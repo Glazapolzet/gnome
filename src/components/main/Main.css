@@ -1,0 +1,39 @@
+.Main {
+  display: flex;
+  height: calc(100% - 65px);
+  align-items: center;
+  justify-content: center;
+}
+
+.Main__container {
+  display: flex;
+  align-items: flex-end;
+  column-gap: 40px;
+}
+
+.Main__login-area {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 600px;
+  min-height: 300px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.Main__icon-area {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  align-self: flex-start;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.Main__icon {
+  width: 200px;
+  height: 200px;
+  background-image: url("./../../images/mtusi.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}

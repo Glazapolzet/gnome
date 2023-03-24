@@ -1,0 +1,45 @@
+.Navlink {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.Navlink:hover::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  border-top: 3px solid #372579;
+}
+
+.Navlink_active.Navlink::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  border-top: 3px solid #372579;
+}
+
+.Navlink__btn {
+  min-width: 70px;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+  height: 100%;
+  padding: 0 5px;
+  color: #444444;
+  font-size: 16px;
+  font-family: inherit;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.Navlink__btn:hover {
+  color: #372579;
+}
+
+.Navlink_active .Navlink__btn {
+  color: #372579;
+}

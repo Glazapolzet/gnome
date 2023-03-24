@@ -1,0 +1,46 @@
+.DropdownNavLink {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  position: relative;
+}
+
+.DropdownNavLink__btn {
+  height: 100%;
+  margin: 0;
+  padding: 0 5px;
+  background-color: transparent;
+  border: none;
+  color: #444444;
+  font-weight: bold;
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.DropdownNavLink__btn:hover {
+  color: #372579;
+}
+
+.DropdownNavLink:hover::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  border-top: 3px solid #372579;
+}
+
+.DropdownNavLink__dropdown {
+  visibility: hidden;
+  min-width: 120px;
+  background-color: #fff;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  display: flex;
+  position: absolute;
+  top: 100%;
+  z-index: 1;
+}
+
+.DropdownNavLink__dropdown_visible {
+  visibility: visible;
+}

@@ -1,0 +1,35 @@
+.Navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 25px;
+  border-bottom: 1px solid #ECF0F1;
+  color: #000;
+  background-color: #fff;
+}
+
+.Navbar__links {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.Navbar__links-right {
+  column-gap: 10px;
+  height: 100%;
+}
+
+.Navbar__links-left {
+  column-gap: 10px;
+  height: 100%;
+}
+
+.Navbar__link-wrapper {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  position: relative;
+}
+
