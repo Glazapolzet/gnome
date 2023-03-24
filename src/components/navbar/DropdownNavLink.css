@@ -1,8 +1,7 @@
 .DropdownNavLink {
   display: flex;
-  box-sizing: border-box;
-  align-items: center;
-  position: relative;
+  flex-direction: column;
+  height: 100%;
 }
 
 .DropdownNavLink__btn {

@@ -1,0 +1,40 @@
+.TimeCounter__btn {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  column-gap: 5px;
+  cursor: pointer;
+}
+
+.TimeCounter__clock-icon {
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.TimeCounter__time {
+  margin: 0;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: bold;
+  color: #444444;
+}
+
+.TimeCounter__dropdown {
+  visibility: hidden;
+  min-width: 120px;
+  background-color: #fff;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  display: flex;
+  position: absolute;
+  top: 100%;
+  z-index: 1;
+}
+
+.TimeCounter__dropdown_visible {
+  visibility: visible;
+}

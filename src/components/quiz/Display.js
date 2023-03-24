@@ -1,30 +1,30 @@
 import "./Display.css"
 import { useState } from "react";
+import MoveBackArrow from "./MoveBackArrow";
 
 export default function Display(props) {
 
   const [currentPicIndex, setCurrentPicIndex] = useState(1);
-  const [isLeftGalleryEnd, setLeftGalleryEndState] = useState(false);
-  const [isRightGalleryEnd, setRightGalleryEndState] = useState(false);
 
   function handleLeftArrowClick () {
-    if (currentPicIndex === 0) {
-      setLeftGalleryEndState(true);
-    } else {
+    if (currentPicIndex !== 0) {
       setCurrentPicIndex(currentPicIndex-1);
     }
   }
 
   function handleRightArrowClick () {
-    if (currentPicIndex === props.pics.length-1) {
-      setRightGalleryEndState(true);
-    } else {
+    if (currentPicIndex !== props.pics.length-1) {
       setCurrentPicIndex(currentPicIndex+1);
     }
   }
 
+  // TODO: плавные переходы между картинками
+
   return (
-    <div className="Display">
+    <section className="Display">
+      <MoveBackArrow
+        leadingTo={"/quiz"}
+      />
       <div className="Display__image-container">
         <div className="Display__bar Display__left-bar">
           <div
@@ -45,6 +45,6 @@ export default function Display(props) {
           />
         </div>
       </div>
-    </div>
+    </section>
   )
 }

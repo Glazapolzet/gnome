@@ -1,5 +1,5 @@
 import "./Form.css";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { useState } from "react";
 
 export default function Form () {
@@ -10,21 +10,24 @@ export default function Form () {
   const [isUserInputValid, setUserInputStatus] = useState(true);
   const [isFormDataValid, setFormDataStatus] = useState(false);
 
+  const navigate = useNavigate();
+
   function handleUserInputChange(evt) {
     setUserInput(evt.target.value);
     setUserInputStatus(evt.target.value !== "");
+    setFormDataStatus(evt.target.value !== "" && groupInput !== "");
   }
 
   function handleGroupInputChange(evt) {
     setGroupInput(evt.target.value);
     setGroupInputStatus(evt.target.value !== "");
+    setFormDataStatus(userInput !== "" && evt.target.value !== "");
   }
 
   function handleFormSubmit(evt) {
     evt.preventDefault();
 
-    setFormDataStatus(isUserInputValid && isGroupInputValid);
-    console.log(isFormDataValid);
+    navigate('/quiz');
   }
 
   return (
@@ -41,8 +44,7 @@ export default function Form () {
             isUserInputValid 
             ? ""
             : "Form__input_type_invalid"}`}
-          minLength="1"
-          aria-required={true}
+          required={true}
           onChange={handleUserInputChange}
         />
         <label htmlFor="group-input" className="Form__input-label">Группа</label>
@@ -55,20 +57,17 @@ export default function Form () {
             isGroupInputValid
               ? ""
               : "Form__input_type_invalid"}`}
-          minLength="1"
-          aria-required={true}
+          required={true}
           onChange={handleGroupInputChange}
         />
       </fieldset>
-      <Link to={`quiz`} className="Form__btn-wrapper">
-        <button
-          type="submit"
-          className={`Form__btn ${isFormDataValid ? "" : "Form__btn_disabled"}`}
-          disabled={isFormDataValid}
-        >
-          Начать
-        </button>
-      </Link>
+      <button
+        type="submit"
+        className={`Form__btn ${isFormDataValid ? "" : "Form__btn_disabled"}`}
+        disabled={!isFormDataValid}
+      >
+        Начать
+      </button>
     </form>
   )
 }

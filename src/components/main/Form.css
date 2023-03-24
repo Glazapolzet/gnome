@@ -77,3 +77,7 @@
   opacity: 0.55;
   cursor: default;
 }
+
+.Form__btn_disabled:hover {
+  opacity: 0.55;
+}

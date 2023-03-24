@@ -1,4 +1,4 @@
-.QuizDisplay {
+.QuizDisplays {
   display: flex;
   width: 100%;
   height: calc(100% - 65px);
