@@ -3,16 +3,41 @@ import { Outlet } from "react-router-dom";
 import DropdownNavLink from "./DropdownNavLink";
 import Navlink from "./Navlink";
 import TimeCounter from "./TimeCounter";
+import beaker from "../../images/beaker-20-solid.svg";
+import book from "../../images/book-open.svg";
+import info from "../../images/info.svg";
 
 export default function Navbar() {
   return (
     <div className="Navbar">
       <ul className="Navbar__links Navbar__links-left">
         <li className="Navbar__link-wrapper">
-          <Navlink title={"Меню"} />
+          <Navlink title={"Меню"} leadingTo={"/"} />
         </li>
         <li className="Navbar__link-wrapper">
           <TimeCounter />
+        </li>
+        <li className="Navbar__link-wrapper">
+          <DropdownNavLink
+            icon={beaker}
+            dropdown={[
+              {
+                id: 3,
+                title: 'Content3',
+                handler: () => console.log('working!3')
+              },
+              {
+                id: 4,
+                title: 'Content4',
+                handler: () => console.log('working!4')
+              }]}
+          />
+        </li>
+        <li className="Navbar__link-wrapper">
+          <Navlink
+            icon={book}
+            leadingTo={"/rad-doc"}
+          />
         </li>
       </ul>
       <Outlet />

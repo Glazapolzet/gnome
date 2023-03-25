@@ -8,6 +8,8 @@ import Display from "./quiz/Display";
 import radiometer from "../images/radiometer.jpg";
 import desktop from "../images/desktop.jpg";
 import spectrometer from "../images/spectrometer.jpg";
+import Doc from "./rad-doc/Doc";
+import multiradDoc from "../docs/multirad.pdf";
 
 function App() {
 
@@ -37,6 +39,7 @@ function App() {
               spectrometer
             ]}
           />}/>
+          <Route path="/rad-doc" element={<Doc link={multiradDoc} />} />
         </Routes>
       </div>
     </>

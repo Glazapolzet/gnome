@@ -2,6 +2,7 @@
   text-decoration: none;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   height: 100%;
 }
 
@@ -22,7 +23,6 @@
 }
 
 .Navlink__btn {
-  min-width: 70px;
   margin: 0;
   border: none;
   background-color: transparent;

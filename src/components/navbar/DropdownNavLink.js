@@ -18,7 +18,12 @@ export default function DropdownNavLink (props) {
           className="DropdownNavLink__btn"
           onClick={toggleDropdown}
           style={{
-            backgroundImage: `url(${props.icon})`
+            backgroundImage: `url(${props.icon})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            width: 28,
+            height: 28,
+            padding: 0
           }}
         />
       ) : (
