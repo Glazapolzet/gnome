@@ -9,8 +9,8 @@ export default function QuizDisplays () {
     <section className="QuizDisplays">
       <>
         <ActionDot
-          x={523}
-          y={428}
+          y={389}
+          x={542}
           leadingTo={"/display"}
         />
         <StartDisplay

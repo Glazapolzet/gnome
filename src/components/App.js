@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     function showClickCoord(evt) {
-      console.log(`x: ${evt.clientX} y: ${evt.clientY}`);
+      console.log(`x: ${evt.clientX} y: ${evt.clientY-65}`);
     }
 
     document.addEventListener('click', showClickCoord);

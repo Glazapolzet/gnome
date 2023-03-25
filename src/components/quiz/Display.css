@@ -45,7 +45,7 @@
 }
 
 .Display__left-arrow {
-  background-image: url("./../../images/chevron-left-circle.svg");
+  background-image: url("../../images/chevron-left-circle.svg");
 }
 
 .Display__image {
@@ -63,5 +63,5 @@
 }
 
 .Display__right-arrow {
-  background-image: url("./../../images/chevron-right-circle.svg");
+  background-image: url("../../images/chevron-right-circle.svg");
 }

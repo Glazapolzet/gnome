@@ -9,8 +9,8 @@ export default function ActionDot (props) {
           type={"button"}
           className="ActionDot"
           style={{
-            top: props.y,
-            left: props.x
+            top: props.y/627*100 + "%",
+            left: props.x/1117*100 + "%"
           }}
         ></button>
       </Link>
