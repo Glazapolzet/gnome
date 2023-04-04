@@ -16,8 +16,9 @@ export default function TimeCounter (props) {
     <>
       <button
         type="button"
-        className="TimeCounter__btn"
+        className={`TimeCounter__btn ${props.isDisabled ? "TimeCounter__btn_disabled" : ""}`}
         onClick={toggleDropdown}
+        disabled={props.isDisabled}
       >
         <div
           className="TimeCounter__clock-icon"

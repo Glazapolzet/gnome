@@ -6,11 +6,11 @@ export default function Navlink(props) {
   return (
     <NavLink
       to={props.leadingTo}
-      className={({isActive}) => isActive ? "Navlink Navlink_active" : "Navlink"}
+      className={({isActive}) => isActive ? "Navlink Navlink_active" : `Navlink ${props.isDisabled ? "Navlink_disabled" : ""}`}
     >
       {props.icon ? (
         <button
-          className={`Navlink__btn ${props.isDisabled ? "Navlink__btn__disabled" : ""}`}
+          className={`Navlink__btn ${props.isDisabled ? "Navlink__btn_disabled" : ""}`}
           type="button"
           style={{
             backgroundImage: `url(${props.icon})`,
@@ -27,7 +27,7 @@ export default function Navlink(props) {
         </button>
       ) : (
         <button
-          className={`Navlink__btn ${props.isDisabled ? "Navlink__btn__disabled" : ""}`}
+          className={`Navlink__btn ${props.isDisabled ? "Navlink__btn_disabled" : ""}`}
           type="button"
           style={{
             minWidth: 70,

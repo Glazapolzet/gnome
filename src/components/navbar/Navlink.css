@@ -14,6 +14,11 @@
   border-top: 3px solid #372579;
 }
 
+.Navlink_disabled.Navlink:hover::after {
+  content: none;
+  border-top: none;
+}
+
 .Navlink_active.Navlink::after {
   content: "";
   position: absolute;
@@ -44,6 +49,10 @@
   color: #372579;
 }
 
-.Navlink__btn__disabled {
-  opacity: 1;
+.Navlink__btn_disabled {
+  opacity: 0.6;
+}
+
+.Navlink__btn_disabled:hover {
+  color: #444444;
 }

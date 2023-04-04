@@ -5,7 +5,7 @@ import {FormContext} from "../../formContext/formContext";
 
 export default function Form () {
 
-  const { isFormOnSubmit, setFormSubmitStatus } = useContext(FormContext);
+  const { setFormSubmitStatus } = useContext(FormContext);
 
   const [userInput, setUserInput] = useState("");
   const [groupInput, setGroupInput] = useState("");

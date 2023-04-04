@@ -21,6 +21,5 @@ export default function CalibrationPopup (props) {
         </button>
       </div>
     </Popup>
-
   )
 }

@@ -1,16 +1,36 @@
 import './ActivityPopup.css'
 import Popup from "./Popup";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function ActivityPopup (props) {
 
-  // const [probeCode, setProbeCode] = useState();
-  // const [probeCode, setProbeCode] = useState();
-  // const [probeCode, setProbeCode] = useState();
-  // const [probeCode, setProbeCode] = useState();
-  // const [probeCode, setProbeCode] = useState();
-  // const [probeCode, setProbeCode] = useState();
-  // const [probeCode, setProbeCode] = useState();
+  const [probeCode, setProbeCode] = useState("");
+  const [probeName, setProbeName] = useState("");
+  const [probeDate, setProbeDate] = useState("");
+  const [probeType, setProbeType] = useState("Прочие");
+  const [probeMethod, setProbeMethod] = useState("Натив");
+  const [probeWeight, setProbeWeight] = useState("1000");
+  const [geometry, setGeometry] = useState("Точка_14мм");
+  const [rnConsistency, setRnConsistency] = useState("137Cs_и_ЕРН");
+  const [exposition, setExposition] = useState("3600");
+  const [trials, setTrials] = useState("1");
+
+  useEffect(() => {
+    setDefaultValues();
+  }, [props.isOpen])
+
+  function setDefaultValues () {
+    setProbeCode("");
+    setProbeName("");
+    setProbeDate("");
+    setProbeType("Прочие");
+    setProbeMethod("Натив");
+    setProbeWeight("1000");
+    setGeometry("Точка_14мм");
+    setRnConsistency("137Cs_и_ЕРН");
+    setExposition("3600");
+    setTrials("1");
+  }
 
   return (
     <Popup
@@ -31,6 +51,8 @@ export default function ActivityPopup (props) {
               type="number"
               className="ActivityPopup__input"
               min={1}
+              value={probeCode}
+              onChange={(evt) => setProbeCode(evt.target.value)}
             />
             <label htmlFor="probe-code" className="ActivityPopup__input-label ActivityPopup__input-label_back"></label>
           </div>
@@ -44,6 +66,8 @@ export default function ActivityPopup (props) {
               type="text"
               className="ActivityPopup__input"
               minLength={1}
+              value={probeName}
+              onChange={(evt) => setProbeName(evt.target.value)}
             />
             <label htmlFor="probe-name" className="ActivityPopup__input-label ActivityPopup__input-label_back"></label>
           </div>
@@ -56,7 +80,8 @@ export default function ActivityPopup (props) {
               name="probe-date"
               type="datetime-local"
               className="ActivityPopup__input"
-              min={1}
+              value={probeDate}
+              onChange={(evt) => setProbeDate(evt.target.value)}
             />
             <label htmlFor="probe-date" className="ActivityPopup__input-label ActivityPopup__input-label_back"></label>
           </div>
@@ -68,12 +93,14 @@ export default function ActivityPopup (props) {
             <select
               name="probe-type"
               className="ActivityPopup__input ActivityPopup__input_type_selection"
+              value={probeType}
+              onChange={(evt) => setProbeType(evt.target.value)}
             >
-              <option selected={true}>Прочие</option>
-              <option>Пищ.пр</option>
-              <option>Стр.мат</option>
-              <option>Вода</option>
-              <option>Лес</option>
+              <option value={"Прочие"}>Прочие</option>
+              <option value={"Пищ.пр"}>Пищ.пр</option>
+              <option value={"Стр.мат"}>Стр.мат</option>
+              <option value={"Вода"}>Вода</option>
+              <option value={"Лес"}>Лес</option>
             </select>
             <label htmlFor="probe-type" className="ActivityPopup__input-label ActivityPopup__input-label_back"></label>
           </div>
@@ -85,10 +112,11 @@ export default function ActivityPopup (props) {
             <select
               name="probe-method"
               className="ActivityPopup__input ActivityPopup__input_type_selection"
+              value={probeMethod}
+              onChange={(evt) => setProbeMethod(evt.target.value)}
             >
-              <option selected={true}>Натив</option>
-              <option>Опция2</option>
-              <option>Опция3</option>
+              <option value={"Натив"}>Натив</option>
+              <option value={"Опция2"}>Опция2</option>
             </select>
             <label htmlFor="probe-method" className="ActivityPopup__input-label ActivityPopup__input-label_back"></label>
           </div>
@@ -100,9 +128,11 @@ export default function ActivityPopup (props) {
             <select
               name="probe-weight"
               className="ActivityPopup__input ActivityPopup__input_type_selection"
+              value={probeWeight}
+              onChange={(evt) => setProbeWeight(evt.target.value)}
             >
-              <option selected={true}>1000</option>
-              <option>500</option>
+              <option value={"1000"}>1000</option>
+              <option value={"500"}>500</option>
             </select>
             <label htmlFor="probe-weight" className="ActivityPopup__input-label ActivityPopup__input-label_back">
               г
@@ -116,11 +146,13 @@ export default function ActivityPopup (props) {
             <select
               name="geometry"
               className="ActivityPopup__input ActivityPopup__input_type_selection"
+              value={geometry}
+              onChange={(evt) => setGeometry(evt.target.value)}
             >
-              <option selected={true}>Точка_14мм</option>
-              <option>Маринелли</option>
-              <option>Петри</option>
-              <option>Половина_Маринелли</option>
+              <option value={"Точка_14мм"}>Точка_14мм</option>
+              <option value={"Маринелли"}>Маринелли</option>
+              <option value={"Петри"}>Петри</option>
+              <option value={"Половина_Маринелли"}>Половина_Маринелли</option>
             </select>
             <label htmlFor="geometry" className="ActivityPopup__input-label ActivityPopup__input-label_back"></label>
           </div>
@@ -134,7 +166,8 @@ export default function ActivityPopup (props) {
               type="text"
               className="ActivityPopup__input"
               minLength={1}
-              defaultValue={"137Cs_и_ЕРН"}
+              value={rnConsistency}
+              onChange={(evt) => setRnConsistency(evt.target.value)}
             />
             <label htmlFor="rn-consistency" className="ActivityPopup__input-label ActivityPopup__input-label_back"></label>
           </div>
@@ -148,8 +181,9 @@ export default function ActivityPopup (props) {
               type="number"
               className="ActivityPopup__input"
               min={1800}
-              defaultValue={3600}
               step={1800}
+              value={exposition}
+              onChange={(evt) => setExposition(evt.target.value)}
             />
             <label htmlFor="exposition" className="ActivityPopup__input-label ActivityPopup__input-label_back">
               с
@@ -164,8 +198,9 @@ export default function ActivityPopup (props) {
               name="trials"
               type="number"
               className="ActivityPopup__input"
-              defaultValue={1}
               min={1}
+              value={trials}
+              onChange={(evt) => setTrials(evt.target.value)}
             />
             <label htmlFor="trials" className="ActivityPopup__input-label ActivityPopup__input-label_back">
               раз
@@ -179,6 +214,7 @@ export default function ActivityPopup (props) {
           form="activity-form"
           type="reset"
           className="ActivityPopup__button"
+          onClick={setDefaultValues}
         >
           Сброс
         </button>

@@ -1,7 +1,20 @@
 import './BackgroundPopup.css'
 import Popup from "./Popup";
+import {useEffect, useState} from "react";
 
 export default function BackgroundPopup (props) {
+
+  const [avg, setAvg] = useState("0.4");
+  const [exposition, setExposition] = useState("1800");
+
+  useEffect(() => {
+    setDefaultValues();
+  }, [props.isOpen])
+
+  function setDefaultValues () {
+    setAvg("0.4");
+    setExposition("1800");
+  }
 
   return (
     <Popup
@@ -20,6 +33,8 @@ export default function BackgroundPopup (props) {
             name="avg"
             type="number"
             className="BackgroundPopup__input"
+            value={avg}
+            onChange={(evt) => setAvg(evt.target.value)}
             min={0}
             max={1}
             step={0.1}
@@ -31,8 +46,10 @@ export default function BackgroundPopup (props) {
             name="exposition"
             type="number"
             className="BackgroundPopup__input"
+            value={exposition}
+            onChange={(evt) => setExposition(evt.target.value)}
             min={1800}
-            step={100}
+            step={1800}
           />
           <label htmlFor={"exposition"} className="BackgroundPopup__input-label">
             с
@@ -40,6 +57,15 @@ export default function BackgroundPopup (props) {
         </fieldset>
       </form>
       <div className="BackgroundPopup__buttons-wrapper">
+        <button
+          formTarget="activity-form"
+          form="activity-form"
+          type="reset"
+          className="ActivityPopup__button"
+          onClick={setDefaultValues}
+        >
+          Сброс
+        </button>
         <button
           type="button"
           className="BackgroundPopup__button"

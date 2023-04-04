@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   min-height: 64px;
-  padding: 0 25px;
+  padding: 0 10px;
   border-bottom: 1px solid #ECF0F1;
   color: #000;
   background-color: #fff;
@@ -17,6 +17,7 @@
 }
 
 .Navbar__links-right {
+  margin: 0 10px 0 0;
   column-gap: 10px;
   height: 100%;
 }

@@ -20,6 +20,15 @@
   border-top: 3px solid #372579;
 }
 
+.TimeCounter__btn_disabled {
+  opacity: 0.6;
+}
+
+.TimeCounter__btn_disabled.TimeCounter__btn:hover::after {
+  content: none;
+  border-top: none;
+}
+
 .TimeCounter__clock-icon {
   width: 24px;
   height: 24px;

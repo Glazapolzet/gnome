@@ -11,11 +11,11 @@ export default function DropdownNavLink (props) {
   }
 
   return (
-    <div className="DropdownNavLink">
+    <div className={`DropdownNavLink ${props.isDisabled ? "DropdownNavLink_disabled" : ""}`}>
       {props.icon ? (
         <button
           type="button"
-          className="DropdownNavLink__btn"
+          className={`DropdownNavLink__btn ${props.isDisabled ? "DropdownNavLink__btn_disabled" : ""}`}
           onClick={toggleDropdown}
           style={{
             backgroundImage: `url(${props.icon})`,
@@ -25,12 +25,14 @@ export default function DropdownNavLink (props) {
             width: 28,
             padding: 0
           }}
+          disabled={props.isDisabled}
         />
       ) : (
           <button
             type="button"
-            className="DropdownNavLink__btn"
+            className={`DropdownNavLink__btn ${props.isDisabled ? "DropdownNavLink__btn_disabled" : ""}`}
             onClick={toggleDropdown}
+            disabled={props.isDisabled}
           >
             {props.title}
           </button>

@@ -14,7 +14,7 @@ import {FormContext} from "../../formContext/formContext";
 
 export default function Navbar() {
 
-  const {isFormOnSubmit, setFormSubmitStatus} = useContext(FormContext);
+  const {isFormOnSubmit} = useContext(FormContext);
 
   const [isCalibrationPopupOpen, setCalibrationPopupVisibility] = useState(false);
   const [isBackgroundPopupOpen, setBackgroundPopupVisibility] = useState(false);
@@ -65,17 +65,20 @@ export default function Navbar() {
             />
           </li>
           <li className="Navbar__link-wrapper">
-            <TimeCounter />
+            <TimeCounter
+              isDisabled={!isFormOnSubmit}
+            />
           </li>
           <li className="Navbar__link-wrapper">
             <DropdownNavLink
               icon={beaker}
+              isDisabled={!isFormOnSubmit}
               dropdown={[
-                {
-                  id: 1,
-                  title: 'Классификатор продукции',
-                  handler: () => console.log('working!3')
-                },
+                // {
+                //   id: 1,
+                //   title: 'Классификатор продукции',
+                //   handler: () => console.log('working!3')
+                // },
                 {
                   id: 2,
                   title: 'Энергетическая калибровка',
@@ -95,16 +98,17 @@ export default function Navbar() {
             />
           </li>
           <li className="Navbar__link-wrapper">
-            <Navlink
-              icon={book}
-              leadingTo={"/rad-doc"}
-            />
+
           </li>
         </ul>
         <Outlet />
 
         <ul className="Navbar__links Navbar__links-right">
           <li className="Navbar__link-wrapper">
+            <Navlink
+              icon={book}
+              leadingTo={"/rad-doc"}
+            />
           </li>
         </ul>
       </div>
