@@ -1,6 +1,6 @@
 import './TimeCounter.css'
 import {useState} from "react";
-import DropdownMenu from "./DropdownMenu";
+import Dropdown from "./Dropdown";
 import clockIco from "../../images/clock.svg";
 
 export default function TimeCounter (props) {
@@ -28,27 +28,22 @@ export default function TimeCounter (props) {
         />
         <p className="TimeCounter__time">{value}</p>
       </button>
-      <div className={`TimeCounter__dropdown ${
-        isDropdownVisible
-          ? "TimeCounter__dropdown_visible"
-          : ""}`}
-      >
-        <DropdownMenu
-          toggleDropdown={toggleDropdown}
-          content={[
-          {
-            id: 1,
-            title: 'Пуск',
-            handler: () => console.log('working!1')
-          },
-          {
-            id: 2,
-            title: 'Стоп',
-            handler: () => console.log('working!2')
-          }
-          ]}
-        />
-      </div>
+      <Dropdown
+        toggleDropdown={toggleDropdown}
+        isDropdownVisible={isDropdownVisible}
+        content={[
+        {
+          id: 1,
+          title: 'Пуск',
+          handler: () => console.log('working!1')
+        },
+        {
+          id: 2,
+          title: 'Стоп',
+          handler: () => console.log('working!2')
+        }
+        ]}
+      />
     </>
   )
 

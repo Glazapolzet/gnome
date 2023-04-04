@@ -1,7 +1,7 @@
 import './App.css';
 
 import { FormContext } from "../formContext/formContext";
-import { Route, Routes } from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";
 
 import Main from "./main/Main";
@@ -21,6 +21,10 @@ import table from "../images/table_temp.jpg";
 
 function App() {
 
+  //TODO: navigate лагает как сука
+
+  // const navigate = useNavigate();
+
   useEffect(() => {
     function showClickCoord(evt) {
       console.log(`x: ${evt.screenX} y: ${evt.screenY-65}`);
@@ -33,11 +37,20 @@ function App() {
   })
 
   const [isFormOnSubmit, setFormSubmitStatus] = useState(false);
+  //!!!
+  const [isDesktopClicked, setDesktopClicked] = useState(true);
+
+  function handleDesktopClick () {
+    setDesktopClicked(true);
+    // navigate('/window');
+  }
 
   return (
     <FormContext.Provider value={{isFormOnSubmit, setFormSubmitStatus}}>
       <div className="App">
-        <Navbar />
+        <Navbar
+          isDesktopClicked={isDesktopClicked}
+        />
 
         <Routes>
           <Route path="/" element={<Main />} />
@@ -61,9 +74,15 @@ function App() {
             <Route path="desktop" element={<DisplayImage
               pic={desktop}
               withDot={true}
-              dotLeadingTo={'/window'}
-              dotX={500}
-              dotY={300}
+              dotX={255}
+              dotY={45}
+              dotDropdown={[
+                {
+                  id: 11,
+                  title: 'Запуск ПО «Прогресс»',
+                  handler: handleDesktopClick
+                },
+              ]}
             />}/>
 
             <Route path="spectrometer" element={<DisplayImage

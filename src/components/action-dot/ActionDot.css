@@ -1,5 +1,11 @@
 .ActionDot {
   position: absolute;
+  display: flex;
+  z-index: 1;
+}
+
+.ActionDot__btn {
+  position: relative;
   margin: 0;
   padding: 0;
   background-image: url("../../images/check_eye.svg");
@@ -13,9 +19,8 @@
   border-radius: 50%;
   transition: transform 0.2s ease-out;
   cursor: pointer;
-  z-index: 1;
 }
 
-.ActionDot:hover {
+.ActionDot__btn:hover {
   transform: scale(1.4);
 }

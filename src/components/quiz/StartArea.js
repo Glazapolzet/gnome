@@ -1,7 +1,7 @@
 import "./StartArea.css"
 import StartDisplay from "./StartDisplay";
 import cabinet from "../../images/cabinet.jpg";
-import ActionDot from "./ActionDot";
+import ActionDot from "../action-dot/ActionDot";
 
 export default function StartArea () {
 

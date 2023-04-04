@@ -12,7 +12,7 @@ import info from "../../images/info.svg";
 import {useContext, useState} from "react";
 import {FormContext} from "../../formContext/formContext";
 
-export default function Navbar() {
+export default function Navbar(props) {
 
   const {isFormOnSubmit} = useContext(FormContext);
 
@@ -55,6 +55,7 @@ export default function Navbar() {
         onClose={closeAllPopups}
         onClick={closeAllPopups}
       />
+
       <div className="Navbar">
         <ul className="Navbar__links Navbar__links-left">
           <li className="Navbar__link-wrapper">
@@ -66,14 +67,15 @@ export default function Navbar() {
           </li>
           <li className="Navbar__link-wrapper">
             <TimeCounter
-              isDisabled={!isFormOnSubmit}
+              isDisabled={!props.isDesktopClicked}
             />
           </li>
           <li className="Navbar__link-wrapper">
             <DropdownNavLink
               icon={beaker}
-              isDisabled={!isFormOnSubmit}
+              isDisabled={!props.isDesktopClicked}
               dropdown={[
+                //TODO: возможно понадобится, но вроде как уже есть измерение активности
                 // {
                 //   id: 1,
                 //   title: 'Классификатор продукции',
@@ -96,9 +98,6 @@ export default function Navbar() {
                 }
               ]}
             />
-          </li>
-          <li className="Navbar__link-wrapper">
-
           </li>
         </ul>
         <Outlet />

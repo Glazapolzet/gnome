@@ -1,5 +1,5 @@
 import './DisplayImage.css'
-import ActionDot from "./ActionDot";
+import ActionDot from "../action-dot/ActionDot";
 
 export default function DisplayImage (props) {
 
@@ -16,6 +16,8 @@ export default function DisplayImage (props) {
           y={props.dotY}
           x={props.dotX}
           leadingTo={props.dotLeadingTo}
+          onClick={props.dotOnClick}
+          dropdown={props.dotDropdown}
         />
       ) : null}
     </>

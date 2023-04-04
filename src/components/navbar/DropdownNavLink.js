@@ -1,5 +1,5 @@
 import './DropdownNavLink.css';
-import DropdownMenu from "./DropdownMenu";
+import Dropdown from "./Dropdown";
 import {useState} from "react";
 
 export default function DropdownNavLink (props) {
@@ -37,13 +37,11 @@ export default function DropdownNavLink (props) {
             {props.title}
           </button>
       )}
-      <div className={`DropdownNavLink__dropdown ${
-        isDropdownVisible
-          ? "DropdownNavLink__dropdown_visible"
-          : ""}`}
-      >
-        <DropdownMenu content={props.dropdown} toggleDropdown={toggleDropdown} />
-      </div>
+      <Dropdown
+        content={props.dropdown}
+        toggleDropdown={toggleDropdown}
+        isDropdownVisible={isDropdownVisible}
+      />
     </div>
   )
 

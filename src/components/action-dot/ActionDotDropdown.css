@@ -1,0 +1,34 @@
+.ActionDotDropdown {
+  visibility: hidden;
+  min-width: 120px;
+  background-color: #fff;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  display: flex;
+  position: absolute;
+  top: 100%;
+  z-index: 1;
+}
+
+.ActionDotDropdown__visible {
+  visibility: visible;
+}
+
+.ActionDotDropdown__btn-container {
+  padding: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  list-style: none;
+}
+
+.ActionDotDropdown__btn {
+  padding: 8px;
+  font-size: 16px;
+  color: #444444;
+  cursor: pointer;
+}
+
+.ActionDotDropdown__btn:hover {
+  background-color: #EBEBEB;
+}
