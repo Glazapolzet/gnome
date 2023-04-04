@@ -32,7 +32,9 @@ export default function TimeCounter (props) {
           ? "TimeCounter__dropdown_visible"
           : ""}`}
       >
-        <DropdownMenu content={[
+        <DropdownMenu
+          toggleDropdown={toggleDropdown}
+          content={[
           {
             id: 1,
             title: 'Пуск',

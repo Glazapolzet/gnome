@@ -1,0 +1,87 @@
+.ActivityPopup__form {
+  margin: 20px 0 0;
+  display: flex;
+  width: 95%;
+}
+
+.ActivityPopup__input-container {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  border-radius: 2px;
+}
+
+.ActivityPopup__input-wrapper {
+  margin: 0;
+  padding: 0 5px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.55);
+}
+
+.ActivityPopup__input-wrapper:nth-last-of-type(1) {
+  border-bottom: none;
+}
+
+.ActivityPopup__input-label {
+  min-width: 45%;
+  max-width: 45%;
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.ActivityPopup__input-label_back {
+  padding: 0 0 0 5px;
+  min-width: 10%;
+  max-width: 10%;
+}
+
+.ActivityPopup__input {
+  margin: 0;
+  height: 22px;
+  min-width: 321px;
+  max-width: 321px;
+  padding: 0 4px;
+  border-left: 1px solid rgba(0, 0, 0, 0.55);
+  border-right: 1px solid rgba(0, 0, 0, 0.55);
+  border-top: none;
+  border-bottom: none;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.ActivityPopup__input:focus {
+  outline: none;
+}
+
+.ActivityPopup__input_type_selection {
+  padding: 0;
+  min-width: 331px;
+  max-width: 331px;
+}
+
+.ActivityPopup__buttons-wrapper {
+  margin: 30px 0 20px;
+  display: flex;
+  column-gap: 15px;
+}
+
+.ActivityPopup__button {
+  padding: 10px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  background-color: #eeeeee;
+  cursor: pointer;
+}
+
+.ActivityPopup__button:hover {
+  background-color: #e1e1e1;
+}

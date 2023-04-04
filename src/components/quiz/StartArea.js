@@ -1,16 +1,16 @@
-import "./QuizDisplays.css"
+import "./StartArea.css"
 import StartDisplay from "./StartDisplay";
 import cabinet from "../../images/cabinet.jpg";
 import ActionDot from "./ActionDot";
 
-export default function QuizDisplays () {
+export default function StartArea () {
 
   return (
     <section className="QuizDisplays">
       <>
         <ActionDot
-          y={389}
-          x={542}
+          y={530}
+          x={725}
           leadingTo={"/display"}
         />
         <StartDisplay

@@ -1,20 +1,25 @@
 import "./ActionDot.css";
-import {Link, Outlet} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function ActionDot (props) {
+
+  const navigate = useNavigate();
+
+  function handleClick() {
+    if (props.leadingTo) {
+      navigate(props.leadingTo);
+    }
+  }
+
   return (
-    <>
-      <Link to={props.leadingTo}>
-        <button
-          type={"button"}
-          className="ActionDot"
-          style={{
-            top: props.y/627*100 + "%",
-            left: props.x/1117*100 + "%"
-          }}
-        ></button>
-      </Link>
-      <Outlet />
-    </>
+    <button
+      type={"button"}
+      className="ActionDot"
+      style={{
+        top: props.y/880*100 + "%",
+        left: props.x/1512*100 + "%"
+      }}
+      onClick={handleClick}
+    />
   )
 }

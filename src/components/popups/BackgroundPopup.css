@@ -1,0 +1,57 @@
+.BackgroundPopup__form {
+  margin: 30px 0 0;
+  min-width: 95%;
+}
+
+.BackgroundPopup__input-container {
+  margin: 0;
+  height: 22px;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  border-radius: 2px;
+}
+
+.BackgroundPopup__input-label {
+  padding: 0 0 0 2px;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.BackgroundPopup__input {
+  height: 100%;
+  width: 100px;
+  margin: 0 0 0 auto;
+  padding: 0 5px;
+  border-left: 1px solid rgba(0, 0, 0, 0.55);
+  border-right: 1px solid rgba(0, 0, 0, 0.55);
+  border-top: none;
+  border-bottom: none;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.BackgroundPopup__input:focus {
+  outline: none;
+}
+
+.BackgroundPopup__buttons-wrapper {
+  margin: 30px 0 18px;
+  display: flex;
+  column-gap: 15px;
+}
+
+.BackgroundPopup__button {
+  padding: 10px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  background-color: #eeeeee;
+  cursor: pointer;
+}
+
+.BackgroundPopup__button:hover {
+  background-color: #e1e1e1;
+}

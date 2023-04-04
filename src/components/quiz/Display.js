@@ -1,10 +1,21 @@
 import "./Display.css"
-import { useState } from "react";
-import MoveBackArrow from "./MoveBackArrow";
+import {useEffect, useState} from "react";
+import MoveBackArrow from "../back-arrow/MoveBackArrow";
+import {Outlet, useNavigate} from "react-router-dom";
 
 export default function Display(props) {
 
-  const [currentPicIndex, setCurrentPicIndex] = useState(1);
+  const [currentPicIndex, setCurrentPicIndex] = useState(props.defaultPicIndex);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setCurrentPicIndex(props.defaultPicIndex);
+  }, [props.defaultPicIndex])
+
+  useEffect(() => {
+    navigate(props.pics[currentPicIndex]);
+  }, [currentPicIndex, navigate, props.pics])
 
   function handleLeftArrowClick () {
     if (currentPicIndex !== 0) {
@@ -18,12 +29,10 @@ export default function Display(props) {
     }
   }
 
-  // TODO: плавные переходы между картинками
-
   return (
     <section className="Display">
       <MoveBackArrow
-        leadingTo={"/quiz"}
+        leadingTo={'/quiz'}
       />
       <div className="Display__image-container">
         <div className="Display__bar Display__left-bar">
@@ -32,12 +41,7 @@ export default function Display(props) {
             onClick={handleLeftArrowClick}
           />
         </div>
-        <div
-          className="Display__image"
-          style={{
-            backgroundImage: `url(${props.pics[currentPicIndex]})`
-          }}
-        />
+        <Outlet/>
         <div className="Display__bar Display__right-bar">
           <div
             className="Display__arrow Display__right-arrow"

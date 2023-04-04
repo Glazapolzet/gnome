@@ -1,8 +1,11 @@
 import "./Form.css";
-import {Link, useNavigate} from "react-router-dom";
-import { useState } from "react";
+import {useNavigate} from "react-router-dom";
+import {useContext, useState} from "react";
+import {FormContext} from "../../formContext/formContext";
 
 export default function Form () {
+
+  const { isFormOnSubmit, setFormSubmitStatus } = useContext(FormContext);
 
   const [userInput, setUserInput] = useState("");
   const [groupInput, setGroupInput] = useState("");
@@ -28,6 +31,7 @@ export default function Form () {
     evt.preventDefault();
 
     navigate('/quiz');
+    setFormSubmitStatus(true);
   }
 
   return (

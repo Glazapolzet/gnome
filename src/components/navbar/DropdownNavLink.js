@@ -21,8 +21,8 @@ export default function DropdownNavLink (props) {
             backgroundImage: `url(${props.icon})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "contain",
+            backgroundPosition: "center",
             width: 28,
-            height: 28,
             padding: 0
           }}
         />
@@ -40,7 +40,7 @@ export default function DropdownNavLink (props) {
           ? "DropdownNavLink__dropdown_visible"
           : ""}`}
       >
-        <DropdownMenu content={props.dropdown} />
+        <DropdownMenu content={props.dropdown} toggleDropdown={toggleDropdown} />
       </div>
     </div>
   )

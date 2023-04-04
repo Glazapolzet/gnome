@@ -43,3 +43,7 @@
 .Navlink_active .Navlink__btn {
   color: #372579;
 }
+
+.Navlink__btn__disabled {
+  opacity: 1;
+}
