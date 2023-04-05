@@ -21,9 +21,9 @@ import table from "../images/table_temp.jpg";
 
 function App() {
 
-  //TODO: navigate лагает как сука
+  //TODO: navigate именно здесь лагает как сука
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     function showClickCoord(evt) {
@@ -42,7 +42,7 @@ function App() {
 
   function handleDesktopClick () {
     setDesktopClicked(true);
-    // navigate('/window');
+    navigate('/window');
   }
 
   return (
@@ -93,6 +93,7 @@ function App() {
               dotY={10}
             />}/>
           </Route>
+
           {/*TODO: сделать норм фотку стола*/}
           <Route path={'/spec-area'} element={<Display
             defaultPicIndex={0}

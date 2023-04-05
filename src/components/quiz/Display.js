@@ -6,28 +6,40 @@ import {Outlet, useNavigate} from "react-router-dom";
 export default function Display(props) {
 
   const [currentPicIndex, setCurrentPicIndex] = useState(props.defaultPicIndex);
+  const [currentPic, setCurrentPic] = useState(props.pics[props.defaultPicIndex]);
+  const [isPicOnChange, setPicOnChange] = useState(true);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log("set");
-    setCurrentPicIndex(props.defaultPicIndex);
-  }, [props.defaultPicIndex])
+  // useEffect(() => {
+  //   console.log("set");
+  //   setCurrentPicIndex(props.defaultPicIndex);
+  //   setCurrentPic(props.pics[props.defaultPicIndex]);
+  // }, [props.pics, props.defaultPicIndex])
 
   useEffect(() => {
-    console.log("nav");
-    navigate(props.pics[currentPicIndex]);
-  }, [currentPicIndex, navigate, props.pics])
+    if (isPicOnChange) {
+      console.log(isPicOnChange);
+      navigate(currentPic);
+      setPicOnChange(false);
+    }
+  }, [isPicOnChange, currentPic, navigate])
 
   function handleLeftArrowClick () {
     if (currentPicIndex !== 0) {
-      setCurrentPicIndex(currentPicIndex-1);
+      const i = currentPicIndex;
+      setCurrentPicIndex(i-1);
+      setCurrentPic(props.pics[i-1]);
+      setPicOnChange(true);
     }
   }
 
   function handleRightArrowClick () {
     if (currentPicIndex !== props.pics.length-1) {
-      setCurrentPicIndex(currentPicIndex+1);
+      const i = currentPicIndex;
+      setCurrentPicIndex(i+1);
+      setCurrentPic(props.pics[i+1]);
+      setPicOnChange(true);
     }
   }
 
