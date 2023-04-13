@@ -41,7 +41,8 @@ function App() {
 
   //FormContext:
   const [isFormOnSubmit, setFormSubmitStatus] = useState(false);
-  const [isActivityFormOnSubmit, setActivityFormSubmitStatus] = useState(false);
+  const [isCalibrationPending, setCalibrationPending] = useState(false);
+  const [isActivityPending, setActivityPending] = useState(false);
   const [activityForm, setActivityForm] = useState({
     probeCode: "",
     probeName: "",
@@ -53,17 +54,12 @@ function App() {
     rnConsistency: "137Cs_и_ЕРН",
     exposition: 3600,
     trials: "1"
+  });
+  const [isBackgroundPending, setBackgroundPending] = useState(false);
+  const [backgroundForm, setBackgroundForm] = useState({
+    averaging: "0.4",
+    exposition: 1800
   })
-  // const [probeCode, setProbeCode] = useState("");
-  // const [probeName, setProbeName] = useState("");
-  // const [probeDate, setProbeDate] = useState("");
-  // const [probeType, setProbeType] = useState("Прочие");
-  // const [probeMethod, setProbeMethod] = useState("Натив");
-  // const [probeWeight, setProbeWeight] = useState("1000");
-  // const [geometry, setGeometry] = useState("Точка_14мм");
-  // const [rnConsistency, setRnConsistency] = useState("137Cs_и_ЕРН");
-  // const [exposition, setExposition] = useState("3600");
-  // const [trials, setTrials] = useState("1");
 
   //TimerContext:
   const [isDesktopClickedForFirstTime, setDesktopClickedForFirstTime] = useState(true);
@@ -124,8 +120,14 @@ function App() {
       <FormContext.Provider value={{
         isFormOnSubmit,
         setFormSubmitStatus,
-        isActivityFormOnSubmit,
-        setActivityFormSubmitStatus,
+        isCalibrationPending,
+        setCalibrationPending,
+        isBackgroundPending,
+        setBackgroundPending,
+        isActivityPending,
+        setActivityPending,
+        backgroundForm,
+        setBackgroundForm,
         activityForm,
         setActivityForm
       }}>

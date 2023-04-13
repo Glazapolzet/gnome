@@ -3,19 +3,7 @@ import {FormContext} from "../../../contexts/formContext";
 import './ResearchReport.css';
 
 export default function ResearchReport () {
-  const {
-    isActivityFormOnSubmit,
-    setActivityFormSubmitStatus,
-    probeCode,
-    probeName,
-    probeDate,
-    probeType,
-    probeMethod,
-    probeWeight,
-    geometry,
-    rnConsistency,
-    exposition,
-    trials} = useContext(FormContext);
+  const {activityForm} = useContext(FormContext);
 
   return (
     <div className="ResearchReport">
@@ -24,35 +12,51 @@ export default function ResearchReport () {
       <ul className="ResearchReport__list">
         <li className="ResearchReport__list-item">
           <p className="ResearchReport__item ResearchReport__item_content_name">Код образца:</p>
-          <p className="ResearchReport__item ResearchReport__item_content_value">{probeCode}</p>
+          <p className="ResearchReport__item ResearchReport__item_content_value">
+            {activityForm.probeCode}
+          </p>
         </li>
         <li className="ResearchReport__list-item">
           <p className="ResearchReport__item ResearchReport__item_content_name">Дата измерения:</p>
-          <p className="ResearchReport__item ResearchReport__item_content_value">{probeDate.replace("T", " ")}</p>
+          <p className="ResearchReport__item ResearchReport__item_content_value">
+            {activityForm.probeDate.replace("T", " ")}
+          </p>
         </li>
         <li className="ResearchReport__list-item">
           <p className="ResearchReport__item ResearchReport__item_content_name">Геометрия измерения:</p>
-          <p className="ResearchReport__item ResearchReport__item_content_value">{geometry}</p>
+          <p className="ResearchReport__item ResearchReport__item_content_value">
+            {activityForm.geometry}
+          </p>
         </li>
         <li className="ResearchReport__list-item">
           <p className="ResearchReport__item ResearchReport__item_content_name">Время экспозиции, с:</p>
-          <p className="ResearchReport__item ResearchReport__item_content_value">{exposition}</p>
+          <p className="ResearchReport__item ResearchReport__item_content_value">
+            {activityForm.exposition}
+          </p>
         </li>
         <li className="ResearchReport__list-item">
           <p className="ResearchReport__item ResearchReport__item_content_name">Вид пробы:</p>
-          <p className="ResearchReport__item ResearchReport__item_content_value">{probeType}</p>
+          <p className="ResearchReport__item ResearchReport__item_content_value">
+            {activityForm.probeType}
+          </p>
         </li>
         <li className="ResearchReport__list-item">
           <p className="ResearchReport__item ResearchReport__item_content_name">Дата отбора:</p>
-          <p className="ResearchReport__item ResearchReport__item_content_value">{probeDate.replace("T", " ")}</p>
+          <p className="ResearchReport__item ResearchReport__item_content_value">
+            {activityForm.probeDate.replace("T", " ")}
+          </p>
         </li>
         <li className="ResearchReport__list-item">
           <p className="ResearchReport__item ResearchReport__item_content_name">Метод подготовки:</p>
-          <p className="ResearchReport__item ResearchReport__item_content_value">{probeMethod}</p>
+          <p className="ResearchReport__item ResearchReport__item_content_value">
+            {activityForm.probeMethod}
+          </p>
         </li>
         <li className="ResearchReport__list-item">
           <p className="ResearchReport__item ResearchReport__item_content_name">Масса пробы, г:</p>
-          <p className="ResearchReport__item ResearchReport__item_content_value">{probeWeight}</p>
+          <p className="ResearchReport__item ResearchReport__item_content_value">
+            {activityForm.probeWeight}
+          </p>
         </li>
       </ul>
     </div>

@@ -1,7 +1,16 @@
 import './CalibrationPopup.css';
 import Popup from "./Popup";
+import {useContext} from "react";
+import {FormContext} from "../../contexts/formContext";
 
 export default function CalibrationPopup (props) {
+
+  const {isCalibrationPending, setCalibrationPending} = useContext(FormContext);
+
+  function handleClick() {
+    props.onClick();
+    setCalibrationPending(true);
+  }
 
   return(
     <Popup
@@ -15,7 +24,8 @@ export default function CalibrationPopup (props) {
         <button
           type="button"
           className="CalibrationPopup__button"
-          onClick={props.onClick}
+          onClick={handleClick}
+          disabled={isCalibrationPending}
         >
           Продолжить
         </button>

@@ -15,7 +15,7 @@ import {WindowContext} from "../../contexts/windowContext";
 
 export default function Navbar(props) {
 
-  const {isFormOnSubmit, exposition} = useContext(FormContext);
+  const {isFormOnSubmit, activityForm, backgroundForm} = useContext(FormContext);
   const {setCounterActive, setTargetValue} = useContext(TimerContext);
   const {
     isAboutPageActive,
@@ -61,7 +61,7 @@ export default function Navbar(props) {
     if (!isAboutPageActive) {
       props.resetPages();
     }
-    setTimeout(() => setCalibrationReportPageActive(true), 1000);
+    setTimeout(() => setCalibrationReportPageActive(true), 9850);
     closeAllPopups();
   }
 
@@ -70,10 +70,11 @@ export default function Navbar(props) {
     setWithMinutes(true);
     setCounterActive(true);
     setTargetValue(30);
+    // setTargetValue(backgroundForm.exposition);
     if (!isAboutPageActive) {
       props.resetPages();
     }
-    setTimeout(() => setBackgroundReportPageActive(true), 1000);
+    setTimeout(() => setBackgroundReportPageActive(true), 1750);
     closeAllPopups();
   }
 
@@ -82,10 +83,11 @@ export default function Navbar(props) {
     setWithMinutes(true);
     setCounterActive(true);
     setTargetValue(30);
+    // setTargetValue(activityForm.exposition);
     if (!isAboutPageActive) {
       props.resetPages();
     }
-    setTimeout(() => setResearchReportPageActive(true), 1000);
+    setTimeout(() => setResearchReportPageActive(true), 1750);
     closeAllPopups();
   }
 

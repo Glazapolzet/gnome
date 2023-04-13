@@ -4,6 +4,7 @@ import Dropdown from "./Dropdown";
 import clockIco from "../../images/clock.svg";
 import {TimerContext} from "../../contexts/timerContext";
 import {WindowContext} from "../../contexts/windowContext";
+import {FormContext} from "../../contexts/formContext";
 
 export default function TimeCounter (props) {
 
@@ -11,7 +12,21 @@ export default function TimeCounter (props) {
   const [value, setValue] = useState(0);
   const [isDropdownVisible, setDropdownVisibility] = useState(false);
 
-  const {isCounterActive, setCounterActive, targetValue, setTargetValue, setCounterDone} = useContext(TimerContext);
+  const {
+    isCalibrationPending,
+    setCalibrationPending,
+    isBackgroundPending,
+    setBackgroundPending,
+    isActivityPending,
+    setActivityPending
+  } = useContext(FormContext);
+  const {
+    isCounterActive,
+    setCounterActive,
+    targetValue,
+    setTargetValue,
+    setCounterDone
+  } = useContext(TimerContext);
   const {setAboutPageActive} = useContext(WindowContext);
 
   const isDisabled = props.isDisabled;
@@ -27,6 +42,16 @@ export default function TimeCounter (props) {
     setTargetValue(0);
     setCounterDone(true);
     setAboutPageActive(false);
+
+    if (isCalibrationPending) {
+      setCalibrationPending(false);
+    }
+    if (isBackgroundPending) {
+      setBackgroundPending(false);
+    }
+    if (isActivityPending) {
+      setActivityPending(false);
+    }
   }
 
   useEffect(() => {
