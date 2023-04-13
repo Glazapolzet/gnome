@@ -18,3 +18,12 @@
 .CalibrationPopup__button:hover {
   background-color: #e1e1e1;
 }
+
+.CalibrationPopup__button_disabled {
+  opacity: .7;
+  cursor: default;
+}
+
+.CalibrationPopup__button_disabled:hover {
+  background-color: #eeeeee;
+}

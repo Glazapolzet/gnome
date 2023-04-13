@@ -56,3 +56,12 @@
 .BackgroundPopup__button:hover {
   background-color: #e1e1e1;
 }
+
+.BackgroundPopup__button_disabled {
+  opacity: .7;
+  cursor: default;
+}
+
+.BackgroundPopup__button_disabled:hover {
+  background-color: #eeeeee;
+}

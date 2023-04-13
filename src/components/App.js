@@ -77,17 +77,21 @@ function App() {
   const [isBackgroundReportDone, setBackgroundReportDone] = useState(false);
   const [isResearchReportDone, setResearchReportDone] = useState(false);
 
-  function handleCalibrationReportDone () {
-    setCalibrationReportDone(true);
-  }
+  const [showCalibrationReportNow, setShowCalibrationReportNow] = useState(false);
+  const [showBackgroundReportNow, setShowBackgroundReportNow] = useState(false);
+  const [showResearchReportNow, setShowResearchReportNow] = useState(false);
 
-  function handleBackgroundReportDone () {
-    setBackgroundReportDone(true);
-  }
-
-  function handleResearchReportDone () {
-    setResearchReportDone(true);
-  }
+  // function handleCalibrationReportDone () {
+  //   setCalibrationReportDone(true);
+  // }
+  //
+  // function handleBackgroundReportDone () {
+  //   setBackgroundReportDone(true);
+  // }
+  //
+  // function handleResearchReportDone () {
+  //   setResearchReportDone(true);
+  // }
 
   function handleDesktopClick () {
     setDesktopClicked(true);
@@ -108,38 +112,30 @@ function App() {
 
   return (
     <WindowContext.Provider value={{
-      isAboutPageActive,
-      setAboutPageActive,
-      isCalibrationReportPageActive,
-      setCalibrationReportPageActive,
-      isBackgroundReportPageActive,
-      setBackgroundReportPageActive,
-      isResearchReportPageActive,
-      setResearchReportPageActive
+      isAboutPageActive, setAboutPageActive,
+      isCalibrationReportPageActive, setCalibrationReportPageActive,
+      isBackgroundReportPageActive, setBackgroundReportPageActive,
+      isResearchReportPageActive, setResearchReportPageActive,
+      isCalibrationReportDone, setCalibrationReportDone,
+      isBackgroundReportDone, setBackgroundReportDone,
+      isResearchReportDone, setResearchReportDone,
+      showCalibrationReportNow, setShowCalibrationReportNow,
+      showBackgroundReportNow, setShowBackgroundReportNow,
+      showResearchReportNow, setShowResearchReportNow
     }}>
       <FormContext.Provider value={{
-        isFormOnSubmit,
-        setFormSubmitStatus,
-        isCalibrationPending,
-        setCalibrationPending,
-        isBackgroundPending,
-        setBackgroundPending,
-        isActivityPending,
-        setActivityPending,
-        backgroundForm,
-        setBackgroundForm,
-        activityForm,
-        setActivityForm
+        isFormOnSubmit, setFormSubmitStatus,
+        isCalibrationPending, setCalibrationPending,
+        isBackgroundPending, setBackgroundPending,
+        isActivityPending, setActivityPending,
+        backgroundForm, setBackgroundForm,
+        activityForm, setActivityForm
       }}>
         <TimerContext.Provider value={{
-          isDesktopClickedForFirstTime,
-          setDesktopClickedForFirstTime,
-          isCounterActive,
-          setCounterActive,
-          targetValue,
-          setTargetValue,
-          isCounterDone,
-          setCounterDone
+          isDesktopClickedForFirstTime, setDesktopClickedForFirstTime,
+          isCounterActive, setCounterActive,
+          targetValue, setTargetValue,
+          isCounterDone, setCounterDone,
         }}>
           <div className="App">
             <Navbar
@@ -211,9 +207,9 @@ function App() {
                 onLeave={handleWindowLeave}
                 resetPages={resetPages}
                 isCounterDone = {isCounterDone}
-                onCalibrationReportDone = {handleCalibrationReportDone}
-                onBackgroundReportDone = {handleBackgroundReportDone}
-                onResearchReportDone = {handleResearchReportDone}
+                // onCalibrationReportDone = {handleCalibrationReportDone}
+                // onBackgroundReportDone = {handleBackgroundReportDone}
+                // onResearchReportDone = {handleResearchReportDone}
                 isCalibrationReportDone = {isCalibrationReportDone}
                 isBackgroundReportDone = {isBackgroundReportDone}
                 isResearchReportDone = {isResearchReportDone}

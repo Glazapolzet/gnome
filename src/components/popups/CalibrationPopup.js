@@ -2,13 +2,22 @@ import './CalibrationPopup.css';
 import Popup from "./Popup";
 import {useContext} from "react";
 import {FormContext} from "../../contexts/formContext";
+import {WindowContext} from "../../contexts/windowContext";
 
 export default function CalibrationPopup (props) {
 
-  const {isCalibrationPending, setCalibrationPending} = useContext(FormContext);
+  const {
+    isCalibrationPending,
+    isBackgroundPending,
+    isActivityPending,
+    setCalibrationPending
+  } = useContext(FormContext);
+
+  const {setCalibrationReportDone} = useContext(WindowContext);
 
   function handleClick() {
     props.onClick();
+    setCalibrationReportDone(false);
     setCalibrationPending(true);
   }
 
@@ -23,9 +32,12 @@ export default function CalibrationPopup (props) {
       <div className="CalibrationPopup__buttons-wrapper">
         <button
           type="button"
-          className="CalibrationPopup__button"
+          className={`CalibrationPopup__button ${
+            isCalibrationPending || isBackgroundPending || isActivityPending
+              ? "CalibrationPopup__button_disabled"
+              : ""}`}
           onClick={handleClick}
-          disabled={isCalibrationPending}
+          disabled={isCalibrationPending || isBackgroundPending || isActivityPending}
         >
           Продолжить
         </button>

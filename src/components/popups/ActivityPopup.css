@@ -86,3 +86,12 @@
 .ActivityPopup__button:hover {
   background-color: #e1e1e1;
 }
+
+.ActivityPopup__button_disabled {
+  opacity: .7;
+  cursor: default;
+}
+
+.ActivityPopup__button_disabled:hover {
+  background-color: #eeeeee;
+}

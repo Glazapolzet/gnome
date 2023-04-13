@@ -20,6 +20,7 @@ export default function TimeCounter (props) {
     isActivityPending,
     setActivityPending
   } = useContext(FormContext);
+
   const {
     isCounterActive,
     setCounterActive,
@@ -27,7 +28,16 @@ export default function TimeCounter (props) {
     setTargetValue,
     setCounterDone
   } = useContext(TimerContext);
-  const {setAboutPageActive} = useContext(WindowContext);
+
+  const {
+    setAboutPageActive,
+    setCalibrationReportDone,
+    setBackgroundReportDone,
+    setResearchReportDone,
+    setShowCalibrationReportNow,
+    setShowBackgroundReportNow,
+    setShowResearchReportNow
+  } = useContext(WindowContext);
 
   const isDisabled = props.isDisabled;
 
@@ -42,14 +52,22 @@ export default function TimeCounter (props) {
     setTargetValue(0);
     setCounterDone(true);
     setAboutPageActive(false);
+  }
 
+  function setReport () {
     if (isCalibrationPending) {
+      setCalibrationReportDone(true);
+      setShowCalibrationReportNow(true);
       setCalibrationPending(false);
     }
     if (isBackgroundPending) {
+      setBackgroundReportDone(true);
+      setShowBackgroundReportNow(true);
       setBackgroundPending(false);
     }
     if (isActivityPending) {
+      setResearchReportDone(true);
+      setShowResearchReportNow(true);
       setActivityPending(false);
     }
   }
@@ -76,6 +94,7 @@ export default function TimeCounter (props) {
       }
       if (tick === targetValue) {
         resetDeps();
+        setReport();
       }
     }
     const interval = setInterval(countByPopupHandler, props.interval);

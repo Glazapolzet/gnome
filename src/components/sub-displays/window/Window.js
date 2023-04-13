@@ -13,29 +13,37 @@ export default function Window (props) {
 
   const {isDesktopClickedForFirstTime, setDesktopClickedForFirstTime} = useContext(TimerContext);
   const {
-    isAboutPageActive,
-    setAboutPageActive,
-    isCalibrationReportPageActive,
-    setCalibrationReportPageActive,
-    isBackgroundReportPageActive,
-    setBackgroundReportPageActive,
-    isResearchReportPageActive,
-    setResearchReportPageActive
+    isAboutPageActive, setAboutPageActive,
+    isCalibrationReportPageActive, setCalibrationReportPageActive,
+    isBackgroundReportPageActive, setBackgroundReportPageActive,
+    isResearchReportPageActive, setResearchReportPageActive,
+    isCalibrationReportDone,
+    isBackgroundReportDone,
+    isResearchReportDone,
+    showCalibrationReportNow, setShowCalibrationReportNow,
+    showBackgroundReportNow, setShowBackgroundReportNow,
+    showResearchReportNow, setShowResearchReportNow
   } = useContext(WindowContext);
 
   const [isFirstTimePopupOpen, setFirstTimePopup] = useState(isDesktopClickedForFirstTime);
 
   useEffect(() => {
-    if (isCalibrationReportPageActive && props.isCounterDone) {
-      props.onCalibrationReportDone();
+    if (isCalibrationReportDone && showCalibrationReportNow) {
+      setShowCalibrationReportNow(false);
+      props.resetPages();
+      setCalibrationReportPageActive(true);
     }
-    if (isBackgroundReportPageActive && props.isCounterDone) {
-      props.onBackgroundReportDone();
+    if (isBackgroundReportDone && showBackgroundReportNow) {
+      setShowBackgroundReportNow(false);
+      props.resetPages();
+      setBackgroundReportPageActive(true);
     }
-    if (isResearchReportPageActive && props.isCounterDone) {
-      props.onResearchReportDone();
+    if (isResearchReportDone && showResearchReportNow) {
+      setShowResearchReportNow(false);
+      props.resetPages();
+      setResearchReportPageActive(true);
     }
-  }, [isBackgroundReportPageActive, isCalibrationReportPageActive, isResearchReportPageActive, props])
+  }, [isBackgroundReportDone, isCalibrationReportDone, isResearchReportDone])
 
   function closePopup () {
     setFirstTimePopup(false);
@@ -46,33 +54,33 @@ export default function Window (props) {
     if (isAboutPageActive && !props.isCounterDone) {
       return <About />;
     }
-    if (isCalibrationReportPageActive && props.isCounterDone) {
+    if (isCalibrationReportPageActive) {
       return <CalibrationReport/>;
     }
-    if (isBackgroundReportPageActive && props.isCounterDone) {
+    if (isBackgroundReportPageActive) {
       return <BackgroundReport/>;
     }
-    if (isResearchReportPageActive && props.isCounterDone) {
+    if (isResearchReportPageActive) {
       return <ResearchReport />;
     }
   }
 
   function handleCalibrationReportBtnClick () {
-    if (props.isCalibrationReportDone) {
+    if (isCalibrationReportDone) {
       props.resetPages();
       setCalibrationReportPageActive(true);
     }
   }
 
   function handleBackgroundReportBtnClick () {
-    if (props.isBackgroundReportDone) {
+    if (isBackgroundReportDone) {
       props.resetPages();
       setBackgroundReportPageActive(true);
     }
   }
 
   function handleResearchReportBtnClick () {
-    if (props.isResearchReportDone) {
+    if (isResearchReportDone) {
       props.resetPages();
       setResearchReportPageActive(true);
     }

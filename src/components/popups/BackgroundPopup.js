@@ -2,15 +2,20 @@ import './BackgroundPopup.css'
 import Popup from "./Popup";
 import {useContext, useEffect} from "react";
 import {FormContext} from "../../contexts/formContext";
+import {WindowContext} from "../../contexts/windowContext";
 
 export default function BackgroundPopup (props) {
 
   const {
     isBackgroundPending,
     setBackgroundPending,
+    isCalibrationPending,
+    isActivityPending,
     backgroundForm,
     setBackgroundForm
   } = useContext(FormContext);
+
+  const {setBackgroundReportDone} = useContext(WindowContext);
 
   useEffect(() => {
     if (props.isOpen) {
@@ -27,8 +32,8 @@ export default function BackgroundPopup (props) {
 
   function handleSubmit (evt) {
     evt.preventDefault();
+    setBackgroundReportDone(false);
     setBackgroundPending(true);
-    console.log(isBackgroundPending);
   }
 
   return (
@@ -83,9 +88,12 @@ export default function BackgroundPopup (props) {
         <button
           form="backgroundForm"
           type="submit"
-          className="BackgroundPopup__button"
+          className={`BackgroundPopup__button ${
+            isCalibrationPending || isBackgroundPending || isActivityPending
+              ? "BackgroundPopup__button_disabled"
+              : ""}`}
           onClick={props.onClick}
-          disabled={isBackgroundPending}
+          disabled={isCalibrationPending || isBackgroundPending || isActivityPending}
         >
           Продолжить
         </button>

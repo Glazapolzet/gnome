@@ -2,15 +2,20 @@ import './ActivityPopup.css'
 import Popup from "./Popup";
 import {useContext, useEffect} from "react";
 import {FormContext} from "../../contexts/formContext";
+import {WindowContext} from "../../contexts/windowContext";
 
 export default function ActivityPopup (props) {
 
   const {
     isActivityPending,
     setActivityPending,
+    isBackgroundPending,
+    isCalibrationPending,
     activityForm,
     setActivityForm
   } = useContext(FormContext);
+
+  const {setResearchReportDone} = useContext(WindowContext);
 
   useEffect(() => {
     if(props.isOpen) {
@@ -35,6 +40,7 @@ export default function ActivityPopup (props) {
 
   function handleSubmit (evt) {
     evt.preventDefault();
+    setResearchReportDone(false);
     setActivityPending(true);
   }
 
@@ -225,9 +231,12 @@ export default function ActivityPopup (props) {
         <button
           form="activityForm"
           type="submit"
-          className="ActivityPopup__button"
+          className={`ActivityPopup__button ${
+            isCalibrationPending || isBackgroundPending || isActivityPending 
+            ? "ActivityPopup__button_disabled" 
+            : ""}`}
           onClick={props.onClick}
-          disabled={isActivityPending}
+          disabled={isCalibrationPending || isBackgroundPending || isActivityPending}
         >
           Продолжить
         </button>

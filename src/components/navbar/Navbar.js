@@ -11,22 +11,12 @@ import book from "../../images/book_opened.svg";
 import {useContext, useState} from "react";
 import {FormContext} from "../../contexts/formContext";
 import {TimerContext} from "../../contexts/timerContext";
-import {WindowContext} from "../../contexts/windowContext";
 
 export default function Navbar(props) {
 
+  //activityForm.exposition, backgroundForm.exposition
   const {isFormOnSubmit, activityForm, backgroundForm} = useContext(FormContext);
   const {setCounterActive, setTargetValue} = useContext(TimerContext);
-  const {
-    isAboutPageActive,
-    setAboutPageActive,
-    isCalibrationReportPageActive,
-    setCalibrationReportPageActive,
-    isBackgroundReportPageActive,
-    setBackgroundReportPageActive,
-    isResearchReportPageActive,
-    setResearchReportPageActive
-  } = useContext(WindowContext);
 
   const [isCalibrationPopupOpen, setCalibrationPopupVisibility] = useState(false);
   const [isBackgroundPopupOpen, setBackgroundPopupVisibility] = useState(false);
@@ -58,10 +48,6 @@ export default function Navbar(props) {
     setWithMinutes(false);
     setCounterActive(true);
     setTargetValue(150);
-    if (!isAboutPageActive) {
-      props.resetPages();
-    }
-    setTimeout(() => setCalibrationReportPageActive(true), 9850);
     closeAllPopups();
   }
 
@@ -70,11 +56,6 @@ export default function Navbar(props) {
     setWithMinutes(true);
     setCounterActive(true);
     setTargetValue(30);
-    // setTargetValue(backgroundForm.exposition);
-    if (!isAboutPageActive) {
-      props.resetPages();
-    }
-    setTimeout(() => setBackgroundReportPageActive(true), 1750);
     closeAllPopups();
   }
 
@@ -83,11 +64,6 @@ export default function Navbar(props) {
     setWithMinutes(true);
     setCounterActive(true);
     setTargetValue(30);
-    // setTargetValue(activityForm.exposition);
-    if (!isAboutPageActive) {
-      props.resetPages();
-    }
-    setTimeout(() => setResearchReportPageActive(true), 1750);
     closeAllPopups();
   }
 
