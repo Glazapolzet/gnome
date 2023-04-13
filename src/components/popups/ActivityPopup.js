@@ -1,35 +1,42 @@
 import './ActivityPopup.css'
 import Popup from "./Popup";
-import {useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
+import {FormContext} from "../../contexts/formContext";
 
 export default function ActivityPopup (props) {
 
-  const [probeCode, setProbeCode] = useState("");
-  const [probeName, setProbeName] = useState("");
-  const [probeDate, setProbeDate] = useState("");
-  const [probeType, setProbeType] = useState("Прочие");
-  const [probeMethod, setProbeMethod] = useState("Натив");
-  const [probeWeight, setProbeWeight] = useState("1000");
-  const [geometry, setGeometry] = useState("Точка_14мм");
-  const [rnConsistency, setRnConsistency] = useState("137Cs_и_ЕРН");
-  const [exposition, setExposition] = useState("3600");
-  const [trials, setTrials] = useState("1");
+  const {
+    isActivityFormOnSubmit,
+    setActivityFormSubmitStatus,
+    activityForm,
+    setActivityForm
+  } = useContext(FormContext);
 
   useEffect(() => {
-    setDefaultValues();
+    if(props.isOpen) {
+      setDefaultValues();
+    }
   }, [props.isOpen])
 
   function setDefaultValues () {
-    setProbeCode("");
-    setProbeName("");
-    setProbeDate("");
-    setProbeType("Прочие");
-    setProbeMethod("Натив");
-    setProbeWeight("1000");
-    setGeometry("Точка_14мм");
-    setRnConsistency("137Cs_и_ЕРН");
-    setExposition("3600");
-    setTrials("1");
+    setActivityForm({
+
+    })
+    // setProbeCode("");
+    // setProbeName("");
+    // setProbeDate("");
+    // setProbeType("Прочие");
+    // setProbeMethod("Натив");
+    // setProbeWeight("1000");
+    // setGeometry("Точка_14мм");
+    // setRnConsistency("137Cs_и_ЕРН");
+    // setExposition("3600");
+    // setTrials("1");
+  }
+
+  function handleSubmit (evt) {
+    evt.preventDefault();
+    setActivityFormSubmitStatus(true);
   }
 
   return (
@@ -40,7 +47,7 @@ export default function ActivityPopup (props) {
       title={"Измерение активности гамма-излучающих радионуклидов на сцинтилляционном гамма-спектрометре."}
       description={`Установите счетный образец на детектор. Введите в таблицу информацию о счетном образце и методе пробоподготовки. Нажмите <Продолжить> для пуска измерения.`}
     >
-      <form name="activity-form" className="ActivityPopup__form">
+      <form id="activity-form" name="activity-form" className="ActivityPopup__form" onSubmit={handleSubmit}>
         <fieldset className="ActivityPopup__input-container">
           <div className="ActivityPopup__input-wrapper">
             <label htmlFor="probe-code" className="ActivityPopup__input-label">
@@ -210,7 +217,6 @@ export default function ActivityPopup (props) {
       </form>
       <div className="ActivityPopup__buttons-wrapper">
         <button
-          formTarget="activity-form"
           form="activity-form"
           type="reset"
           className="ActivityPopup__button"
@@ -219,7 +225,8 @@ export default function ActivityPopup (props) {
           Сброс
         </button>
         <button
-          type="button"
+          form="activity-form"
+          type="submit"
           className="ActivityPopup__button"
           onClick={props.onClick}
         >

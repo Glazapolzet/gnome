@@ -1,7 +1,7 @@
 import "./Form.css";
 import {useNavigate} from "react-router-dom";
 import {useContext, useState} from "react";
-import {FormContext} from "../../formContext/formContext";
+import {FormContext} from "../../contexts/formContext";
 
 export default function Form () {
 

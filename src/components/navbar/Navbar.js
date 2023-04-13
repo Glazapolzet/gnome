@@ -8,17 +8,32 @@ import BackgroundPopup from "../popups/BackgroundPopup";
 import ActivityPopup from "../popups/ActivityPopup";
 import beaker from "../../images/beaker-20-solid.svg";
 import book from "../../images/book_opened.svg";
-import info from "../../images/info.svg";
 import {useContext, useState} from "react";
-import {FormContext} from "../../formContext/formContext";
+import {FormContext} from "../../contexts/formContext";
+import {TimerContext} from "../../contexts/timerContext";
+import {WindowContext} from "../../contexts/windowContext";
 
 export default function Navbar(props) {
 
-  const {isFormOnSubmit} = useContext(FormContext);
+  const {isFormOnSubmit, exposition} = useContext(FormContext);
+  const {setCounterActive, setTargetValue} = useContext(TimerContext);
+  const {
+    isAboutPageActive,
+    setAboutPageActive,
+    isCalibrationReportPageActive,
+    setCalibrationReportPageActive,
+    isBackgroundReportPageActive,
+    setBackgroundReportPageActive,
+    isResearchReportPageActive,
+    setResearchReportPageActive
+  } = useContext(WindowContext);
 
   const [isCalibrationPopupOpen, setCalibrationPopupVisibility] = useState(false);
   const [isBackgroundPopupOpen, setBackgroundPopupVisibility] = useState(false);
   const [isActivityPopupOpen, setActivityPopupVisibility] = useState(false);
+
+  const [withMinutes, setWithMinutes] = useState(false);
+  const [timerInterval, setTimerInterval] = useState(0);
 
   function closeAllPopups() {
     setCalibrationPopupVisibility(false);
@@ -38,22 +53,58 @@ export default function Navbar(props) {
     setActivityPopupVisibility(true)
   }
 
+  function handleCalibrationPopupClick () {
+    setTimerInterval(60);
+    setWithMinutes(false);
+    setCounterActive(true);
+    setTargetValue(150);
+    if (!isAboutPageActive) {
+      props.resetPages();
+    }
+    setTimeout(() => setCalibrationReportPageActive(true), 1000);
+    closeAllPopups();
+  }
+
+  function handleBackgroundPopupClick () {
+    setTimerInterval(150);
+    setWithMinutes(true);
+    setCounterActive(true);
+    setTargetValue(30);
+    if (!isAboutPageActive) {
+      props.resetPages();
+    }
+    setTimeout(() => setBackgroundReportPageActive(true), 1000);
+    closeAllPopups();
+  }
+
+  function handleActivityPopupClick () {
+    setTimerInterval(150);
+    setWithMinutes(true);
+    setCounterActive(true);
+    setTargetValue(30);
+    if (!isAboutPageActive) {
+      props.resetPages();
+    }
+    setTimeout(() => setResearchReportPageActive(true), 1000);
+    closeAllPopups();
+  }
+
   return (
     <>
       <CalibrationPopup
         isOpen={isCalibrationPopupOpen}
         onClose={closeAllPopups}
-        onClick={closeAllPopups}
+        onClick={handleCalibrationPopupClick}
       />
       <BackgroundPopup
         isOpen={isBackgroundPopupOpen}
         onClose={closeAllPopups}
-        onClick={closeAllPopups}
+        onClick={handleBackgroundPopupClick}
       />
       <ActivityPopup
         isOpen={isActivityPopupOpen}
         onClose={closeAllPopups}
-        onClick={closeAllPopups}
+        onClick={handleActivityPopupClick}
       />
 
       <div className="Navbar">
@@ -67,7 +118,10 @@ export default function Navbar(props) {
           </li>
           <li className="Navbar__link-wrapper">
             <TimeCounter
+              //проверяет, доступна ли иконка часиков для нажатия
               isDisabled={!props.isDesktopClicked}
+              inMinutes={withMinutes}
+              interval={timerInterval}
             />
           </li>
           <li className="Navbar__link-wrapper">
@@ -99,14 +153,21 @@ export default function Navbar(props) {
               ]}
             />
           </li>
+          <li className="Navbar__link-wrapper">
+            <Navlink
+              icon={book}
+              leadingTo={"/rad-doc"}
+            />
+          </li>
         </ul>
         <Outlet />
 
         <ul className="Navbar__links Navbar__links-right">
           <li className="Navbar__link-wrapper">
             <Navlink
-              icon={book}
-              leadingTo={"/rad-doc"}
+              title={"Завершить"}
+              leadingTo={"/result"}
+              isDisabled={!isFormOnSubmit}
             />
           </li>
         </ul>

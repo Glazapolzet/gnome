@@ -1,15 +1,71 @@
 import './TimeCounter.css'
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Dropdown from "./Dropdown";
 import clockIco from "../../images/clock.svg";
+import {TimerContext} from "../../contexts/timerContext";
+import {WindowContext} from "../../contexts/windowContext";
 
 export default function TimeCounter (props) {
 
+  const [tick, setTick] = useState(0);
   const [value, setValue] = useState(0);
   const [isDropdownVisible, setDropdownVisibility] = useState(false);
 
+  const {isCounterActive, setCounterActive, targetValue, setTargetValue, setCounterDone} = useContext(TimerContext);
+  const {setAboutPageActive} = useContext(WindowContext);
+
+  const isDisabled = props.isDisabled;
+
   function toggleDropdown() {
     setDropdownVisibility(!isDropdownVisible);
+  }
+
+  function resetDeps () {
+    setCounterActive(false);
+    setValue(targetValue);
+    setTick(0);
+    setTargetValue(0);
+    setCounterDone(true);
+    setAboutPageActive(false);
+  }
+
+  useEffect(() => {
+    if (isDisabled) {
+      setValue(0);
+    }
+  }, [isDisabled])
+
+  useEffect(() => {
+    if (!isCounterActive && tick !== 0) {
+      setValue(tick);
+    }
+
+    function countByPopupHandler () {
+      if (isDisabled || !isCounterActive || !targetValue) {
+        return
+      }
+
+      setCounterDone(false);
+      if (tick < targetValue) {
+        setTick((s) => s+1);
+      }
+      if (tick === targetValue) {
+        resetDeps();
+      }
+    }
+    const interval = setInterval(countByPopupHandler, props.interval);
+
+    return () => clearInterval(interval);
+  }, [targetValue, isCounterActive, isDisabled, tick, setCounterDone, resetDeps, props.interval])
+
+  function stopCounter () {
+    setCounterActive(false);
+  }
+
+  function startCounter () {
+    if (!isCounterActive && tick !== targetValue) {
+      setCounterActive(true);
+    }
   }
 
   return (
@@ -26,21 +82,25 @@ export default function TimeCounter (props) {
             backgroundImage: `url(${clockIco})`
           }}
         />
-        <p className="TimeCounter__time">{value}</p>
+        {props.inMinutes ? (
+            <p className="TimeCounter__time">{isCounterActive ? tick + ' мин' : value + ' мин'}</p>
+          ) : (
+            <p className="TimeCounter__time">{isCounterActive ? tick + ' с' : value + ' с'}</p>
+          )}
       </button>
       <Dropdown
         toggleDropdown={toggleDropdown}
         isDropdownVisible={isDropdownVisible}
         content={[
         {
-          id: 1,
+          id: "start-counter",
           title: 'Пуск',
-          handler: () => console.log('working!1')
+          handler: startCounter
         },
         {
-          id: 2,
+          id: "stop-counter",
           title: 'Стоп',
-          handler: () => console.log('working!2')
+          handler: stopCounter
         }
         ]}
       />
