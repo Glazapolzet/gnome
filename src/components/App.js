@@ -21,6 +21,7 @@ import multiradDoc from "../docs/multirad.pdf";
 import Case from "./sub-displays/table/Case";
 import Table from "./sub-displays/table/Table";
 import Window from "./sub-displays/window/Window";
+import Result from "./result/Result";
 
 function App() {
 
@@ -80,18 +81,6 @@ function App() {
   const [showCalibrationReportNow, setShowCalibrationReportNow] = useState(false);
   const [showBackgroundReportNow, setShowBackgroundReportNow] = useState(false);
   const [showResearchReportNow, setShowResearchReportNow] = useState(false);
-
-  // function handleCalibrationReportDone () {
-  //   setCalibrationReportDone(true);
-  // }
-  //
-  // function handleBackgroundReportDone () {
-  //   setBackgroundReportDone(true);
-  // }
-  //
-  // function handleResearchReportDone () {
-  //   setResearchReportDone(true);
-  // }
 
   function handleDesktopClick () {
     setDesktopClicked(true);
@@ -207,14 +196,12 @@ function App() {
                 onLeave={handleWindowLeave}
                 resetPages={resetPages}
                 isCounterDone = {isCounterDone}
-                // onCalibrationReportDone = {handleCalibrationReportDone}
-                // onBackgroundReportDone = {handleBackgroundReportDone}
-                // onResearchReportDone = {handleResearchReportDone}
                 isCalibrationReportDone = {isCalibrationReportDone}
                 isBackgroundReportDone = {isBackgroundReportDone}
                 isResearchReportDone = {isResearchReportDone}
               />} />
               <Route path="/rad-doc" element={<Doc link={multiradDoc} />} />
+              <Route path="/result" element={<Result />} />
             </Routes>
           </div>
         </TimerContext.Provider>
