@@ -1,35 +1,47 @@
 import './ActivityPopup.css'
 import Popup from "./Popup";
-import {useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
+import {FormContext} from "../../contexts/formContext";
+import {WindowContext} from "../../contexts/windowContext";
 
 export default function ActivityPopup (props) {
 
-  const [probeCode, setProbeCode] = useState("");
-  const [probeName, setProbeName] = useState("");
-  const [probeDate, setProbeDate] = useState("");
-  const [probeType, setProbeType] = useState("Прочие");
-  const [probeMethod, setProbeMethod] = useState("Натив");
-  const [probeWeight, setProbeWeight] = useState("1000");
-  const [geometry, setGeometry] = useState("Точка_14мм");
-  const [rnConsistency, setRnConsistency] = useState("137Cs_и_ЕРН");
-  const [exposition, setExposition] = useState("3600");
-  const [trials, setTrials] = useState("1");
+  const {
+    isActivityPending,
+    setActivityPending,
+    isBackgroundPending,
+    isCalibrationPending,
+    activityForm,
+    setActivityForm
+  } = useContext(FormContext);
+
+  const {setResearchReportDone} = useContext(WindowContext);
 
   useEffect(() => {
-    setDefaultValues();
+    if(props.isOpen) {
+      setDefaultValues();
+    }
   }, [props.isOpen])
 
   function setDefaultValues () {
-    setProbeCode("");
-    setProbeName("");
-    setProbeDate("");
-    setProbeType("Прочие");
-    setProbeMethod("Натив");
-    setProbeWeight("1000");
-    setGeometry("Точка_14мм");
-    setRnConsistency("137Cs_и_ЕРН");
-    setExposition("3600");
-    setTrials("1");
+    setActivityForm({
+      probeCode: "",
+      probeName: "",
+      probeDate: "",
+      probeType: "Прочие",
+      probeMethod: "Натив",
+      probeWeight: "1000",
+      geometry: "Точка_14мм",
+      rnConsistency: "137Cs_и_ЕРН",
+      exposition: 3600,
+      trials: "1"
+    })
+  }
+
+  function handleSubmit (evt) {
+    evt.preventDefault();
+    setResearchReportDone(false);
+    setActivityPending(true);
   }
 
   return (
@@ -40,19 +52,19 @@ export default function ActivityPopup (props) {
       title={"Измерение активности гамма-излучающих радионуклидов на сцинтилляционном гамма-спектрометре."}
       description={`Установите счетный образец на детектор. Введите в таблицу информацию о счетном образце и методе пробоподготовки. Нажмите <Продолжить> для пуска измерения.`}
     >
-      <form name="activity-form" className="ActivityPopup__form">
+      <form id="activityForm" name="activity-form" className="ActivityPopup__form" onSubmit={handleSubmit}>
         <fieldset className="ActivityPopup__input-container">
           <div className="ActivityPopup__input-wrapper">
             <label htmlFor="probe-code" className="ActivityPopup__input-label">
               Код пробы
             </label>
             <input
-              name="probe-code"
+              name="probeCode"
               type="number"
               className="ActivityPopup__input"
               min={1}
-              value={probeCode}
-              onChange={(evt) => setProbeCode(evt.target.value)}
+              value={activityForm.probeCode}
+              onChange={(evt) => {setActivityForm({...activityForm, probeCode: evt.target.value})}}
             />
             <label htmlFor="probe-code" className="ActivityPopup__input-label ActivityPopup__input-label_back"></label>
           </div>
@@ -62,12 +74,12 @@ export default function ActivityPopup (props) {
               Название
             </label>
             <input
-              name="probe-name"
+              name="probeName"
               type="text"
               className="ActivityPopup__input"
               minLength={1}
-              value={probeName}
-              onChange={(evt) => setProbeName(evt.target.value)}
+              value={activityForm.probeName}
+              onChange={(evt) => setActivityForm({...activityForm, probeName: evt.target.value})}
             />
             <label htmlFor="probe-name" className="ActivityPopup__input-label ActivityPopup__input-label_back"></label>
           </div>
@@ -77,11 +89,11 @@ export default function ActivityPopup (props) {
               Дата отбора
             </label>
             <input
-              name="probe-date"
+              name="probeDate"
               type="datetime-local"
               className="ActivityPopup__input"
-              value={probeDate}
-              onChange={(evt) => setProbeDate(evt.target.value)}
+              value={activityForm.probeDate}
+              onChange={(evt) => setActivityForm({...activityForm, probeDate: evt.target.value})}
             />
             <label htmlFor="probe-date" className="ActivityPopup__input-label ActivityPopup__input-label_back"></label>
           </div>
@@ -91,10 +103,10 @@ export default function ActivityPopup (props) {
               Тип пробы
             </label>
             <select
-              name="probe-type"
+              name="probeType"
               className="ActivityPopup__input ActivityPopup__input_type_selection"
-              value={probeType}
-              onChange={(evt) => setProbeType(evt.target.value)}
+              value={activityForm.probeType}
+              onChange={(evt) => setActivityForm({...activityForm, probeType: evt.target.value})}
             >
               <option value={"Прочие"}>Прочие</option>
               <option value={"Пищ.пр"}>Пищ.пр</option>
@@ -110,13 +122,12 @@ export default function ActivityPopup (props) {
               Метод пробоподготовки
             </label>
             <select
-              name="probe-method"
+              name="probeMethod"
               className="ActivityPopup__input ActivityPopup__input_type_selection"
-              value={probeMethod}
-              onChange={(evt) => setProbeMethod(evt.target.value)}
+              value={activityForm.probeMethod}
+              onChange={(evt) => setActivityForm({...activityForm, probeMethod: evt.target.value})}
             >
               <option value={"Натив"}>Натив</option>
-              <option value={"Опция2"}>Опция2</option>
             </select>
             <label htmlFor="probe-method" className="ActivityPopup__input-label ActivityPopup__input-label_back"></label>
           </div>
@@ -126,10 +137,10 @@ export default function ActivityPopup (props) {
               Масса пробы
             </label>
             <select
-              name="probe-weight"
+              name="probeWeight"
               className="ActivityPopup__input ActivityPopup__input_type_selection"
-              value={probeWeight}
-              onChange={(evt) => setProbeWeight(evt.target.value)}
+              value={activityForm.probeWeight}
+              onChange={(evt) => setActivityForm({...activityForm, probeWeight: evt.target.value})}
             >
               <option value={"1000"}>1000</option>
               <option value={"500"}>500</option>
@@ -146,8 +157,8 @@ export default function ActivityPopup (props) {
             <select
               name="geometry"
               className="ActivityPopup__input ActivityPopup__input_type_selection"
-              value={geometry}
-              onChange={(evt) => setGeometry(evt.target.value)}
+              value={activityForm.geometry}
+              onChange={(evt) => setActivityForm({...activityForm, geometry: evt.target.value})}
             >
               <option value={"Точка_14мм"}>Точка_14мм</option>
               <option value={"Маринелли"}>Маринелли</option>
@@ -162,12 +173,12 @@ export default function ActivityPopup (props) {
               Р/н состав
             </label>
             <input
-              name="rn-consistency"
+              name="rnConsistency"
               type="text"
               className="ActivityPopup__input"
               minLength={1}
-              value={rnConsistency}
-              onChange={(evt) => setRnConsistency(evt.target.value)}
+              value={activityForm.rnConsistency}
+              onChange={(evt) => setActivityForm({...activityForm, rnConsistency: evt.target.value})}
             />
             <label htmlFor="rn-consistency" className="ActivityPopup__input-label ActivityPopup__input-label_back"></label>
           </div>
@@ -182,8 +193,8 @@ export default function ActivityPopup (props) {
               className="ActivityPopup__input"
               min={1800}
               step={1800}
-              value={exposition}
-              onChange={(evt) => setExposition(evt.target.value)}
+              value={activityForm.exposition}
+              onChange={(evt) => setActivityForm({...activityForm, exposition: evt.target.value})}
             />
             <label htmlFor="exposition" className="ActivityPopup__input-label ActivityPopup__input-label_back">
               с
@@ -199,8 +210,8 @@ export default function ActivityPopup (props) {
               type="number"
               className="ActivityPopup__input"
               min={1}
-              value={trials}
-              onChange={(evt) => setTrials(evt.target.value)}
+              value={activityForm.trials}
+              onChange={(evt) => setActivityForm({...activityForm, trials: evt.target.value})}
             />
             <label htmlFor="trials" className="ActivityPopup__input-label ActivityPopup__input-label_back">
               раз
@@ -210,8 +221,7 @@ export default function ActivityPopup (props) {
       </form>
       <div className="ActivityPopup__buttons-wrapper">
         <button
-          formTarget="activity-form"
-          form="activity-form"
+          form="activityForm"
           type="reset"
           className="ActivityPopup__button"
           onClick={setDefaultValues}
@@ -219,9 +229,14 @@ export default function ActivityPopup (props) {
           Сброс
         </button>
         <button
-          type="button"
-          className="ActivityPopup__button"
+          form="activityForm"
+          type="submit"
+          className={`ActivityPopup__button ${
+            isCalibrationPending || isBackgroundPending || isActivityPending 
+            ? "ActivityPopup__button_disabled" 
+            : ""}`}
           onClick={props.onClick}
+          disabled={isCalibrationPending || isBackgroundPending || isActivityPending}
         >
           Продолжить
         </button>

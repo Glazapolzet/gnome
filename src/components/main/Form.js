@@ -1,11 +1,11 @@
 import "./Form.css";
 import {useNavigate} from "react-router-dom";
 import {useContext, useState} from "react";
-import {FormContext} from "../../formContext/formContext";
+import {FormContext} from "../../contexts/formContext";
 
 export default function Form () {
 
-  const { setFormSubmitStatus } = useContext(FormContext);
+  const { setFormSubmitStatus, setNavbarBtnsDisabled } = useContext(FormContext);
 
   const [userInput, setUserInput] = useState("");
   const [groupInput, setGroupInput] = useState("");
@@ -32,6 +32,7 @@ export default function Form () {
 
     navigate('/quiz');
     setFormSubmitStatus(true);
+    setNavbarBtnsDisabled(false);
   }
 
   return (

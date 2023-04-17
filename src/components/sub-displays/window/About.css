@@ -1,0 +1,11 @@
+.About {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.About__title {
+}
+
+.About__description {
+}

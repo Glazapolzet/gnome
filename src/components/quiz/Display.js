@@ -5,21 +5,23 @@ import {Outlet, useNavigate} from "react-router-dom";
 
 export default function Display(props) {
 
-  const [currentPicIndex, setCurrentPicIndex] = useState(props.defaultPicIndex);
-  const [currentPic, setCurrentPic] = useState(props.pics[props.defaultPicIndex]);
+  const i = props.defaultPicIndex;
+  const defaultPic = props.pics[i];
+
+  const [currentPicIndex, setCurrentPicIndex] = useState(i);
+  const [currentPic, setCurrentPic] = useState(defaultPic);
   const [isPicOnChange, setPicOnChange] = useState(true);
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   console.log("set");
-  //   setCurrentPicIndex(props.defaultPicIndex);
-  //   setCurrentPic(props.pics[props.defaultPicIndex]);
-  // }, [props.pics, props.defaultPicIndex])
+  useEffect(() => {
+    setPicOnChange(true);
+    setCurrentPicIndex(i);
+    setCurrentPic(defaultPic);
+  }, [defaultPic, i])
 
   useEffect(() => {
     if (isPicOnChange) {
-      console.log(isPicOnChange);
       navigate(currentPic);
       setPicOnChange(false);
     }
@@ -46,7 +48,8 @@ export default function Display(props) {
   return (
     <section className="Display">
       <MoveBackArrow
-        leadingTo={'/quiz'}
+        leadingTo={props.backArrowTo}
+        isDisabled={false}
       />
       <div className="Display__image-container">
         <div className="Display__bar Display__left-bar">

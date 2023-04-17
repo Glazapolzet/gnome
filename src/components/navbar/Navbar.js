@@ -1,5 +1,5 @@
 import './Navbar.css';
-import { Outlet } from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import DropdownNavLink from "./DropdownNavLink";
 import Navlink from "./Navlink";
 import TimeCounter from "./TimeCounter";
@@ -7,18 +7,25 @@ import CalibrationPopup from "../popups/CalibrationPopup";
 import BackgroundPopup from "../popups/BackgroundPopup";
 import ActivityPopup from "../popups/ActivityPopup";
 import beaker from "../../images/beaker-20-solid.svg";
-import book from "../../images/book_opened.svg";
 import info from "../../images/info.svg";
 import {useContext, useState} from "react";
-import {FormContext} from "../../formContext/formContext";
+import {FormContext} from "../../contexts/formContext";
+import {TimerContext} from "../../contexts/timerContext";
 
 export default function Navbar(props) {
 
-  const {isFormOnSubmit} = useContext(FormContext);
+  const navigate = useNavigate();
+
+  //activityForm.exposition, backgroundForm.exposition
+  const {isFormOnSubmit, isNavbarBtnsDisabled, setNavbarBtnsDisabled, activityForm, backgroundForm} = useContext(FormContext);
+  const {setCounterActive, setTargetValue} = useContext(TimerContext);
 
   const [isCalibrationPopupOpen, setCalibrationPopupVisibility] = useState(false);
   const [isBackgroundPopupOpen, setBackgroundPopupVisibility] = useState(false);
   const [isActivityPopupOpen, setActivityPopupVisibility] = useState(false);
+
+  const [withMinutes, setWithMinutes] = useState(false);
+  const [timerInterval, setTimerInterval] = useState(0);
 
   function closeAllPopups() {
     setCalibrationPopupVisibility(false);
@@ -38,22 +45,52 @@ export default function Navbar(props) {
     setActivityPopupVisibility(true)
   }
 
+  function handleCalibrationPopupClick () {
+    setTimerInterval(60);
+    setWithMinutes(false);
+    setCounterActive(true);
+    setTargetValue(150);
+    closeAllPopups();
+  }
+
+  function handleBackgroundPopupClick () {
+    setTimerInterval(150);
+    setWithMinutes(true);
+    setCounterActive(true);
+    setTargetValue(30);
+    closeAllPopups();
+  }
+
+  function handleActivityPopupClick () {
+    setTimerInterval(150);
+    setWithMinutes(true);
+    setCounterActive(true);
+    setTargetValue(30);
+    closeAllPopups();
+  }
+
+  function handleResultClick (evt) {
+    evt.preventDefault();
+    setNavbarBtnsDisabled(true);
+    navigate("/result");
+  }
+
   return (
     <>
       <CalibrationPopup
         isOpen={isCalibrationPopupOpen}
         onClose={closeAllPopups}
-        onClick={closeAllPopups}
+        onClick={handleCalibrationPopupClick}
       />
       <BackgroundPopup
         isOpen={isBackgroundPopupOpen}
         onClose={closeAllPopups}
-        onClick={closeAllPopups}
+        onClick={handleBackgroundPopupClick}
       />
       <ActivityPopup
         isOpen={isActivityPopupOpen}
         onClose={closeAllPopups}
-        onClick={closeAllPopups}
+        onClick={handleActivityPopupClick}
       />
 
       <div className="Navbar">
@@ -67,13 +104,16 @@ export default function Navbar(props) {
           </li>
           <li className="Navbar__link-wrapper">
             <TimeCounter
-              isDisabled={!props.isDesktopClicked}
+              //проверяет, доступна ли иконка часиков для нажатия
+              isDisabled={!props.isDesktopClicked || isNavbarBtnsDisabled}
+              inMinutes={withMinutes}
+              interval={timerInterval}
             />
           </li>
           <li className="Navbar__link-wrapper">
             <DropdownNavLink
               icon={beaker}
-              isDisabled={!props.isDesktopClicked}
+              isDisabled={!props.isDesktopClicked || isNavbarBtnsDisabled}
               dropdown={[
                 //TODO: возможно понадобится, но вроде как уже есть измерение активности
                 // {
@@ -99,14 +139,22 @@ export default function Navbar(props) {
               ]}
             />
           </li>
+          <li className="Navbar__link-wrapper">
+            <Navlink
+              icon={info}
+              leadingTo={"/rad-doc"}
+            />
+          </li>
         </ul>
         <Outlet />
 
         <ul className="Navbar__links Navbar__links-right">
           <li className="Navbar__link-wrapper">
             <Navlink
-              icon={book}
-              leadingTo={"/rad-doc"}
+              title={"Завершить"}
+              leadingTo={"/result"}
+              isDisabled={!isFormOnSubmit}
+              onClick={handleResultClick}
             />
           </li>
         </ul>

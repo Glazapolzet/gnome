@@ -1,15 +1,130 @@
 import './TimeCounter.css'
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Dropdown from "./Dropdown";
 import clockIco from "../../images/clock.svg";
+import {TimerContext} from "../../contexts/timerContext";
+import {WindowContext} from "../../contexts/windowContext";
+import {FormContext} from "../../contexts/formContext";
+import {SpectreContext} from "../../contexts/spectreContext";
 
 export default function TimeCounter (props) {
 
+  const [tick, setTick] = useState(0);
   const [value, setValue] = useState(0);
   const [isDropdownVisible, setDropdownVisibility] = useState(false);
 
+  const {
+    isCalibrationPending,
+    setCalibrationPending,
+    isBackgroundPending,
+    setBackgroundPending,
+    isActivityPending,
+    setActivityPending
+  } = useContext(FormContext);
+
+  const {
+    isCounterActive,
+    setCounterActive,
+    targetValue,
+    setTargetValue,
+    setCounterDone
+  } = useContext(TimerContext);
+
+  const {
+    setAboutPageActive,
+    setCalibrationReportDone,
+    setBackgroundReportDone,
+    setResearchReportDone,
+    setShowCalibrationReportNow,
+    setShowBackgroundReportNow,
+    setShowResearchReportNow,
+    resetPages
+  } = useContext(WindowContext);
+
+  const {setElements, getRandomVal} = useContext(SpectreContext);
+
+  const isDisabled = props.isDisabled;
+
+  function regenerateElements () {
+    setElements({
+      cs: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
+      rs: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
+      th: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
+      k: `${getRandomVal(0, 50, 0)} +- ${getRandomVal(70, 130, 0)} Бк/кг`
+    })
+  }
+
   function toggleDropdown() {
     setDropdownVisibility(!isDropdownVisible);
+  }
+
+  function resetDeps () {
+    setCounterActive(false);
+    setValue(targetValue);
+    setTick(0);
+    setTargetValue(0);
+    setCounterDone(true);
+    setAboutPageActive(false);
+  }
+
+  function setReport () {
+    if (isCalibrationPending) {
+      setCalibrationReportDone(true);
+      setShowCalibrationReportNow(true);
+      setCalibrationPending(false);
+    }
+    if (isBackgroundPending) {
+      setBackgroundReportDone(true);
+      setShowBackgroundReportNow(true);
+      setBackgroundPending(false);
+    }
+    if (isActivityPending) {
+      regenerateElements();
+      setResearchReportDone(true);
+      setShowResearchReportNow(true);
+      setActivityPending(false);
+    }
+  }
+
+  useEffect(() => {
+    if (isDisabled) {
+      setValue(0);
+    }
+  }, [isDisabled])
+
+  useEffect(() => {
+    if (!isCounterActive && tick !== 0) {
+      setValue(tick);
+    }
+
+    function countByPopupHandler () {
+      if (isDisabled || !isCounterActive || !targetValue) {
+        return
+      }
+
+      setCounterDone(false);
+      resetPages();
+      if (tick < targetValue) {
+        setTick((s) => s+1);
+      }
+      if (tick === targetValue) {
+        resetDeps();
+        setReport();
+      }
+    }
+    const interval = setInterval(countByPopupHandler, props.interval);
+
+    return () => clearInterval(interval);
+  }, [targetValue, isCounterActive, isDisabled, tick, setCounterDone, resetDeps, props.interval])
+
+  function stopCounter () {
+    setCounterActive(false);
+  }
+
+  function startCounter () {
+    if (!isCounterActive && tick !== targetValue) {
+      setCounterActive(true);
+    }
   }
 
   return (
@@ -26,21 +141,25 @@ export default function TimeCounter (props) {
             backgroundImage: `url(${clockIco})`
           }}
         />
-        <p className="TimeCounter__time">{value}</p>
+        {props.inMinutes ? (
+            <p className="TimeCounter__time">{isCounterActive ? tick + ' мин' : value + ' мин'}</p>
+          ) : (
+            <p className="TimeCounter__time">{isCounterActive ? tick + ' с' : value + ' с'}</p>
+          )}
       </button>
       <Dropdown
         toggleDropdown={toggleDropdown}
         isDropdownVisible={isDropdownVisible}
         content={[
         {
-          id: 1,
+          id: "start-counter",
           title: 'Пуск',
-          handler: () => console.log('working!1')
+          handler: startCounter
         },
         {
-          id: 2,
+          id: "stop-counter",
           title: 'Стоп',
-          handler: () => console.log('working!2')
+          handler: stopCounter
         }
         ]}
       />

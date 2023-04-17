@@ -6,7 +6,7 @@ import ActionDot from "../action-dot/ActionDot";
 export default function StartArea () {
 
   return (
-    <section className="QuizDisplays">
+    <section className="StartArea">
       <>
         <ActionDot
           y={530}

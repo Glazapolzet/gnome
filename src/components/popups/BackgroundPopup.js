@@ -1,19 +1,39 @@
 import './BackgroundPopup.css'
 import Popup from "./Popup";
-import {useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
+import {FormContext} from "../../contexts/formContext";
+import {WindowContext} from "../../contexts/windowContext";
 
 export default function BackgroundPopup (props) {
 
-  const [avg, setAvg] = useState("0.4");
-  const [exposition, setExposition] = useState("1800");
+  const {
+    isBackgroundPending,
+    setBackgroundPending,
+    isCalibrationPending,
+    isActivityPending,
+    backgroundForm,
+    setBackgroundForm
+  } = useContext(FormContext);
+
+  const {setBackgroundReportDone} = useContext(WindowContext);
 
   useEffect(() => {
-    setDefaultValues();
+    if (props.isOpen) {
+      setDefaultValues();
+    }
   }, [props.isOpen])
 
   function setDefaultValues () {
-    setAvg("0.4");
-    setExposition("1800");
+    setBackgroundForm({
+      averaging: "0.4",
+      exposition: 1800
+    })
+  }
+
+  function handleSubmit (evt) {
+    evt.preventDefault();
+    setBackgroundReportDone(false);
+    setBackgroundPending(true);
   }
 
   return (
@@ -24,17 +44,17 @@ export default function BackgroundPopup (props) {
       title={"Измерение фонового спектра сцинтилляционного гамма-спектрометра."}
       description={`Уберите контрольный источник с детектора и нажмите <Продолжить> для пуска измерений.`}
     >
-      <form className="BackgroundPopup__form">
+      <form id="backgroundForm" className="BackgroundPopup__form" onSubmit={handleSubmit}>
         <fieldset className="BackgroundPopup__input-container">
           <label htmlFor="avg" className="BackgroundPopup__input-label">
             Усреднять спектры с весом
           </label>
           <input
-            name="avg"
+            name="averaging"
             type="number"
             className="BackgroundPopup__input"
-            value={avg}
-            onChange={(evt) => setAvg(evt.target.value)}
+            value={backgroundForm.averaging}
+            onChange={(evt) => setBackgroundForm({...backgroundForm, averaging: evt.target.value})}
             min={0}
             max={1}
             step={0.1}
@@ -46,8 +66,8 @@ export default function BackgroundPopup (props) {
             name="exposition"
             type="number"
             className="BackgroundPopup__input"
-            value={exposition}
-            onChange={(evt) => setExposition(evt.target.value)}
+            value={backgroundForm.exposition}
+            onChange={(evt) => setBackgroundForm({...backgroundForm, exposition: evt.target.value})}
             min={1800}
             step={1800}
           />
@@ -58,18 +78,22 @@ export default function BackgroundPopup (props) {
       </form>
       <div className="BackgroundPopup__buttons-wrapper">
         <button
-          formTarget="activity-form"
-          form="activity-form"
+          form="backgroundForm"
           type="reset"
-          className="ActivityPopup__button"
+          className="BackgroundPopup__button"
           onClick={setDefaultValues}
         >
           Сброс
         </button>
         <button
-          type="button"
-          className="BackgroundPopup__button"
+          form="backgroundForm"
+          type="submit"
+          className={`BackgroundPopup__button ${
+            isCalibrationPending || isBackgroundPending || isActivityPending
+              ? "BackgroundPopup__button_disabled"
+              : ""}`}
           onClick={props.onClick}
+          disabled={isCalibrationPending || isBackgroundPending || isActivityPending}
         >
           Продолжить
         </button>

@@ -7,6 +7,9 @@ export default function MoveBackArrow (props) {
   const navigate = useNavigate();
 
   function handleClick () {
+    if (props.onClick) {
+      props.onClick();
+    }
     navigate(props.leadingTo);
   }
 
@@ -20,6 +23,7 @@ export default function MoveBackArrow (props) {
         backgroundSize: "contain"
       }}
       onClick={handleClick}
+      disabled={props.isDisabled}
     />
   )
 }
