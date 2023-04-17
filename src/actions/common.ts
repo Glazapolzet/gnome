@@ -1,6 +1,7 @@
 export type Action = {
     name: string
     penaltyForCanceling: number
+    penalty?: number
 }
 
 export interface StageActions {
