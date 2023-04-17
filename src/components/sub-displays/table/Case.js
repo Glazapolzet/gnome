@@ -10,18 +10,18 @@ import {CaseContext} from "../../../contexts/caseContext";
 export default function Case (props) {
 
   const {isContainerChosen, setContainerChosen, isContainerIn, setContainerIn} = useContext(ContainerContext);
+  const {isCaseOpened, setCaseOpened} = useContext(CaseContext);
 
-  const [isCaseOpened, setCaseOpened] = useState(false);
   const [isCaseEmpty, setCaseEmpty] = useState(false);
   const [isCaseWithContainer, setCaseWithContainer] = useState(false);
 
   useEffect(() => {
-    console.log(isCaseEmpty);
-    if (isContainerChosen && isContainerIn) {
-      // setContainerIn(true);
-      // if (isCaseEmpty) {
-      //   setCaseWithContainer(true);
-      // }
+    if (isCaseOpened) {
+      if (isContainerIn) {
+        setCaseWithContainer(true);
+      } else {
+        setCaseEmpty(true);
+      }
     }
   }, [])
 
@@ -37,14 +37,6 @@ export default function Case (props) {
 
   function closeCase () {
     setCaseOpened(false);
-
-    //
-    setCaseEmpty(false);
-  }
-
-  function closeCaseWithContainer () {
-    setCaseEmpty(false);
-    setCaseWithContainer(false);
   }
 
   function addContainer () {
@@ -83,75 +75,50 @@ export default function Case (props) {
                 {
                   id: 'close-case-with-container',
                   title: 'Закрыть крышку',
-                  handler: closeCaseWithContainer
+                  handler: closeCase
                 },
               ]}
             />
           </>
         )
       }
+      if (isCaseEmpty) {
+        return (
+          <>
+            <img
+              className="Case"
+              src={caseOpened}
+              alt={caseOpened}
+              loading={"lazy"}
+            />
+            <ActionDot
+              y={props.dotY}
+              x={props.dotX}
+              dropdown={isContainerChosen ? [
+                {
+                  id: 'close-case',
+                  title: 'Закрыть',
+                  handler: closeCase
+                },
+                {
+                  id: 'set-container',
+                  title: 'Установить источник',
+                  handler: addContainer
+                },
+              ] : [
+                {
+                  id: 'close-case',
+                  title: 'Закрыть',
+                  handler: closeCase
+                }
+              ]}
+            />
+          </>
+        )
+      }
     }
-  }
-
-  return (
-    <>
-      {isCaseWithContainer ? (
-        <>
-          <img
-            className="Case"
-            src={caseWithContainer}
-            alt={caseWithContainer}
-            loading={"lazy"}
-          />
-          <ActionDot
-            y={props.dotY}
-            x={props.dotX}
-            dropdown={[
-              {
-                id: 'move-back',
-                title: 'Извлечь источник',
-                handler: removeContainer
-              },
-              {
-                id: 'close-case-with-container',
-                title: 'Закрыть крышку',
-                handler: closeCaseWithContainer
-              },
-            ]}
-          />
-        </>
-        ) : isCaseEmpty ? (
-        <>
-          <img
-            className="Case"
-            src={caseOpened}
-            alt={caseOpened}
-            loading={"lazy"}
-          />
-          <ActionDot
-            y={props.dotY}
-            x={props.dotX}
-            dropdown={isContainerChosen ? [
-              {
-                id: 'close-case',
-                title: 'Закрыть',
-                handler: closeCase
-              },
-              {
-                id: 'set-container',
-                title: 'Установить источник',
-                handler: addContainer
-              },
-            ] : [
-              {
-                id: 'close-case',
-                title: 'Закрыть',
-                handler: closeCase
-              }
-            ]}
-          />
-        </>
-      ) : (
+    else {
+      return (
         <>
           <img
             className="Case"
@@ -171,7 +138,9 @@ export default function Case (props) {
             ]}
           />
         </>
-        )}
-    </>
-  )
+      )
+    }
+  }
+
+  return switchContent()
 }

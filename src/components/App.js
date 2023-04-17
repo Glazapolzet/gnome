@@ -73,6 +73,7 @@ function App() {
   const [isCounterDone, setCounterDone] = useState(false);
 
   //CaseContext:
+  const [isCaseOpened, setCaseOpened] = useState(false);
 
   //ContainerContext:
   const [isContainerChosen, setContainerChosen] = useState(false);
@@ -156,6 +157,7 @@ function App() {
           isCounterDone, setCounterDone,
         }}>
           <CaseContext.Provider value={{
+            isCaseOpened, setCaseOpened
           }}>
             <ContainerContext.Provider value={{
               isContainerChosen, setContainerChosen,
