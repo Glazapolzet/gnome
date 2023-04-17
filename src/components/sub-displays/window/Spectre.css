@@ -1,0 +1,46 @@
+.Spectre {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: calc(100% - 50px);
+  background-image: url("../../../images/graph_temp.png");
+  background-size: 120% 120%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.Spectre__content {
+  margin: 50px 220px 0 0;
+}
+
+.Spectre__title {
+  text-align: end;
+  font-size: 16px;
+  margin: 0;
+}
+
+.Spectre__list {
+  padding: 0;
+  width: 400px;
+  list-style: none;
+}
+
+.Spectre__list-item {
+  display: flex;
+}
+
+.Spectre__item {
+  margin: 5px 0 0;
+}
+
+.Spectre__item_content_name {
+  min-width: 217px;
+}
+
+.Spectre__item_content_value {
+
+}
+
+.Spectre__divider {
+  border-bottom: 1px dashed #000;
+}

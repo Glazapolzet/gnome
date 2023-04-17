@@ -1,11 +1,14 @@
 import './Table.css';
 import ActionDot from "../../action-dot/ActionDot";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import table from '../../../images/table_tmp.jpg';
 import calibrationContainer from '../../../images/calibration-container.jpg';
 import OrganicContainer from "./OrganicContainer";
+import {ContainerContext} from "../../../contexts/containerContext";
 
 export default function Table (props) {
+
+  const {setContainerChosen} = useContext(ContainerContext);
 
   const [isCalibrationContainerChosen, setCalibrationContainer] = useState(false);
   const [isOrganicContainerChosen, setOrganicContainer] = useState(false);
@@ -27,12 +30,14 @@ export default function Table (props) {
 
   function handleCalibrationContainerPick () {
     // ТУТ ЕЩЕ ДОЛЖЕН ОБНОВЛЯТЬСЯ КОНТЕКСТ
+    setContainerChosen(true);
 
     resetContainerPick();
   }
 
   function handleOrganicContainerPick () {
     // ТУТ ЕЩЕ ДОЛЖЕН ОБНОВЛЯТЬСЯ КОНТЕКСТ
+    setContainerChosen(true);
 
     resetContainerPick();
   }

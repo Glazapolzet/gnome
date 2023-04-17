@@ -3,6 +3,7 @@ import {FormContext} from "../../../contexts/formContext";
 import './ResearchReport.css';
 
 export default function ResearchReport () {
+
   const {activityForm} = useContext(FormContext);
 
   return (

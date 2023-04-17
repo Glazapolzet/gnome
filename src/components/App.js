@@ -22,6 +22,9 @@ import Case from "./sub-displays/table/Case";
 import Table from "./sub-displays/table/Table";
 import Window from "./sub-displays/window/Window";
 import Result from "./result/Result";
+import {ContainerContext} from "../contexts/containerContext";
+import {SpectreContext} from "../contexts/spectreContext";
+import {CaseContext} from "../contexts/caseContext";
 
 function App() {
 
@@ -42,6 +45,7 @@ function App() {
 
   //FormContext:
   const [isFormOnSubmit, setFormSubmitStatus] = useState(false);
+  const [isNavbarBtnsDisabled, setNavbarBtnsDisabled] = useState(true);
   const [isCalibrationPending, setCalibrationPending] = useState(false);
   const [isActivityPending, setActivityPending] = useState(false);
   const [activityForm, setActivityForm] = useState({
@@ -68,11 +72,18 @@ function App() {
   const [targetValue, setTargetValue] = useState(0);
   const [isCounterDone, setCounterDone] = useState(false);
 
+  //CaseContext:
+
+  //ContainerContext:
+  const [isContainerChosen, setContainerChosen] = useState(false);
+  const [isContainerIn, setContainerIn] = useState(false);
+
   //WindowContext:
   const [isAboutPageActive, setAboutPageActive] = useState(false);
   const [isCalibrationReportPageActive, setCalibrationReportPageActive] = useState(false);
   const [isBackgroundReportPageActive, setBackgroundReportPageActive] = useState(false);
   const [isResearchReportPageActive, setResearchReportPageActive] = useState(false);
+  const [isSpectrePageActive, setSpectrePageActive] = useState(false);
 
   const [isCalibrationReportDone, setCalibrationReportDone] = useState(false);
   const [isBackgroundReportDone, setBackgroundReportDone] = useState(false);
@@ -81,6 +92,20 @@ function App() {
   const [showCalibrationReportNow, setShowCalibrationReportNow] = useState(false);
   const [showBackgroundReportNow, setShowBackgroundReportNow] = useState(false);
   const [showResearchReportNow, setShowResearchReportNow] = useState(false);
+
+  //Spectre Context:
+  function getRandomVal (min, max, dec=4) {
+    const str = (Math.random() * (max - min) + min).toFixed(dec);
+
+    return parseFloat(str);
+  }
+
+  const [elements, setElements] = useState({
+    cs: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
+    rs: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
+    th: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
+    k: `${getRandomVal(0, 50, 0)} +- ${getRandomVal(70, 130, 0)} Бк/кг`
+  });
 
   function handleDesktopClick () {
     setDesktopClicked(true);
@@ -97,6 +122,7 @@ function App() {
     setCalibrationReportPageActive(false);
     setBackgroundReportPageActive(false);
     setResearchReportPageActive(false);
+    setSpectrePageActive(false);
   }
 
   return (
@@ -105,15 +131,18 @@ function App() {
       isCalibrationReportPageActive, setCalibrationReportPageActive,
       isBackgroundReportPageActive, setBackgroundReportPageActive,
       isResearchReportPageActive, setResearchReportPageActive,
+      isSpectrePageActive, setSpectrePageActive,
       isCalibrationReportDone, setCalibrationReportDone,
       isBackgroundReportDone, setBackgroundReportDone,
       isResearchReportDone, setResearchReportDone,
       showCalibrationReportNow, setShowCalibrationReportNow,
       showBackgroundReportNow, setShowBackgroundReportNow,
-      showResearchReportNow, setShowResearchReportNow
+      showResearchReportNow, setShowResearchReportNow,
+      resetPages
     }}>
       <FormContext.Provider value={{
         isFormOnSubmit, setFormSubmitStatus,
+        isNavbarBtnsDisabled, setNavbarBtnsDisabled,
         isCalibrationPending, setCalibrationPending,
         isBackgroundPending, setBackgroundPending,
         isActivityPending, setActivityPending,
@@ -126,84 +155,97 @@ function App() {
           targetValue, setTargetValue,
           isCounterDone, setCounterDone,
         }}>
-          <div className="App">
-            <Navbar
-              isDesktopClicked={isDesktopClicked}
-              resetPages={resetPages}
-            />
+          <CaseContext.Provider value={{
+          }}>
+            <ContainerContext.Provider value={{
+              isContainerChosen, setContainerChosen,
+              isContainerIn, setContainerIn
+            }}>
+              <SpectreContext.Provider value={{
+                elements, setElements,
+                getRandomVal
+              }}>
+                <div className="App">
+                  <Navbar
+                    isDesktopClicked={isDesktopClicked}
+                    resetPages={resetPages}
+                  />
 
-            <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/quiz" element={<StartArea />} />
-              <Route path="/display" element={<Display
-                backArrowTo={'/quiz'}
-                defaultPicIndex={1}
-                pics={[
-                  "radiometer",
-                  "desktop",
-                  "spectrometer"
-                ]}/>}
-              >
-                <Route path="radiometer" element={<DisplayImage
-                  pic={radiometer}
-                  withDot={false}
-                />}/>
+                  <Routes>
+                    <Route path="/" element={<Main />} />
+                    <Route path="/quiz" element={<StartArea />} />
+                    <Route path="/display" element={<Display
+                      backArrowTo={'/quiz'}
+                      defaultPicIndex={1}
+                      pics={[
+                        "radiometer",
+                        "desktop",
+                        "spectrometer"
+                      ]}/>}
+                    >
+                      <Route path="radiometer" element={<DisplayImage
+                        pic={radiometer}
+                        withDot={false}
+                      />}/>
 
-                <Route path="desktop" element={<DisplayImage
-                  pic={desktop}
-                  withDot={true}
-                  dotX={255}
-                  dotY={45}
-                  dotDropdown={[
-                    {
-                      id: "start-app",
-                      title: 'Запуск ПО «Прогресс»',
-                      handler: handleDesktopClick
-                    },
-                  ]}
-                />}/>
+                      <Route path="desktop" element={<DisplayImage
+                        pic={desktop}
+                        withDot={true}
+                        dotX={255}
+                        dotY={45}
+                        dotDropdown={[
+                          {
+                            id: "start-app",
+                            title: 'Запуск ПО «Прогресс»',
+                            handler: handleDesktopClick
+                          },
+                        ]}
+                      />}/>
 
-                <Route path="spectrometer" element={<DisplayImage
-                  pic={spectrometer}
-                  withDot={true}
-                  dotLeadingTo={'/spec-area'}
-                  dotX={935}
-                  dotY={10}
-                />}/>
-              </Route>
+                      <Route path="spectrometer" element={<DisplayImage
+                        pic={spectrometer}
+                        withDot={true}
+                        dotLeadingTo={'/spec-area'}
+                        dotX={935}
+                        dotY={10}
+                      />}/>
+                    </Route>
 
-              {/*TODO: сделать норм фотку стола*/}
-              <Route path={'/spec-area'} element={<Display
-                backArrowTo={'/display'}
-                defaultPicIndex={0}
-                pics={[
-                  "case-closed",
-                  "table",
-                ]}/>}>
+                    {/*TODO: сделать норм фотку стола*/}
+                    <Route path={'/spec-area'} element={<Display
+                      backArrowTo={'/display'}
+                      defaultPicIndex={0}
+                      pics={[
+                        "case-closed",
+                        "table",
+                      ]}/>}>
 
-                <Route path="case-closed" element={<Case
-                  dotX={820}
-                  dotY={320}
-                />}/>
+                      <Route path="case-closed" element={<Case
+                        dotX={820}
+                        dotY={320}
+                      />}/>
 
-                <Route path="table" element={<Table
-                  dotX={900}
-                  dotY={300}
-                />}/>
+                      <Route path="table" element={<Table
+                        dotX={900}
+                        dotY={300}
+                      />}/>
 
-              </Route>
-              <Route path="/window" element={<Window
-                onLeave={handleWindowLeave}
-                resetPages={resetPages}
-                isCounterDone = {isCounterDone}
-                isCalibrationReportDone = {isCalibrationReportDone}
-                isBackgroundReportDone = {isBackgroundReportDone}
-                isResearchReportDone = {isResearchReportDone}
-              />} />
-              <Route path="/rad-doc" element={<Doc link={multiradDoc} />} />
-              <Route path="/result" element={<Result />} />
-            </Routes>
-          </div>
+                    </Route>
+                    <Route path="/window" element={<Window
+                      onLeave={handleWindowLeave}
+                      resetPages={resetPages}
+                      isCounterDone = {isCounterDone}
+                      isCalibrationReportDone = {isCalibrationReportDone}
+                      isBackgroundReportDone = {isBackgroundReportDone}
+                      isResearchReportDone = {isResearchReportDone}
+                    />} />
+                    <Route path="/rad-doc" element={<Doc link={multiradDoc} />} />
+                    <Route path="/result" element={<Result />} />
+                  </Routes>
+                </div>
+              </SpectreContext.Provider>
+            </ContainerContext.Provider>
+          </CaseContext.Provider>
         </TimerContext.Provider>
       </FormContext.Provider>
     </WindowContext.Provider>

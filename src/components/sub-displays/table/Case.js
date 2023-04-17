@@ -1,43 +1,96 @@
 import './Case.css'
 import ActionDot from "../../action-dot/ActionDot";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import caseClosed from "../../../images/case_closed.jpg";
 import caseOpened from "../../../images/case_opened.jpg";
 import caseWithContainer from "../../../images/case_with-container.jpg";
+import {ContainerContext} from "../../../contexts/containerContext";
+import {CaseContext} from "../../../contexts/caseContext";
 
 export default function Case (props) {
 
-  const [isCaseOpen, setCaseOpen] = useState(false);
+  const {isContainerChosen, setContainerChosen, isContainerIn, setContainerIn} = useContext(ContainerContext);
+
+  const [isCaseOpened, setCaseOpened] = useState(false);
+  const [isCaseEmpty, setCaseEmpty] = useState(false);
   const [isCaseWithContainer, setCaseWithContainer] = useState(false);
-  const [isContainer, setContainer] = useState(false);
+
+  useEffect(() => {
+    console.log(isCaseEmpty);
+    if (isContainerChosen && isContainerIn) {
+      // setContainerIn(true);
+      // if (isCaseEmpty) {
+      //   setCaseWithContainer(true);
+      // }
+    }
+  }, [])
 
   function openCase () {
-    if (isContainer) {
+    setCaseOpened(true);
+    if (isContainerIn) {
       setCaseWithContainer(true);
     }
     else {
-      setCaseOpen(true);
+      setCaseEmpty(true);
     }
   }
 
   function closeCase () {
-    setCaseOpen(false);
-  }
+    setCaseOpened(false);
 
-  function addContainer () {
-    setContainer(true);
-    setCaseWithContainer(true);
-  }
-
-  function removeContainer () {
-    setContainer(false);
-    setCaseWithContainer(false);
-    setCaseOpen(true);
+    //
+    setCaseEmpty(false);
   }
 
   function closeCaseWithContainer () {
-    setCaseOpen(false);
+    setCaseEmpty(false);
     setCaseWithContainer(false);
+  }
+
+  function addContainer () {
+    setCaseWithContainer(true);
+    setContainerIn(true);
+  }
+
+  function removeContainer () {
+    setContainerChosen(false);
+
+    setCaseWithContainer(false);
+    setContainerIn(false);
+    setCaseEmpty(true);
+  }
+
+  function switchContent () {
+    if (isCaseOpened) {
+      if (isCaseWithContainer) {
+        return (
+          <>
+            <img
+              className="Case"
+              src={caseWithContainer}
+              alt={caseWithContainer}
+              loading={"lazy"}
+            />
+            <ActionDot
+              y={props.dotY}
+              x={props.dotX}
+              dropdown={[
+                {
+                  id: 'move-back',
+                  title: 'Извлечь источник',
+                  handler: removeContainer
+                },
+                {
+                  id: 'close-case-with-container',
+                  title: 'Закрыть крышку',
+                  handler: closeCaseWithContainer
+                },
+              ]}
+            />
+          </>
+        )
+      }
+    }
   }
 
   return (
@@ -67,7 +120,7 @@ export default function Case (props) {
             ]}
           />
         </>
-        ) : isCaseOpen ? (
+        ) : isCaseEmpty ? (
         <>
           <img
             className="Case"
@@ -78,7 +131,7 @@ export default function Case (props) {
           <ActionDot
             y={props.dotY}
             x={props.dotX}
-            dropdown={[
+            dropdown={isContainerChosen ? [
               {
                 id: 'close-case',
                 title: 'Закрыть',
@@ -89,6 +142,12 @@ export default function Case (props) {
                 title: 'Установить источник',
                 handler: addContainer
               },
+            ] : [
+              {
+                id: 'close-case',
+                title: 'Закрыть',
+                handler: closeCase
+              }
             ]}
           />
         </>

@@ -1,5 +1,5 @@
 import './Navbar.css';
-import { Outlet } from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import DropdownNavLink from "./DropdownNavLink";
 import Navlink from "./Navlink";
 import TimeCounter from "./TimeCounter";
@@ -7,15 +7,17 @@ import CalibrationPopup from "../popups/CalibrationPopup";
 import BackgroundPopup from "../popups/BackgroundPopup";
 import ActivityPopup from "../popups/ActivityPopup";
 import beaker from "../../images/beaker-20-solid.svg";
-import book from "../../images/book_opened.svg";
+import info from "../../images/info.svg";
 import {useContext, useState} from "react";
 import {FormContext} from "../../contexts/formContext";
 import {TimerContext} from "../../contexts/timerContext";
 
 export default function Navbar(props) {
 
+  const navigate = useNavigate();
+
   //activityForm.exposition, backgroundForm.exposition
-  const {isFormOnSubmit, activityForm, backgroundForm} = useContext(FormContext);
+  const {isFormOnSubmit, isNavbarBtnsDisabled, setNavbarBtnsDisabled, activityForm, backgroundForm} = useContext(FormContext);
   const {setCounterActive, setTargetValue} = useContext(TimerContext);
 
   const [isCalibrationPopupOpen, setCalibrationPopupVisibility] = useState(false);
@@ -67,6 +69,12 @@ export default function Navbar(props) {
     closeAllPopups();
   }
 
+  function handleResultClick (evt) {
+    evt.preventDefault();
+    setNavbarBtnsDisabled(true);
+    navigate("/result");
+  }
+
   return (
     <>
       <CalibrationPopup
@@ -97,7 +105,7 @@ export default function Navbar(props) {
           <li className="Navbar__link-wrapper">
             <TimeCounter
               //проверяет, доступна ли иконка часиков для нажатия
-              isDisabled={!props.isDesktopClicked}
+              isDisabled={!props.isDesktopClicked || isNavbarBtnsDisabled}
               inMinutes={withMinutes}
               interval={timerInterval}
             />
@@ -105,7 +113,7 @@ export default function Navbar(props) {
           <li className="Navbar__link-wrapper">
             <DropdownNavLink
               icon={beaker}
-              isDisabled={!props.isDesktopClicked}
+              isDisabled={!props.isDesktopClicked || isNavbarBtnsDisabled}
               dropdown={[
                 //TODO: возможно понадобится, но вроде как уже есть измерение активности
                 // {
@@ -133,7 +141,7 @@ export default function Navbar(props) {
           </li>
           <li className="Navbar__link-wrapper">
             <Navlink
-              icon={book}
+              icon={info}
               leadingTo={"/rad-doc"}
             />
           </li>
@@ -146,6 +154,7 @@ export default function Navbar(props) {
               title={"Завершить"}
               leadingTo={"/result"}
               isDisabled={!isFormOnSubmit}
+              onClick={handleResultClick}
             />
           </li>
         </ul>

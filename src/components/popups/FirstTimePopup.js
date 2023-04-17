@@ -33,7 +33,7 @@ export default function FirstTimePopup (props) {
           // global state
           onClick={props.onClick}
         >
-          50 минут
+          5 минут
         </button>
       </div>
     </Popup>

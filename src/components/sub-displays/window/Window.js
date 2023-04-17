@@ -8,6 +8,7 @@ import {WindowContext} from "../../../contexts/windowContext";
 import CalibrationReport from "./CalibrationReport";
 import BackgroundReport from "./BackgroundReport";
 import ResearchReport from "./ResearchReport";
+import Spectre from "./Spectre";
 
 export default function Window (props) {
 
@@ -17,6 +18,7 @@ export default function Window (props) {
     isCalibrationReportPageActive, setCalibrationReportPageActive,
     isBackgroundReportPageActive, setBackgroundReportPageActive,
     isResearchReportPageActive, setResearchReportPageActive,
+    isSpectrePageActive, setSpectrePageActive,
     isCalibrationReportDone,
     isBackgroundReportDone,
     isResearchReportDone,
@@ -63,6 +65,9 @@ export default function Window (props) {
     if (isResearchReportPageActive) {
       return <ResearchReport />;
     }
+    if (isSpectrePageActive) {
+      return <Spectre />
+    }
   }
 
   function handleCalibrationReportBtnClick () {
@@ -83,6 +88,13 @@ export default function Window (props) {
     if (isResearchReportDone) {
       props.resetPages();
       setResearchReportPageActive(true);
+    }
+  }
+
+  function handleSpectreBtnClick () {
+    if (isResearchReportDone) {
+      props.resetPages();
+      setSpectrePageActive(true);
     }
   }
 
@@ -123,7 +135,11 @@ export default function Window (props) {
             >
               Отчет И.А.
             </button>
-            <button type="button" className="Window__footer-button">
+            <button
+              type="button"
+              className={`Window__footer-button ${isSpectrePageActive ? "Window__footer-button_active" : ""}`}
+              onClick={handleSpectreBtnClick}
+            >
               Спектр
             </button>
           </div>

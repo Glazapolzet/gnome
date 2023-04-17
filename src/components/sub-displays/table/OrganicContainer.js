@@ -9,7 +9,9 @@ export default function OrganicContainer (props) {
 
   const [isContainerOpen, setContainerOpen] = useState(false);
 
-  const [isPotatoPopupOpen, setPotatoPopup] = useState(false);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+
+  const [popupData, setPopupData] = useState({});
 
   function handleOpen () {
     setContainerOpen(true);
@@ -20,21 +22,45 @@ export default function OrganicContainer (props) {
   }
 
   function handlePotatoPut () {
-    setPotatoPopup(true);
+    setPopupOpen(true);
+    setPopupData({
+      name: 'Картошка',
+      title: 'Выбран образец: картошка',
+      description: 'Вы поместили картошку в сосуд Маринелли!'
+    })
+  }
+
+  function handleMeatPut () {
+    setPopupOpen(true);
+    setPopupData({
+      name: 'Мясо',
+      title: 'Выбран образец: мясо',
+      description: 'Вы поместили мясо в сосуд Маринелли!'
+    })
+  }
+
+  function handleMilkPut () {
+    setPopupOpen(true);
+    setPopupData({
+      name: 'Молоко',
+      title: 'Выбран образец: молоко',
+      description: 'Вы поместили молоко в сосуд Маринелли!'
+    })
   }
 
   function closePopups () {
-    setPotatoPopup(false);
+    setPopupOpen(false);
+    setContainerOpen(false);
   }
 
   return (
     <>
       <Popup
-        isOpen={isPotatoPopupOpen}
+        isOpen={isPopupOpen}
         onClose={closePopups}
-        name={'Картошка'}
-        title={'Выбран образец: картошка'}
-        description={'Вы положили картошку в сосуд Маринелли!'}
+        name={popupData.name}
+        title={popupData.title}
+        description={popupData.description}
       />
       {isContainerOpen ? (
         <>
@@ -61,12 +87,12 @@ export default function OrganicContainer (props) {
               {
                 id: 'meat',
                 title: 'Положить мясо',
-                handler: (() => console.log("meat"))
+                handler: (handleMeatPut)
               },
               {
                 id: 'milk',
                 title: 'Налить молоко',
-                handler: (() => console.log("milk"))
+                handler: (handleMilkPut)
               },
             ]}
           />

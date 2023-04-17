@@ -5,6 +5,7 @@ import clockIco from "../../images/clock.svg";
 import {TimerContext} from "../../contexts/timerContext";
 import {WindowContext} from "../../contexts/windowContext";
 import {FormContext} from "../../contexts/formContext";
+import {SpectreContext} from "../../contexts/spectreContext";
 
 export default function TimeCounter (props) {
 
@@ -36,10 +37,22 @@ export default function TimeCounter (props) {
     setResearchReportDone,
     setShowCalibrationReportNow,
     setShowBackgroundReportNow,
-    setShowResearchReportNow
+    setShowResearchReportNow,
+    resetPages
   } = useContext(WindowContext);
 
+  const {setElements, getRandomVal} = useContext(SpectreContext);
+
   const isDisabled = props.isDisabled;
+
+  function regenerateElements () {
+    setElements({
+      cs: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
+      rs: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
+      th: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
+      k: `${getRandomVal(0, 50, 0)} +- ${getRandomVal(70, 130, 0)} Бк/кг`
+    })
+  }
 
   function toggleDropdown() {
     setDropdownVisibility(!isDropdownVisible);
@@ -66,6 +79,7 @@ export default function TimeCounter (props) {
       setBackgroundPending(false);
     }
     if (isActivityPending) {
+      regenerateElements();
       setResearchReportDone(true);
       setShowResearchReportNow(true);
       setActivityPending(false);
@@ -89,6 +103,7 @@ export default function TimeCounter (props) {
       }
 
       setCounterDone(false);
+      resetPages();
       if (tick < targetValue) {
         setTick((s) => s+1);
       }
