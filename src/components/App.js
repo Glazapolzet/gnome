@@ -6,8 +6,6 @@ import { WindowContext } from "../contexts/windowContext";
 import { ContainerContext } from "../contexts/containerContext";
 import { SpectreContext } from "../contexts/spectreContext";
 import { CaseContext } from "../contexts/caseContext";
-import { RecorderContext } from "../contexts/recorderContext";
-import { recorder } from "../actions/memento";
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 
