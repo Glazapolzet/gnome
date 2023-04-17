@@ -1,5 +1,5 @@
 import './Result.css';
-import { data } from './answer-chart';
+import { data } from '../../utils/answerChart';
 import { Doughnut } from 'react-chartjs-2';
 import {useState} from "react";
 import tick from "../../images/tick.svg";
