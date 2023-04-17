@@ -18,15 +18,15 @@ const potatoExploringSequence: Exploring = {
                 order: [
                     {
                         name: PotatoExploringActions.ENABLE_PC,
-                        penaltyForCanceling: 0
+                        penaltyForCanceling: 0,
                     },
                     {  
                         name: PotatoExploringActions.ENABLE_PROGRAM,
-                        penaltyForCanceling: 0
+                        penaltyForCanceling: 0,
                     },
                     {
                         name: PotatoExploringActions.WAIT_FOR_PC,
-                        penaltyForCanceling: 0
+                        penaltyForCanceling: 0,
                     }
                 ],
             }

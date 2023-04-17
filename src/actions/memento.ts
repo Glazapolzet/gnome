@@ -14,6 +14,8 @@ export class ActionRecorder {
     }
 
     getScore(): number {
+        this._setStageCoef();
+        
         let score : number = 0;
         for (let i = 0; i < this.actionSequence.stages.length; i++) {
            score += this.actionSequence.stages[i].actions.totalPoints * this.actionSequence.stages[i].coef;
@@ -21,6 +23,14 @@ export class ActionRecorder {
         console.log(score);
         
         return score / this.trueActionSequence.totalPoints
+    }
+
+    add_action_with_penalty(actionName: string, penalty: number) {
+        let [stage, action] = this._getActionInfoByActionName(actionName);
+
+        action.penalty = penalty;
+    
+        this.actionSequence.stages[stage].actions.order.push(action);
     }
 
     add_action(actionName: string) {
@@ -68,6 +78,12 @@ export class ActionRecorder {
         for (let i = 0; i < this.trueActionSequence.stages.length; i++) {
             if (!this._checkStageSequence(this.actionSequence.stages[i])) {
                 this.actionSequence.stages[i].coef -= this.trueActionSequence.stages[i].penalty
+                continue
+            }
+            for (let j = 0; j < this.trueActionSequence.stages[i].actions.order.length; j++) {
+                if (this.actionSequence.stages[i].actions.order[j].penalty !== undefined){
+                    this.actionSequence.stages[i].coef -= this.trueActionSequence.stages[i].actions.order[j].penalty as number
+                }
             }
         }
     }
