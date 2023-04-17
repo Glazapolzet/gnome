@@ -3,8 +3,11 @@ import './App.css';
 import { FormContext } from "../contexts/formContext";
 import { TimerContext } from "../contexts/timerContext";
 import { WindowContext } from "../contexts/windowContext";
-import {Route, Routes, useNavigate} from 'react-router-dom';
-import {useEffect, useState} from "react";
+import { ContainerContext } from "../contexts/containerContext";
+import { SpectreContext } from "../contexts/spectreContext";
+import { CaseContext } from "../contexts/caseContext";
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useState } from "react";
 
 import Main from "./main/Main";
 import StartArea from "./quiz/StartArea";
@@ -15,6 +18,7 @@ import DisplayImage from "./quiz/DisplayImage";
 import radiometer from "../images/radiometer.jpg";
 import desktop from "../images/desktop.jpg";
 import spectrometer from "../images/spectrometer.jpg";
+
 import Doc from "./rad-doc/Doc";
 import multiradDoc from "../docs/multirad.pdf";
 
@@ -22,9 +26,6 @@ import Case from "./sub-displays/table/Case";
 import Table from "./sub-displays/table/Table";
 import Window from "./sub-displays/window/Window";
 import Result from "./result/Result";
-import {ContainerContext} from "../contexts/containerContext";
-import {SpectreContext} from "../contexts/spectreContext";
-import {CaseContext} from "../contexts/caseContext";
 
 function App() {
 
@@ -107,6 +108,9 @@ function App() {
     th: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
     k: `${getRandomVal(0, 50, 0)} +- ${getRandomVal(70, 130, 0)} Бк/кг`
   });
+
+  //RecorderContext:
+
 
   function handleDesktopClick () {
     setDesktopClicked(true);
