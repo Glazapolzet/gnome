@@ -39,6 +39,11 @@ export class ActionRecorder {
         this.actionSequence.stages[stage].actions.order.push(action);
     }
 
+    check_action_added(actionName: string): boolean {
+        let [stage, action] = this._getActionInfoByActionName(actionName);
+        return this.actionSequence.stages[stage].actions.order.indexOf(action) !== -1
+    }
+
     cancel_action(actionName: string) {
         let  [stage, action] = this._getActionInfoByActionName(actionName);
         this.actionSequence.stages[stage].actions.order.splice(this.actionSequence.stages[stage].actions.order.indexOf(action), 1);
