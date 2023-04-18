@@ -6,45 +6,55 @@ import calibrationContainer from '../../../images/calibration-container.jpg';
 import OrganicContainer from "./OrganicContainer";
 import {ContainerContext} from "../../../contexts/containerContext";
 
+import GammaExploring, { PotatoExploringActions } from "../../../actions/gammaExploring.ts";
+
 export default function Table (props) {
 
-  const {setContainerChosen} = useContext(ContainerContext);
+  const {
+    setCalibrationContainerChosen,
+    setOrganicContainerChosen,
+    // setContainerChosen
+  } = useContext(ContainerContext);
 
-  const [isCalibrationContainerChosen, setCalibrationContainer] = useState(false);
-  const [isOrganicContainerChosen, setOrganicContainer] = useState(false);
+  const [showCalibrationContainer, setShowCalibrationContainer] = useState(false);
+  const [showOrganicContainer, setShowOrganicContainer] = useState(false);
 
   function handleCalibrationContainerChoose () {
-    setOrganicContainer(false);
-    setCalibrationContainer(true);
+    setShowOrganicContainer(false);
+    setShowCalibrationContainer(true);
   }
 
   function handleOrganicContainerChoose () {
-    setCalibrationContainer(false);
-    setOrganicContainer(true);
+    setShowCalibrationContainer(false);
+    setShowOrganicContainer(true);
   }
 
-  function resetContainerPick () {
-    setCalibrationContainer(false);
-    setOrganicContainer(false);
+  function moveFromContainerPick () {
+    setShowCalibrationContainer(false);
+    setShowOrganicContainer(false);
   }
 
   function handleCalibrationContainerPick () {
-    // ТУТ ЕЩЕ ДОЛЖЕН ОБНОВЛЯТЬСЯ КОНТЕКСТ
-    setContainerChosen(true);
+    GammaExploring.add_action(PotatoExploringActions.PICK_C_CONTAINER);
+    // setContainerChosen(true);
+    setOrganicContainerChosen(false);
+    setCalibrationContainerChosen(true);
 
-    resetContainerPick();
+    moveFromContainerPick();
   }
 
   function handleOrganicContainerPick () {
-    // ТУТ ЕЩЕ ДОЛЖЕН ОБНОВЛЯТЬСЯ КОНТЕКСТ
-    setContainerChosen(true);
+    GammaExploring.add_action(PotatoExploringActions.PICK_O_CONTAINER);
+    // setContainerChosen(true);
+    setCalibrationContainerChosen(false);
+    setOrganicContainerChosen(true);
 
-    resetContainerPick();
+    moveFromContainerPick();
   }
 
   return (
     <>
-      {isCalibrationContainerChosen ? (
+      {showCalibrationContainer ? (
         <>
           <img
             className="Table"
@@ -59,7 +69,7 @@ export default function Table (props) {
               {
                 id: 'move-back',
                 title: 'Назад',
-                handler: resetContainerPick
+                handler: moveFromContainerPick
               },
               {
                 id: 'pick',
@@ -69,11 +79,11 @@ export default function Table (props) {
             ]}
           />
         </>
-      ) : isOrganicContainerChosen ? (
+      ) : showOrganicContainer ? (
         <OrganicContainer
           dotY={props.dotY}
           dotX={props.dotX}
-          onBack={resetContainerPick}
+          onBack={moveFromContainerPick}
           onPick={handleOrganicContainerPick}
         />
       ) : (

@@ -9,8 +9,8 @@ export class ActionRecorder {
         this.trueActionSequence = trueActionSequence;
         this.actionSequence = this._clear_actions(trueActionSequence);
 
-        console.log(this.trueActionSequence, "real")
-        console.log(this.actionSequence, "empty")
+        // console.log(this.trueActionSequence, "real")
+        // console.log(this.actionSequence, "empty")
     }
 
     getScore(): number {
@@ -29,14 +29,15 @@ export class ActionRecorder {
         let [stage, action] = this._getActionInfoByActionName(actionName);
 
         action.penalty = penalty;
-    
+
         this.actionSequence.stages[stage].actions.order.push(action);
+        console.log(this.actionSequence);
     }
 
     add_action(actionName: string) {
         let [stage, action] = this._getActionInfoByActionName(actionName);
-        console.log(stage, action)
         this.actionSequence.stages[stage].actions.order.push(action);
+      console.log(this.actionSequence);
     }
 
     check_action_added(actionName: string): boolean {
@@ -48,6 +49,9 @@ export class ActionRecorder {
         let  [stage, action] = this._getActionInfoByActionName(actionName);
         this.actionSequence.stages[stage].actions.order.splice(this.actionSequence.stages[stage].actions.order.indexOf(action), 1);
         this.actionSequence.stages[stage].coef -= action.penaltyForCanceling;
+
+      console.log(this.actionSequence);
+
     }
 
     _clear_actions(source: Exploring): Exploring {
@@ -94,6 +98,10 @@ export class ActionRecorder {
     }
 
     _checkStageSequence(stage : Stage): boolean {
+        if (stage.actions.order.length === 0) {
+          return false
+        }
+
         for (let i = 0; i < stage.actions.order.length; i++) {
             if (this.trueActionSequence.stages[i].actions.order[i].name !== stage.actions.order[i].name) {
                 return false;

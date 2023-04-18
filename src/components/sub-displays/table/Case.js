@@ -6,10 +6,19 @@ import caseOpened from "../../../images/case_opened.jpg";
 import caseWithContainer from "../../../images/case_with-container.jpg";
 import {ContainerContext} from "../../../contexts/containerContext";
 import {CaseContext} from "../../../contexts/caseContext";
+import GammaExploring, { PotatoExploringActions } from "../../../actions/gammaExploring.ts";
 
 export default function Case (props) {
 
-  const {isContainerChosen, setContainerChosen, isContainerIn, setContainerIn} = useContext(ContainerContext);
+  const {
+    isContainerIn, setContainerIn,
+    containerContent, setContainerContent,
+    isCalibrationContainerChosen, setCalibrationContainerChosen,
+    isOrganicContainerChosen, setOrganicContainerChosen
+  } = useContext(ContainerContext);
+
+  const [isContainerChosen, setContainerChosen] = useState(isCalibrationContainerChosen || isOrganicContainerChosen);
+
   const {isCaseOpened, setCaseOpened} = useContext(CaseContext);
 
   const [isCaseEmpty, setCaseEmpty] = useState(false);
@@ -35,17 +44,50 @@ export default function Case (props) {
     }
   }
 
+  function checkCaseContent () {
+    if (isContainerIn) {
+      if (isCalibrationContainerChosen) {
+        GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_C_CONTAINER);
+      }
+      if (isOrganicContainerChosen) {
+        GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER);
+      }
+    }
+  }
+
   function closeCase () {
+    checkCaseContent();
     setCaseOpened(false);
   }
 
+  function checkContainer () {
+    if (isCalibrationContainerChosen) {
+      GammaExploring.add_action(PotatoExploringActions.PUT_C_CONTAINER_INTO_CASE);
+    }
+    if (isOrganicContainerChosen) {
+      if ('potato' in containerContent) {
+        GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0);
+      }
+      if ('meat' in containerContent) {
+        GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.1);
+      }
+      if ('milk' in containerContent) {
+        GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.1);
+      }
+    }
+  }
+
   function addContainer () {
+    checkContainer();
     setCaseWithContainer(true);
     setContainerIn(true);
   }
 
   function removeContainer () {
     setContainerChosen(false);
+    setCalibrationContainerChosen(false);
+    setOrganicContainerChosen(false);
+    setContainerContent({});
 
     setCaseWithContainer(false);
     setContainerIn(false);

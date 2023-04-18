@@ -1,9 +1,10 @@
 import './OrganicContainer.css';
 import ActionDot from "../../action-dot/ActionDot";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import organicContainerOpened from '../../../images/organic-container_opened.jpg'
 import organicContainerClosed from '../../../images/organic-container_closed.jpg'
 import Popup from "../../popups/Popup";
+import {ContainerContext} from "../../../contexts/containerContext";
 
 export default function OrganicContainer (props) {
 
@@ -12,6 +13,8 @@ export default function OrganicContainer (props) {
   const [isPopupOpen, setPopupOpen] = useState(false);
 
   const [popupData, setPopupData] = useState({});
+
+  const {setContainerContent} = useContext(ContainerContext);
 
   function handleOpen () {
     setContainerOpen(true);
@@ -27,7 +30,8 @@ export default function OrganicContainer (props) {
       name: 'Картошка',
       title: 'Выбран образец: картошка',
       description: 'Вы поместили картошку в сосуд Маринелли!'
-    })
+    });
+    setContainerContent({potato: 'potato'});
   }
 
   function handleMeatPut () {
@@ -36,7 +40,8 @@ export default function OrganicContainer (props) {
       name: 'Мясо',
       title: 'Выбран образец: мясо',
       description: 'Вы поместили мясо в сосуд Маринелли!'
-    })
+    });
+    setContainerContent({meat: 'meat'});
   }
 
   function handleMilkPut () {
@@ -45,7 +50,8 @@ export default function OrganicContainer (props) {
       name: 'Молоко',
       title: 'Выбран образец: молоко',
       description: 'Вы поместили молоко в сосуд Маринелли!'
-    })
+    });
+    setContainerContent({milk: 'milk'});
   }
 
   function closePopups () {

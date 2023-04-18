@@ -1,15 +1,22 @@
 import './Result.css';
 import { data } from '../../utils/answerChart';
 import { Doughnut } from 'react-chartjs-2';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import tick from "../../images/tick.svg";
 import cross from "../../images/cross_red.svg";
+import GammaExploring, { PotatoExploringActions } from "../../actions/gammaExploring.ts";
 
 export default function Result () {
 
   const [havePassed, setHavePassed] = useState(false);
-  const [rightAnswersNum, setRightAnswersNum] = useState(0);
+  const [rightAnswersNum, setRightAnswersNum] = useState(GammaExploring.getScore());
   const [resultMessage, setResultMessage] = useState(`тест ${havePassed ? "сдан" : "не сдан"}`);
+
+  useEffect(() => {
+    if (rightAnswersNum > 40) {
+      setHavePassed((havePassed) => !havePassed);
+    }
+  }, [])
 
   return (
     <div className="Result">
@@ -20,7 +27,7 @@ export default function Result () {
         }}/>
         <Doughnut data={data} />
       </div>
-      <h3 className="Result__description">Вы совершили {rightAnswersNum} верных действий из 10</h3>
+      <h3 className="Result__description">Вы совершили {rightAnswersNum} верных действий из 80</h3>
       <p className="Result__info" style={{
         color: havePassed ? "rgb(54,235,57)" : "rgb(255,99,132)"
       }}>

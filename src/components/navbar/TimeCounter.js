@@ -6,6 +6,7 @@ import {TimerContext} from "../../contexts/timerContext";
 import {WindowContext} from "../../contexts/windowContext";
 import {FormContext} from "../../contexts/formContext";
 import {SpectreContext} from "../../contexts/spectreContext";
+import GammaExploring, { PotatoExploringActions } from "../../actions/gammaExploring.ts";
 
 export default function TimeCounter (props) {
 
@@ -35,9 +36,9 @@ export default function TimeCounter (props) {
     setCalibrationReportDone,
     setBackgroundReportDone,
     setResearchReportDone,
-    setShowCalibrationReportNow,
-    setShowBackgroundReportNow,
-    setShowResearchReportNow,
+    showCalibrationReportNow, setShowCalibrationReportNow,
+    showBackgroundReportNow, setShowBackgroundReportNow,
+    showResearchReportNow, setShowResearchReportNow,
     resetPages
   } = useContext(WindowContext);
 
@@ -67,7 +68,13 @@ export default function TimeCounter (props) {
     setAboutPageActive(false);
   }
 
-  function setReport () {
+  function resetReports () {
+    setShowCalibrationReportNow(false);
+    setShowBackgroundReportNow(false);
+    setShowResearchReportNow(false);
+  }
+
+  function showReport () {
     if (isCalibrationPending) {
       setCalibrationReportDone(true);
       setShowCalibrationReportNow(true);
@@ -104,12 +111,14 @@ export default function TimeCounter (props) {
 
       setCounterDone(false);
       resetPages();
+      resetReports();
+
       if (tick < targetValue) {
         setTick((s) => s+1);
       }
       if (tick === targetValue) {
         resetDeps();
-        setReport();
+        showReport();
       }
     }
     const interval = setInterval(countByPopupHandler, props.interval);
@@ -117,7 +126,26 @@ export default function TimeCounter (props) {
     return () => clearInterval(interval);
   }, [targetValue, isCounterActive, isDisabled, tick, setCounterDone, resetDeps, props.interval])
 
+  function checkReport () {
+    if (showCalibrationReportNow) {
+      GammaExploring.add_action(PotatoExploringActions.STOP_TIMER_FOR_C_POPUP);
+    }
+    if (showBackgroundReportNow) {
+      GammaExploring.add_action(PotatoExploringActions.STOP_TIMER_FOR_B_POPUP);
+    }
+    if (showResearchReportNow) {
+      GammaExploring.add_action(PotatoExploringActions.STOP_TIMER_FOR_A_POPUP);
+    }
+    //то же самое для is_пендингов, но с пенальти 0.7-0.8 на случай если человек остановит таймер, не подождав конца отсчета
+    // (хз слишком жестоко это или нет, поэтому пока тут ничего нет)
+    else {
+
+    }
+  }
+
   function stopCounter () {
+    checkReport();
+    // console.log(showCalibrationReportNow, showBackgroundReportNow, showResearchReportNow);
     setCounterActive(false);
   }
 

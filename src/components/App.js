@@ -9,6 +9,9 @@ import { CaseContext } from "../contexts/caseContext";
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 
+//RecorderContext:
+import GammaExploring, { PotatoExploringActions } from "../actions/gammaExploring.ts";
+
 import Main from "./main/Main";
 import StartArea from "./quiz/StartArea";
 import Navbar from "./navbar/Navbar";
@@ -79,6 +82,9 @@ function App() {
   //ContainerContext:
   const [isContainerChosen, setContainerChosen] = useState(false);
   const [isContainerIn, setContainerIn] = useState(false);
+  const [containerContent, setContainerContent] = useState({});
+  const [isCalibrationContainerChosen, setCalibrationContainerChosen] = useState(false);
+  const [isOrganicContainerChosen, setOrganicContainerChosen] = useState(false);
 
   //WindowContext:
   const [isAboutPageActive, setAboutPageActive] = useState(false);
@@ -109,10 +115,13 @@ function App() {
     k: `${getRandomVal(0, 50, 0)} +- ${getRandomVal(70, 130, 0)} Бк/кг`
   });
 
-  //RecorderContext:
-
+  function handlePcClick () {
+    GammaExploring.add_action(PotatoExploringActions.ENABLE_PC);
+    navigate('/display');
+  }
 
   function handleDesktopClick () {
+    GammaExploring.add_action(PotatoExploringActions.ENABLE_PROGRAM);
     setDesktopClicked(true);
     setAboutPageActive(true);
     navigate('/window');
@@ -164,8 +173,12 @@ function App() {
             isCaseOpened, setCaseOpened
           }}>
             <ContainerContext.Provider value={{
-              isContainerChosen, setContainerChosen,
-              isContainerIn, setContainerIn
+              //not needed anymore
+              // isContainerChosen, setContainerChosen,
+              isContainerIn, setContainerIn,
+              containerContent, setContainerContent,
+              isCalibrationContainerChosen, setCalibrationContainerChosen,
+              isOrganicContainerChosen, setOrganicContainerChosen
             }}>
               <SpectreContext.Provider value={{
                 elements, setElements,
@@ -179,7 +192,7 @@ function App() {
 
                   <Routes>
                     <Route path="/" element={<Main />} />
-                    <Route path="/quiz" element={<StartArea />} />
+                    <Route path="/quiz" element={<StartArea onClick={handlePcClick} />} />
                     <Route path="/display" element={<Display
                       backArrowTo={'/quiz'}
                       defaultPicIndex={1}

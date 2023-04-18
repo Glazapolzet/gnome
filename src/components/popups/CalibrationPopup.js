@@ -3,6 +3,7 @@ import Popup from "./Popup";
 import {useContext} from "react";
 import {FormContext} from "../../contexts/formContext";
 import {WindowContext} from "../../contexts/windowContext";
+import GammaExploring, { PotatoExploringActions } from "../../actions/gammaExploring.ts";
 
 export default function CalibrationPopup (props) {
 
@@ -15,10 +16,11 @@ export default function CalibrationPopup (props) {
 
   const {setCalibrationReportDone} = useContext(WindowContext);
 
-  function handleClick() {
+  function handleBtnClick() {
     props.onClick();
     setCalibrationReportDone(false);
     setCalibrationPending(true);
+    GammaExploring.add_action(PotatoExploringActions.ACTIVATE_CALIBRATION_POPUP);
   }
 
   return(
@@ -36,7 +38,7 @@ export default function CalibrationPopup (props) {
             isCalibrationPending || isBackgroundPending || isActivityPending
               ? "CalibrationPopup__button_disabled"
               : ""}`}
-          onClick={handleClick}
+          onClick={handleBtnClick}
           disabled={isCalibrationPending || isBackgroundPending || isActivityPending}
         >
           Продолжить

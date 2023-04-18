@@ -3,6 +3,7 @@ import Popup from "./Popup";
 import {useContext, useEffect} from "react";
 import {FormContext} from "../../contexts/formContext";
 import {WindowContext} from "../../contexts/windowContext";
+import GammaExploring, { PotatoExploringActions } from "../../actions/gammaExploring.ts";
 
 export default function BackgroundPopup (props) {
 
@@ -30,8 +31,17 @@ export default function BackgroundPopup (props) {
     })
   }
 
+  function checkForm () {
+    if (backgroundForm.exposition === 1800) {
+      GammaExploring.add_action_with_penalty(PotatoExploringActions.ACTIVATE_BACKGROUND_POPUP, 0);
+    } else {
+      GammaExploring.add_action_with_penalty(PotatoExploringActions.ACTIVATE_BACKGROUND_POPUP, 0.2);
+    }
+  }
+
   function handleSubmit (evt) {
     evt.preventDefault();
+    checkForm();
     setBackgroundReportDone(false);
     setBackgroundPending(true);
   }

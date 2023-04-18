@@ -1,8 +1,9 @@
 import './ActivityPopup.css'
 import Popup from "./Popup";
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import {FormContext} from "../../contexts/formContext";
 import {WindowContext} from "../../contexts/windowContext";
+import GammaExploring, { PotatoExploringActions } from "../../actions/gammaExploring.ts";
 
 export default function ActivityPopup (props) {
 
@@ -16,6 +17,14 @@ export default function ActivityPopup (props) {
   } = useContext(FormContext);
 
   const {setResearchReportDone} = useContext(WindowContext);
+
+  const [itemsToCheck, setItemsToCheck] = useState({
+    probeType: null,
+    probeWeight: null,
+    geometry: null,
+    rnConsistency: null,
+    exposition: null
+  });
 
   useEffect(() => {
     if(props.isOpen) {
@@ -38,8 +47,56 @@ export default function ActivityPopup (props) {
     })
   }
 
+  function checkItems () {
+    if (activityForm.probeType === "Пищ.пр") {
+      setItemsToCheck((itemsToCheck) => ({
+        ...itemsToCheck,
+        probeType: true
+      }))
+    }
+    if (activityForm.probeWeight === "1000") {
+      setItemsToCheck((itemsToCheck) => ({
+        ...itemsToCheck,
+        probeWeight: true
+      }))
+    }
+    if (activityForm.geometry === "Маринелли") {
+      setItemsToCheck((itemsToCheck) => ({
+        ...itemsToCheck,
+        geometry: true
+      }))
+    }
+    if (activityForm.rnConsistency === "137Cs_и_ЕРН") {
+      setItemsToCheck((itemsToCheck) => ({
+        ...itemsToCheck,
+        rnConsistency: true
+      }))
+    }
+    if (activityForm.exposition === 1800) {
+      setItemsToCheck((itemsToCheck) => ({
+        ...itemsToCheck,
+        exposition: true
+      }))
+    }
+  }
+
+  useEffect(() => {
+    checkItems();
+  }, [activityForm])
+
+  function checkForm () {
+    const checkedItems = Object.values(itemsToCheck);
+    console.log(itemsToCheck);
+
+    GammaExploring.add_action_with_penalty(
+      PotatoExploringActions.ACTIVATE_ACTIVITY_POPUP,
+      0.05 * checkedItems.filter(i => i===null).length
+    )
+  }
+
   function handleSubmit (evt) {
     evt.preventDefault();
+    checkForm();
     setResearchReportDone(false);
     setActivityPending(true);
   }
@@ -194,7 +251,7 @@ export default function ActivityPopup (props) {
               min={1800}
               step={1800}
               value={activityForm.exposition}
-              onChange={(evt) => setActivityForm({...activityForm, exposition: evt.target.value})}
+              onChange={(evt) => setActivityForm({...activityForm, exposition: parseInt(evt.target.value)})}
             />
             <label htmlFor="exposition" className="ActivityPopup__input-label ActivityPopup__input-label_back">
               с

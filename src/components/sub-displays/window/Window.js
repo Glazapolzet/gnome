@@ -30,18 +30,19 @@ export default function Window (props) {
   const [isFirstTimePopupOpen, setFirstTimePopup] = useState(isDesktopClickedForFirstTime);
 
   useEffect(() => {
+    //по моему тут можно убрать проверку на done
     if (isCalibrationReportDone && showCalibrationReportNow) {
-      setShowCalibrationReportNow(false);
+      // setShowCalibrationReportNow(false);
       props.resetPages();
       setCalibrationReportPageActive(true);
     }
     if (isBackgroundReportDone && showBackgroundReportNow) {
-      setShowBackgroundReportNow(false);
+      // setShowBackgroundReportNow(false);
       props.resetPages();
       setBackgroundReportPageActive(true);
     }
     if (isResearchReportDone && showResearchReportNow) {
-      setShowResearchReportNow(false);
+      // setShowResearchReportNow(false);
       props.resetPages();
       setResearchReportPageActive(true);
     }
@@ -103,7 +104,6 @@ export default function Window (props) {
       <FirstTimePopup
         isOpen={isFirstTimePopupOpen}
         onClose={closePopup}
-        onClick={closePopup}
       />
       <section className="Window">
         <MoveBackArrow
