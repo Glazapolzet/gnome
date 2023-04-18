@@ -85,7 +85,7 @@ export class ActionRecorder {
 
     _setStageCoef() {
         for (let i = 0; i < this.trueActionSequence.stages.length; i++) {
-            if (!this._checkStageSequence(this.actionSequence.stages[i])) {
+            if (!this._checkStageSequence(this.actionSequence.stages[i], this.trueActionSequence.stages[i])) {
                 this.actionSequence.stages[i].coef -= this.trueActionSequence.stages[i].penalty
                 continue
             }
@@ -97,13 +97,13 @@ export class ActionRecorder {
         }
     }
 
-    _checkStageSequence(stage : Stage): boolean {
+    _checkStageSequence(stage : Stage, trueStage : Stage): boolean {
         if (stage.actions.order.length === 0) {
           return false
         }
 
         for (let i = 0; i < stage.actions.order.length; i++) {
-            if (this.trueActionSequence.stages[i].actions.order[i].name !== stage.actions.order[i].name) {
+            if (trueStage.actions.order[i].name !== stage.actions.order[i].name) {
                 return false;
             }
         }
