@@ -22,27 +22,23 @@ export default function Window (props) {
     isCalibrationReportDone,
     isBackgroundReportDone,
     isResearchReportDone,
-    showCalibrationReportNow, setShowCalibrationReportNow,
-    showBackgroundReportNow, setShowBackgroundReportNow,
-    showResearchReportNow, setShowResearchReportNow
+    showCalibrationReportNow,
+    showBackgroundReportNow,
+    showResearchReportNow,
   } = useContext(WindowContext);
 
   const [isFirstTimePopupOpen, setFirstTimePopup] = useState(isDesktopClickedForFirstTime);
 
   useEffect(() => {
-    //по моему тут можно убрать проверку на done
     if (isCalibrationReportDone && showCalibrationReportNow) {
-      // setShowCalibrationReportNow(false);
       props.resetPages();
       setCalibrationReportPageActive(true);
     }
     if (isBackgroundReportDone && showBackgroundReportNow) {
-      // setShowBackgroundReportNow(false);
       props.resetPages();
       setBackgroundReportPageActive(true);
     }
     if (isResearchReportDone && showResearchReportNow) {
-      // setShowResearchReportNow(false);
       props.resetPages();
       setResearchReportPageActive(true);
     }

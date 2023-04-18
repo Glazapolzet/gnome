@@ -52,6 +52,8 @@ export default function Case (props) {
       if (isOrganicContainerChosen) {
         GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER);
       }
+    } else {
+      GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITHOUT_CONTAINERS);
     }
   }
 
@@ -60,7 +62,7 @@ export default function Case (props) {
     setCaseOpened(false);
   }
 
-  function checkContainer () {
+  function checkContainerType () {
     if (isCalibrationContainerChosen) {
       GammaExploring.add_action(PotatoExploringActions.PUT_C_CONTAINER_INTO_CASE);
     }
@@ -78,12 +80,15 @@ export default function Case (props) {
   }
 
   function addContainer () {
-    checkContainer();
+    checkContainerType();
     setCaseWithContainer(true);
     setContainerIn(true);
   }
 
   function removeContainer () {
+    if (isCalibrationContainerChosen) {
+      GammaExploring.add_action(PotatoExploringActions.REMOVE_C_CONTAINER);
+    }
     setContainerChosen(false);
     setCalibrationContainerChosen(false);
     setOrganicContainerChosen(false);

@@ -13,7 +13,6 @@ export default function Table (props) {
   const {
     setCalibrationContainerChosen,
     setOrganicContainerChosen,
-    // setContainerChosen
   } = useContext(ContainerContext);
 
   const [showCalibrationContainer, setShowCalibrationContainer] = useState(false);
@@ -36,7 +35,6 @@ export default function Table (props) {
 
   function handleCalibrationContainerPick () {
     GammaExploring.add_action(PotatoExploringActions.PICK_C_CONTAINER);
-    // setContainerChosen(true);
     setOrganicContainerChosen(false);
     setCalibrationContainerChosen(true);
 
@@ -45,7 +43,6 @@ export default function Table (props) {
 
   function handleOrganicContainerPick () {
     GammaExploring.add_action(PotatoExploringActions.PICK_O_CONTAINER);
-    // setContainerChosen(true);
     setCalibrationContainerChosen(false);
     setOrganicContainerChosen(true);
 

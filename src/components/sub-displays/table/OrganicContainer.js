@@ -5,13 +5,13 @@ import organicContainerOpened from '../../../images/organic-container_opened.jpg
 import organicContainerClosed from '../../../images/organic-container_closed.jpg'
 import Popup from "../../popups/Popup";
 import {ContainerContext} from "../../../contexts/containerContext";
+import GammaExploring, { PotatoExploringActions } from "../../../actions/gammaExploring.ts";
 
 export default function OrganicContainer (props) {
 
   const [isContainerOpen, setContainerOpen] = useState(false);
 
   const [isPopupOpen, setPopupOpen] = useState(false);
-
   const [popupData, setPopupData] = useState({});
 
   const {setContainerContent} = useContext(ContainerContext);
@@ -25,6 +25,7 @@ export default function OrganicContainer (props) {
   }
 
   function handlePotatoPut () {
+    GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_POTATO_INTO_CONTAINER, 0);
     setPopupOpen(true);
     setPopupData({
       name: 'Картошка',
@@ -35,6 +36,7 @@ export default function OrganicContainer (props) {
   }
 
   function handleMeatPut () {
+    GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_POTATO_INTO_CONTAINER, 0.001);
     setPopupOpen(true);
     setPopupData({
       name: 'Мясо',
@@ -45,6 +47,7 @@ export default function OrganicContainer (props) {
   }
 
   function handleMilkPut () {
+    GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_POTATO_INTO_CONTAINER, 0.001);
     setPopupOpen(true);
     setPopupData({
       name: 'Молоко',

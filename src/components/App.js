@@ -80,7 +80,6 @@ function App() {
   const [isCaseOpened, setCaseOpened] = useState(false);
 
   //ContainerContext:
-  const [isContainerChosen, setContainerChosen] = useState(false);
   const [isContainerIn, setContainerIn] = useState(false);
   const [containerContent, setContainerContent] = useState({});
   const [isCalibrationContainerChosen, setCalibrationContainerChosen] = useState(false);
@@ -121,7 +120,9 @@ function App() {
   }
 
   function handleDesktopClick () {
-    GammaExploring.add_action(PotatoExploringActions.ENABLE_PROGRAM);
+    if (!GammaExploring.check_action_added(PotatoExploringActions.ENABLE_PROGRAM)) {
+      GammaExploring.add_action(PotatoExploringActions.ENABLE_PROGRAM);
+    }
     setDesktopClicked(true);
     setAboutPageActive(true);
     navigate('/window');
@@ -173,8 +174,6 @@ function App() {
             isCaseOpened, setCaseOpened
           }}>
             <ContainerContext.Provider value={{
-              //not needed anymore
-              // isContainerChosen, setContainerChosen,
               isContainerIn, setContainerIn,
               containerContent, setContainerContent,
               isCalibrationContainerChosen, setCalibrationContainerChosen,
