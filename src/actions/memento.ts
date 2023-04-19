@@ -4,17 +4,24 @@ import { Exploring, Stage, Action } from "./common.ts";
 export class ActionRecorder {
     trueActionSequence: Exploring;
     actionSequence: Exploring;
+    isRecording: boolean;
 
     constructor(trueActionSequence: Exploring) {
         this.trueActionSequence = trueActionSequence;
         this.actionSequence = this._clear_actions(trueActionSequence);
+        this.isRecording = true
 
         // console.log(this.trueActionSequence, "real")
         // console.log(this.actionSequence, "empty")
     }
 
     getScore(): number {
-        this._setStageCoef();
+        if (this.isRecording) {
+            this._setStageCoef();
+            this.isRecording = false;
+        }
+
+        console.log(this.actionSequence);
         
         let score : number = 0;
         for (let i = 0; i < this.actionSequence.stages.length; i++) {
@@ -89,10 +96,16 @@ export class ActionRecorder {
 
     _setStageCoef() {
         for (let i = 0; i < this.trueActionSequence.stages.length; i++) {
+            if (this.actionSequence.stages[i].actions.order.length === 0) {
+                this.actionSequence.stages[i].coef = 0;
+                continue
+            }
+
             if (!this._checkStageSequence(this.actionSequence.stages[i], this.trueActionSequence.stages[i])) {
                 this.actionSequence.stages[i].coef -= this.trueActionSequence.stages[i].penalty
                 continue
             }
+            
             for (let j = 0; j < this.trueActionSequence.stages[i].actions.order.length; j++) {
                 if (this.actionSequence.stages[i].actions.order[j].penalty !== undefined){
                     this.actionSequence.stages[i].coef -= this.trueActionSequence.stages[i].actions.order[j].penalty as number
