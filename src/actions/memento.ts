@@ -22,7 +22,11 @@ export class ActionRecorder {
         }
         console.log(score);
         
-        return score / this.trueActionSequence.totalPoints
+        return score
+    }
+
+    getTotalAvailableScore(): number {
+        return this.trueActionSequence.totalPoints
     }
 
     add_action_with_penalty(actionName: string, penalty: number) {
