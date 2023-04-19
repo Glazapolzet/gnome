@@ -9,15 +9,16 @@ import GammaExploring from "../../actions/gammaExploring.ts";
 export default function Result () {
 
   const [havePassed, setHavePassed] = useState(false);
-  const [resultMessage, setResultMessage] = useState(`тест ${havePassed ? "сдан" : "не сдан"}`);
+  const [resultMessage, setResultMessage] = useState("тест не сдан");
 
   const [score, total] = [GammaExploring.getScore(), GammaExploring.getTotalAvailableScore()];
 
   useEffect(() => {
-    if (score > 40) {
-      setHavePassed((havePassed) => !havePassed);
+    if (score > total/2) {
+      setHavePassed(true);
+      setResultMessage("тест сдан");
     }
-  }, [score])
+  }, [])
 
   return (
     <div className="Result">
