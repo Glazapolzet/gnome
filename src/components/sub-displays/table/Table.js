@@ -11,21 +11,25 @@ import GammaExploring, { PotatoExploringActions } from "../../../actions/gammaEx
 export default function Table (props) {
 
   const {
-    setCalibrationContainerChosen,
-    setOrganicContainerChosen,
+    isCalibrationContainerChosen, setCalibrationContainerChosen,
+    isOrganicContainerChosen, setOrganicContainerChosen,
   } = useContext(ContainerContext);
 
   const [showCalibrationContainer, setShowCalibrationContainer] = useState(false);
   const [showOrganicContainer, setShowOrganicContainer] = useState(false);
 
   function handleCalibrationContainerChoose () {
-    setShowOrganicContainer(false);
-    setShowCalibrationContainer(true);
+    if (!(isCalibrationContainerChosen || isOrganicContainerChosen)) {
+      setShowOrganicContainer(false);
+      setShowCalibrationContainer(true);
+    }
   }
 
   function handleOrganicContainerChoose () {
-    setShowCalibrationContainer(false);
-    setShowOrganicContainer(true);
+    if (!(isCalibrationContainerChosen || isOrganicContainerChosen)) {
+      setShowCalibrationContainer(false);
+      setShowOrganicContainer(true);
+    }
   }
 
   function moveFromContainerPick () {

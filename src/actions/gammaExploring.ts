@@ -38,12 +38,12 @@ const potatoExploringSequence: Exploring = {
               totalPoints: 20,
               order: [
                 {
-                    name: PotatoExploringActions.ENABLE_PC,
-                    penaltyForCanceling: 0,
+                  name: PotatoExploringActions.ENABLE_PC,
+                  penaltyForCanceling: 0,
                 },
                 {
-                    name: PotatoExploringActions.ENABLE_PROGRAM,
-                    penaltyForCanceling: 0,
+                  name: PotatoExploringActions.ENABLE_PROGRAM,
+                  penaltyForCanceling: 0,
                 },
                 {
                   name: PotatoExploringActions.WAIT_FOR_WARMING_UP,
@@ -64,7 +64,7 @@ const potatoExploringSequence: Exploring = {
             },
             {
               name: PotatoExploringActions.PUT_C_CONTAINER_INTO_CASE,
-              penaltyForCanceling: 0.05,
+              penaltyForCanceling: 0,
             },
             {
               name: PotatoExploringActions.CLOSE_CASE_WITH_C_CONTAINER,
@@ -114,7 +114,7 @@ const potatoExploringSequence: Exploring = {
           order: [
             {
               name: PotatoExploringActions.PUT_POTATO_INTO_CONTAINER,
-              penaltyForCanceling: 0.05,
+              penaltyForCanceling: 0,
             },
             {
               name: PotatoExploringActions.PICK_O_CONTAINER,
@@ -122,7 +122,7 @@ const potatoExploringSequence: Exploring = {
             },
             {
               name: PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE,
-              penaltyForCanceling: 0.05,
+              penaltyForCanceling: 0,
             },
             {
               name: PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER,

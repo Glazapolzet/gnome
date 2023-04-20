@@ -47,13 +47,20 @@ export default function Case (props) {
   function checkCaseContent () {
     if (isContainerIn) {
       if (isCalibrationContainerChosen) {
-        GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_C_CONTAINER);
+        if (!GammaExploring.check_action_added(PotatoExploringActions.CLOSE_CASE_WITH_C_CONTAINER)) {
+          GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_C_CONTAINER);
+        }
       }
       if (isOrganicContainerChosen) {
-        GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER);
+        if (!GammaExploring.check_action_added(PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER)) {
+          GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER);
+        }
       }
     } else {
-      GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITHOUT_CONTAINERS);
+      if (!GammaExploring.check_action_added(PotatoExploringActions.CLOSE_CASE_WITHOUT_CONTAINERS)
+        && GammaExploring.check_action_added(PotatoExploringActions.REMOVE_C_CONTAINER)) {
+        GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITHOUT_CONTAINERS);
+      }
     }
   }
 
@@ -67,14 +74,19 @@ export default function Case (props) {
       GammaExploring.add_action(PotatoExploringActions.PUT_C_CONTAINER_INTO_CASE);
     }
     if (isOrganicContainerChosen) {
-      if ('potato' in containerContent) {
-        GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0);
-      }
-      if ('meat' in containerContent) {
-        GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.1);
-      }
-      if ('milk' in containerContent) {
-        GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.1);
+      switch (containerContent) {
+        case containerContent.potato:
+          GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0);
+          break;
+        case containerContent.meat:
+          GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.05);
+          break;
+        case containerContent.milk:
+          GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.05);
+          break;
+        default:
+          GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.1);
+          break;
       }
     }
   }
@@ -85,10 +97,7 @@ export default function Case (props) {
     setContainerIn(true);
   }
 
-  function removeContainer () {
-    if (isCalibrationContainerChosen) {
-      GammaExploring.add_action(PotatoExploringActions.REMOVE_C_CONTAINER);
-    }
+  function resetContainerPick () {
     setContainerChosen(false);
     setCalibrationContainerChosen(false);
     setOrganicContainerChosen(false);
@@ -97,6 +106,55 @@ export default function Case (props) {
     setCaseWithContainer(false);
     setContainerIn(false);
     setCaseEmpty(true);
+  }
+
+  function changeContainer () {
+    function getSettedContainer(possibleContainers) {
+      for (let item of possibleContainers) {
+        if (GammaExploring.check_action_added(item)) {
+          return [item]
+        }
+      }
+    }
+
+    function  cancelGroup(canceled){
+      for (let item of canceled){
+        GammaExploring.cancel_action(item);
+      }
+    }
+
+    const possibleContainers = [
+      PotatoExploringActions.PUT_C_CONTAINER_INTO_CASE,
+      PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE,
+    ]
+
+    const canceledActionsForContainer = {
+      [PotatoExploringActions.PUT_C_CONTAINER_INTO_CASE]: [
+        PotatoExploringActions.PUT_C_CONTAINER_INTO_CASE,
+        PotatoExploringActions.PICK_C_CONTAINER,
+        PotatoExploringActions.CLOSE_CASE_WITH_C_CONTAINER,
+      ],
+      [PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE]: [
+        PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE,
+        PotatoExploringActions.PICK_O_CONTAINER,
+        PotatoExploringActions.PUT_POTATO_INTO_CONTAINER,
+        PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER,
+      ]
+    }
+
+    const currentContainer = getSettedContainer(possibleContainers);
+
+    currentContainer && cancelGroup(canceledActionsForContainer[currentContainer]);
+
+    resetContainerPick();
+  }
+
+  function pickUpContainer () {
+    if (!GammaExploring.check_action_added(PotatoExploringActions.REMOVE_C_CONTAINER)) {
+      GammaExploring.add_action(PotatoExploringActions.REMOVE_C_CONTAINER);
+    }
+
+    resetContainerPick();
   }
 
   function switchContent () {
@@ -115,15 +173,20 @@ export default function Case (props) {
               x={props.dotX}
               dropdown={[
                 {
-                  id: 'move-back',
-                  title: 'Извлечь источник',
-                  handler: removeContainer
-                },
-                {
                   id: 'close-case-with-container',
                   title: 'Закрыть крышку',
                   handler: closeCase
                 },
+                {
+                  id: 'pick-up-container',
+                  title: 'Достать контейнер',
+                  handler: pickUpContainer
+                },
+                {
+                  id: 'change-container',
+                  title: 'Сменить контейнер',
+                  handler: changeContainer
+                }
               ]}
             />
           </>
