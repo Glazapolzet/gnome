@@ -1,5 +1,7 @@
 {
   "name": "gnome",
+  "author": "best people",
+  "description": "for best university",
   "version": "0.1.0",
   "private": true,
   "main": "src/electron-starter.js",
