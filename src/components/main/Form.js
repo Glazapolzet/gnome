@@ -7,24 +7,48 @@ export default function Form () {
 
   const { setFormSubmitStatus, setNavbarBtnsDisabled } = useContext(FormContext);
 
-  const [userInput, setUserInput] = useState("");
-  const [groupInput, setGroupInput] = useState("");
-  const [isGroupInputValid, setGroupInputStatus] = useState(true);
-  const [isUserInputValid, setUserInputStatus] = useState(true);
-  const [isFormDataValid, setFormDataStatus] = useState(false);
+  const [userData, setUserData] = useState({
+    'name': "",
+    'group': ""
+  });
+
+  const [dataValidity, setDataValidity] = useState({
+    'name': true,
+    'group': true
+  })
+
+  const [isFormValid, setFormValid] = useState(false)
 
   const navigate = useNavigate();
 
-  function handleUserInputChange(evt) {
-    setUserInput(evt.target.value);
-    setUserInputStatus(evt.target.value !== "");
-    setFormDataStatus(evt.target.value !== "" && groupInput !== "");
+  function updateData(evt) {
+    setUserData({
+      ...userData,
+      [`${evt.target.name}`]: evt.target.value
+    })
+
+    setDataValidity({
+      ...dataValidity,
+      [`${evt.target.name}`]: evt.target.value !== ""
+    })
   }
 
-  function handleGroupInputChange(evt) {
-    setGroupInput(evt.target.value);
-    setGroupInputStatus(evt.target.value !== "");
-    setFormDataStatus(userInput !== "" && evt.target.value !== "");
+  function isFieldValid(fieldName) {
+    return dataValidity[fieldName]
+  }
+
+  function checkFormValid(evt) {
+    return Object.keys(dataValidity).every(key => {
+      if (key !== evt.target.name) {
+        return dataValidity[key] === true
+      }
+      return true
+    }) && evt.target.value !== ""
+  }
+
+  function handleChange(evt) {
+    updateData(evt)
+    setFormValid(checkFormValid(evt))
   }
 
   function handleFormSubmit(evt) {
@@ -38,41 +62,61 @@ export default function Form () {
   return (
     <form className="Form" onSubmit={handleFormSubmit}>
       <fieldset className="Form__input-container">
-        <legend className="Form__legend">Данные студента</legend>
-        <label htmlFor="user-input" className="Form__input-label">ФИО</label>
+
+        <legend className="Form__legend">
+          Данные студента
+        </legend>
+
+        <label htmlFor="name-input" className="Form__input-label">
+          ФИО
+        </label>
         <input
           type="text"
-          id="user-input"
+          id="name-input"
+          name="name"
           placeholder="Введите фамилию и имя"
-          value={userInput}
+          value={userData.name}
           className={`Form__input ${
-            isUserInputValid 
-            ? ""
-            : "Form__input_type_invalid"}`}
+            isFieldValid('name')
+              ? ""
+              : "Form__input_type_invalid"
+          }`}
           required={true}
-          onChange={handleUserInputChange}
+          onChange={handleChange}
         />
-        <label htmlFor="group-input" className="Form__input-label">Группа</label>
+
+        <label htmlFor="group-input" className="Form__input-label">
+          Группа
+        </label>
         <input
           type="text"
           id="group-input"
+          name="group"
           placeholder="Введите свою группу"
-          value={groupInput}
+          value={userData.group}
           className={`Form__input ${
-            isGroupInputValid
+            isFieldValid('group')
               ? ""
-              : "Form__input_type_invalid"}`}
+              : "Form__input_type_invalid"
+          }`}
           required={true}
-          onChange={handleGroupInputChange}
+          onChange={handleChange}
         />
+
       </fieldset>
+
       <button
         type="submit"
-        className={`Form__btn ${isFormDataValid ? "" : "Form__btn_disabled"}`}
-        disabled={!isFormDataValid}
+        className={`Form__btn ${
+          isFormValid
+            ? "" 
+            : "Form__btn_disabled"
+        }`}
+        disabled={!isFormValid}
       >
         Начать
       </button>
+
     </form>
   )
 }
