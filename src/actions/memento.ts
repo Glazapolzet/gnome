@@ -1,4 +1,4 @@
-import { Exploring, Stage, Action } from "./common.ts";
+import { Exploring, Stage, Action } from "./common";
 
 
 export class ActionRecorder {
@@ -29,7 +29,7 @@ export class ActionRecorder {
         }
         console.log(score);
         
-        return score
+        return Math.round(score)
     }
 
     getTotalAvailableScore(): number {
@@ -115,7 +115,7 @@ export class ActionRecorder {
     }
 
     _checkStageSequence(stage : Stage, trueStage : Stage): boolean {
-        if (stage.actions.order.length === 0) {
+        if (stage.actions.order.length !== trueStage.actions.order.length) {
           return false
         }
 

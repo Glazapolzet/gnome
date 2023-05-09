@@ -46,21 +46,29 @@ export default function Case (props) {
 
   function checkCaseContent () {
     if (isContainerIn) {
-      if (isCalibrationContainerChosen) {
-        if (!GammaExploring.check_action_added(PotatoExploringActions.CLOSE_CASE_WITH_C_CONTAINER)) {
-          GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_C_CONTAINER);
-        }
+
+      if (
+          isCalibrationContainerChosen &&
+          !GammaExploring.check_action_added(PotatoExploringActions.CLOSE_CASE_WITH_C_CONTAINER)
+      ) {
+        GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_C_CONTAINER);
       }
-      if (isOrganicContainerChosen) {
-        if (!GammaExploring.check_action_added(PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER)) {
-          GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER);
-        }
+
+      if (
+        isOrganicContainerChosen &&
+        !GammaExploring.check_action_added(PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER)
+      ) {
+        GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER);
       }
-    } else {
-      if (!GammaExploring.check_action_added(PotatoExploringActions.CLOSE_CASE_WITHOUT_CONTAINERS)
-        && GammaExploring.check_action_added(PotatoExploringActions.REMOVE_C_CONTAINER)) {
-        GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITHOUT_CONTAINERS);
-      }
+
+      return
+    }
+
+    if (
+      !GammaExploring.check_action_added(PotatoExploringActions.CLOSE_CASE_WITHOUT_CONTAINERS) &&
+      GammaExploring.check_action_added(PotatoExploringActions.REMOVE_C_CONTAINER)
+    ) {
+      GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITHOUT_CONTAINERS);
     }
   }
 
@@ -74,14 +82,14 @@ export default function Case (props) {
       GammaExploring.add_action(PotatoExploringActions.PUT_C_CONTAINER_INTO_CASE);
     }
     if (isOrganicContainerChosen) {
-      switch (containerContent) {
-        case containerContent.potato:
+      switch (true) {
+        case containerContent.potato !== undefined:
           GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0);
           break;
-        case containerContent.meat:
+        case containerContent.meat !== undefined:
           GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.05);
           break;
-        case containerContent.milk:
+        case containerContent.milk !== undefined:
           GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.05);
           break;
         default:

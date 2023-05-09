@@ -1,5 +1,5 @@
-import { Exploring} from "./common.ts";
-import { ActionRecorder } from "./memento.ts";
+import { Exploring } from "./common";
+import { ActionRecorder } from "./memento";
 
 export enum PotatoExploringActions {
   ENABLE_PC = "enable_pc",
@@ -33,7 +33,7 @@ const potatoExploringSequence: Exploring = {
     stages: [
       {
           coef: 1,
-          penalty: 0,
+          penalty: 1,
           actions: {
               totalPoints: 20,
               order: [
