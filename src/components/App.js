@@ -115,7 +115,9 @@ function App() {
   });
 
   function handlePcClick () {
-    GammaExploring.add_action(PotatoExploringActions.ENABLE_PC);
+    if (!GammaExploring.check_action_added(PotatoExploringActions.ENABLE_PC)) {
+      GammaExploring.add_action(PotatoExploringActions.ENABLE_PC);
+    }
     navigate('/display');
   }
 

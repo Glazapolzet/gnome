@@ -16,6 +16,24 @@ export default function OrganicContainer (props) {
 
   const {setContainerContent} = useContext(ContainerContext);
 
+  const content = {
+    'potato': {
+      name: 'Картошка',
+      title: 'Выбран образец: картошка',
+      description: 'Вы поместили картошку в сосуд Маринелли!'
+    },
+    'meat': {
+      name: 'Мясо',
+      title: 'Выбран образец: мясо',
+      description: 'Вы поместили мясо в сосуд Маринелли!'
+    },
+    'milk': {
+      name: 'Молоко',
+      title: 'Выбран образец: молоко',
+      description: 'Вы поместили молоко в сосуд Маринелли!'
+    }
+  }
+
   function handleOpen () {
     setContainerOpen(true);
   }
@@ -24,37 +42,23 @@ export default function OrganicContainer (props) {
     setContainerOpen(false);
   }
 
-  function handlePotatoPut () {
-    GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_POTATO_INTO_CONTAINER, 0);
+  function handlePutWithPenalty(product, penalty) {
+    GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_POTATO_INTO_CONTAINER, penalty);
     setPopupOpen(true);
-    setPopupData({
-      name: 'Картошка',
-      title: 'Выбран образец: картошка',
-      description: 'Вы поместили картошку в сосуд Маринелли!'
-    });
-    setContainerContent({potato: 'potato'});
+    setPopupData(content[product]);
+    setContainerContent({[`${product}`]: product});
+  }
+
+  function handlePotatoPut () {
+    handlePutWithPenalty('potato', 0);
   }
 
   function handleMeatPut () {
-    GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_POTATO_INTO_CONTAINER, 0.001);
-    setPopupOpen(true);
-    setPopupData({
-      name: 'Мясо',
-      title: 'Выбран образец: мясо',
-      description: 'Вы поместили мясо в сосуд Маринелли!'
-    });
-    setContainerContent({meat: 'meat'});
+    handlePutWithPenalty('meat', 0.001);
   }
 
   function handleMilkPut () {
-    GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_POTATO_INTO_CONTAINER, 0.001);
-    setPopupOpen(true);
-    setPopupData({
-      name: 'Молоко',
-      title: 'Выбран образец: молоко',
-      description: 'Вы поместили молоко в сосуд Маринелли!'
-    });
-    setContainerContent({milk: 'milk'});
+    handlePutWithPenalty('milk', 0.001);
   }
 
   function closePopups () {
@@ -96,12 +100,12 @@ export default function OrganicContainer (props) {
               {
                 id: 'meat',
                 title: 'Положить мясо',
-                handler: (handleMeatPut)
+                handler: handleMeatPut
               },
               {
                 id: 'milk',
                 title: 'Налить молоко',
-                handler: (handleMilkPut)
+                handler: handleMilkPut
               },
             ]}
           />

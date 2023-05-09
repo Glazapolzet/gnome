@@ -11,7 +11,6 @@ export default function StartArea (props) {
         <ActionDot
           y={530}
           x={725}
-          // leadingTo={"/display"}
           onClick={props.onClick}
         />
         <StartDisplay

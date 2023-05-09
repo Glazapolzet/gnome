@@ -25,12 +25,14 @@ export default function Case (props) {
   const [isCaseWithContainer, setCaseWithContainer] = useState(false);
 
   useEffect(() => {
-    if (isCaseOpened) {
-      if (isContainerIn) {
-        setCaseWithContainer(true);
-      } else {
-        setCaseEmpty(true);
-      }
+    if (!isCaseOpened) {
+      return
+    }
+
+    if (isContainerIn) {
+      setCaseWithContainer(true);
+    } else {
+      setCaseEmpty(true);
     }
   }, [])
 
@@ -81,15 +83,16 @@ export default function Case (props) {
     if (isCalibrationContainerChosen) {
       GammaExploring.add_action(PotatoExploringActions.PUT_C_CONTAINER_INTO_CASE);
     }
+
     if (isOrganicContainerChosen) {
       switch (true) {
-        case containerContent.potato !== undefined:
+        case containerContent['potato'] !== undefined:
           GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0);
           break;
-        case containerContent.meat !== undefined:
+        case containerContent['meat'] !== undefined:
           GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.05);
           break;
-        case containerContent.milk !== undefined:
+        case containerContent['milk'] !== undefined:
           GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.05);
           break;
         default:

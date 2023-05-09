@@ -19,6 +19,7 @@
 }
 
 .Form__input-label {
+  max-width: fit-content;
   font-family: inherit;
   font-size: 14px;
 }
@@ -57,7 +58,7 @@
 .Form__btn {
   border: none;
   opacity: 1;
-  margin: 25px 0 20px;
+  margin: 25px 0 10px;
   padding: 15px 70px;
   font-family: inherit;
   font-size: 16px;

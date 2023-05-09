@@ -45,27 +45,25 @@ export default function Navbar(props) {
     setActivityPopupVisibility(true)
   }
 
-  function handleCalibrationPopupClick () {
-    setTimerInterval(60);
-    setWithMinutes(false);
+  function setCounter(interval, targetValue, inMinutes= false) {
+    setTimerInterval(interval);
+    setWithMinutes(inMinutes);
+    setTargetValue(targetValue);
     setCounterActive(true);
-    setTargetValue(150);
+  }
+
+  function handleCalibrationPopupClick () {
+    setCounter(60, 150);
     closeAllPopups();
   }
 
   function handleBackgroundPopupClick () {
-    setTimerInterval(150);
-    setWithMinutes(true);
-    setCounterActive(true);
-    setTargetValue(30);
+    setCounter(150, 30, true)
     closeAllPopups();
   }
 
   function handleActivityPopupClick () {
-    setTimerInterval(150);
-    setWithMinutes(true);
-    setCounterActive(true);
-    setTargetValue(30);
+    setCounter(150, 30, true)
     closeAllPopups();
   }
 
@@ -146,7 +144,10 @@ export default function Navbar(props) {
             />
           </li>
         </ul>
-        <Outlet />
+
+        {/*<Outlet />*/}
+
+        <div className="Navbar__icon"></div>
 
         <ul className="Navbar__links Navbar__links-right">
           <li className="Navbar__link-wrapper">
