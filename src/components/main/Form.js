@@ -1,11 +1,11 @@
 import "./Form.css";
 import {useNavigate} from "react-router-dom";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {FormContext} from "../../contexts/formContext";
 
 export default function Form () {
 
-  const { setFormSubmitStatus, setNavbarBtnsDisabled } = useContext(FormContext);
+  const { setFormSubmitStatus } = useContext(FormContext);
 
   const [userData, setUserData] = useState({
     'name': "",
@@ -13,11 +13,13 @@ export default function Form () {
   });
 
   const [dataValidity, setDataValidity] = useState({
-    'name': true,
-    'group': true
+    'name': false,
+    'group': false
   })
 
   const [isFormValid, setFormValid] = useState(false)
+
+  const [isJustOpened, setJustOpened] = useState(true);
 
   const navigate = useNavigate();
 
@@ -34,7 +36,7 @@ export default function Form () {
   }
 
   function isFieldValid(fieldName) {
-    return dataValidity[fieldName]
+    return dataValidity[fieldName] || isJustOpened
   }
 
   function checkFormValid(evt) {
@@ -47,8 +49,9 @@ export default function Form () {
   }
 
   function handleChange(evt) {
-    updateData(evt)
-    setFormValid(checkFormValid(evt))
+    setJustOpened(false);
+    updateData(evt);
+    setFormValid(checkFormValid(evt));
   }
 
   function handleFormSubmit(evt) {
@@ -56,7 +59,6 @@ export default function Form () {
 
     navigate('/quiz');
     setFormSubmitStatus(true);
-    setNavbarBtnsDisabled(false);
   }
 
   return (

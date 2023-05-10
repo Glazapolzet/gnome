@@ -41,7 +41,9 @@ export default function Result () {
             ],
         }} />
       </div>
-      <h3 className="Result__description">Вы набрали {score} баллов из {total} возможных</h3>
+      <h3 className="Result__description">
+        Вы набрали {score} баллов из {total} возможных
+      </h3>
       <p className="Result__info" style={{
         color: havePassed ? "rgb(54,235,57)" : "rgb(255,99,132)"
       }}>

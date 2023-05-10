@@ -86,16 +86,16 @@ export default function ActivityPopup (props) {
 
   function checkForm () {
     const checkedItems = Object.values(itemsToCheck);
-    console.log(itemsToCheck);
 
     GammaExploring.add_action_with_penalty(
       PotatoExploringActions.ACTIVATE_ACTIVITY_POPUP,
-      0.05 * checkedItems.filter(i => i===null).length
+      0.05 * checkedItems.filter(i => i === null).length
     )
   }
 
   function handleSubmit (evt) {
     evt.preventDefault();
+
     checkForm();
     setResearchReportDone(false);
     setActivityPending(true);
@@ -107,7 +107,9 @@ export default function ActivityPopup (props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       title={"Измерение активности гамма-излучающих радионуклидов на сцинтилляционном гамма-спектрометре."}
-      description={`Установите счетный образец на детектор. Введите в таблицу информацию о счетном образце и методе пробоподготовки. Нажмите <Продолжить> для пуска измерения.`}
+      description={`Установите счетный образец на детектор. 
+                    Введите в таблицу информацию о счетном образце и методе пробоподготовки. 
+                    Нажмите <Продолжить> для пуска измерения.`}
     >
       <form id="activityForm" name="activity-form" className="ActivityPopup__form" onSubmit={handleSubmit}>
         <fieldset className="ActivityPopup__input-container">

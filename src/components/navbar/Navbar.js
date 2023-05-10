@@ -8,7 +8,7 @@ import BackgroundPopup from "../popups/BackgroundPopup";
 import ActivityPopup from "../popups/ActivityPopup";
 import beaker from "../../images/beaker-20-solid.svg";
 import info from "../../images/info.svg";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {FormContext} from "../../contexts/formContext";
 import {TimerContext} from "../../contexts/timerContext";
 
@@ -72,6 +72,12 @@ export default function Navbar(props) {
     setNavbarBtnsDisabled(true);
     navigate("/result");
   }
+
+  useEffect(() => {
+    if (isFormOnSubmit) {
+      setNavbarBtnsDisabled(false);
+    }
+  }, [isFormOnSubmit])
 
   return (
     <>
