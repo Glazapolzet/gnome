@@ -1,6 +1,6 @@
 import "./Form.css";
 import {useNavigate} from "react-router-dom";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {FormContext} from "../../contexts/formContext";
 
 export default function Form () {
@@ -19,9 +19,23 @@ export default function Form () {
 
   const [isFormValid, setFormValid] = useState(false)
 
-  const [isJustOpened, setJustOpened] = useState(true);
+  const [isFirstEntered, setFirstEntered] = useState({
+    'name': true,
+    'group': true
+  });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setFormValid(Object.keys(dataValidity).every(key => dataValidity[key] === true))
+  }, [dataValidity])
+
+  function handleBlur(evt) {
+    setFirstEntered({
+      ...isFirstEntered,
+      [`${evt.target.name}`]: false
+    });
+  }
 
   function updateData(evt) {
     setUserData({
@@ -36,22 +50,11 @@ export default function Form () {
   }
 
   function isFieldValid(fieldName) {
-    return dataValidity[fieldName] || isJustOpened
-  }
-
-  function checkFormValid(evt) {
-    return Object.keys(dataValidity).every(key => {
-      if (key !== evt.target.name) {
-        return dataValidity[key] === true
-      }
-      return true
-    }) && evt.target.value !== ""
+    return dataValidity[fieldName] || isFirstEntered[fieldName]
   }
 
   function handleChange(evt) {
-    setJustOpened(false);
     updateData(evt);
-    setFormValid(checkFormValid(evt));
   }
 
   function handleFormSubmit(evt) {
@@ -78,6 +81,7 @@ export default function Form () {
           name="name"
           placeholder="Введите фамилию и имя"
           value={userData.name}
+          onBlur={handleBlur}
           className={`Form__input ${
             isFieldValid('name')
               ? ""
@@ -96,6 +100,7 @@ export default function Form () {
           name="group"
           placeholder="Введите свою группу"
           value={userData.group}
+          onBlur={handleBlur}
           className={`Form__input ${
             isFieldValid('group')
               ? ""
