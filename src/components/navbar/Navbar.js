@@ -1,5 +1,5 @@
 import './Navbar.css';
-import {Outlet, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import DropdownNavLink from "./DropdownNavLink";
 import Navlink from "./Navlink";
 import TimeCounter from "./TimeCounter";
@@ -17,32 +17,37 @@ export default function Navbar(props) {
   const navigate = useNavigate();
 
   //activityForm.exposition, backgroundForm.exposition
-  const {isFormOnSubmit, isNavbarBtnsDisabled, setNavbarBtnsDisabled, activityForm, backgroundForm} = useContext(FormContext);
+  const {
+    isFormOnSubmit,
+    isNavbarBtnsDisabled, setNavbarBtnsDisabled,
+    activityForm, backgroundForm
+  } = useContext(FormContext);
+
   const {setCounterActive, setTargetValue} = useContext(TimerContext);
 
-  const [isCalibrationPopupOpen, setCalibrationPopupVisibility] = useState(false);
-  const [isBackgroundPopupOpen, setBackgroundPopupVisibility] = useState(false);
-  const [isActivityPopupOpen, setActivityPopupVisibility] = useState(false);
+  const [popupsOpenStatus, setPopupsOpenStatus] = useState({
+    'calibration': false,
+    'background': false,
+    'activity': false
+  });
 
   const [withMinutes, setWithMinutes] = useState(false);
   const [timerInterval, setTimerInterval] = useState(0);
 
   function closeAllPopups() {
-    setCalibrationPopupVisibility(false);
-    setBackgroundPopupVisibility(false);
-    setActivityPopupVisibility(false);
+    setPopupsOpenStatus({
+      'calibration': false,
+      'background': false,
+      'activity': false
+    })
   }
 
-  function handleCalibrationBtnClick() {
-    setCalibrationPopupVisibility(true);
-  }
-
-  function handleBackgroundBtnClick() {
-    setBackgroundPopupVisibility(true);
-  }
-
-  function handleActivityBtnClick() {
-    setActivityPopupVisibility(true)
+  function handleBtnClick(evt) {
+    console.log(evt.target);
+    setPopupsOpenStatus({
+      ...popupsOpenStatus,
+      [`${evt.target.id}`]: true,
+    })
   }
 
   function setCounter(interval, targetValue, inMinutes= false) {
@@ -82,17 +87,17 @@ export default function Navbar(props) {
   return (
     <>
       <CalibrationPopup
-        isOpen={isCalibrationPopupOpen}
+        isOpen={popupsOpenStatus.calibration}
         onClose={closeAllPopups}
         onClick={handleCalibrationPopupClick}
       />
       <BackgroundPopup
-        isOpen={isBackgroundPopupOpen}
+        isOpen={popupsOpenStatus.background}
         onClose={closeAllPopups}
         onClick={handleBackgroundPopupClick}
       />
       <ActivityPopup
-        isOpen={isActivityPopupOpen}
+        isOpen={popupsOpenStatus.activity}
         onClose={closeAllPopups}
         onClick={handleActivityPopupClick}
       />
@@ -126,19 +131,19 @@ export default function Navbar(props) {
                 //   handler: () => console.log('working!3')
                 // },
                 {
-                  id: 2,
+                  id: "calibration",
                   title: 'Энергетическая калибровка',
-                  handler: handleCalibrationBtnClick
+                  handler: handleBtnClick
                 },
                 {
-                  id: 3,
+                  id: "background",
                   title: 'Измерение фона',
-                  handler: handleBackgroundBtnClick
+                  handler: handleBtnClick
                 },
                 {
-                  id: 4,
+                  id: "activity",
                   title: 'Измерение активности',
-                  handler: handleActivityBtnClick
+                  handler: handleBtnClick
                 }
               ]}
             />
@@ -150,8 +155,6 @@ export default function Navbar(props) {
             />
           </li>
         </ul>
-
-        {/*<Outlet />*/}
 
         <div className="Navbar__icon"></div>
 

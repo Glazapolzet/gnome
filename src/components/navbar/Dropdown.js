@@ -2,8 +2,8 @@ import './Dropdown.css';
 
 export default function Dropdown (props) {
 
-  function handleBtnClick(handler) {
-    handler();
+  function handleBtnClick(evt, handler) {
+    handler(evt);
 
     props.toggleDropdown();
   }
@@ -18,8 +18,9 @@ export default function Dropdown (props) {
         {props.content.map(({id, title, handler}) => (
           <li
             key={id}
+            id={id}
             className="Dropdown__btn"
-            onClick={() => handleBtnClick(handler)}
+            onClick={(evt) => handleBtnClick(evt, handler)}
           >
             {title}
           </li>

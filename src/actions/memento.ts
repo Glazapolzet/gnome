@@ -21,13 +21,13 @@ export class ActionRecorder {
             this.isRecording = false;
         }
 
-        console.log(this.actionSequence);
+        // console.log(this.actionSequence);
         
         let score : number = 0;
         for (let i = 0; i < this.actionSequence.stages.length; i++) {
            score += this.actionSequence.stages[i].actions.totalPoints * this.actionSequence.stages[i].coef;
         }
-        console.log(score);
+        // console.log(score);
         
         return Math.round(score)
     }
@@ -48,7 +48,7 @@ export class ActionRecorder {
     add_action(actionName: string) {
         let [stage, action] = this._getActionInfoByActionName(actionName);
         this.actionSequence.stages[stage].actions.order.push(action);
-      console.log(this.actionSequence);
+        console.log(this.actionSequence);
     }
 
     check_action_added(actionName: string): boolean {
@@ -61,8 +61,7 @@ export class ActionRecorder {
         this.actionSequence.stages[stage].actions.order.splice(this.actionSequence.stages[stage].actions.order.indexOf(action), 1);
         this.actionSequence.stages[stage].coef -= action.penaltyForCanceling;
 
-      console.log(this.actionSequence);
-
+        console.log(this.actionSequence);
     }
 
     _clear_actions(source: Exploring): Exploring {
