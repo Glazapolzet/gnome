@@ -7,9 +7,9 @@ import { ContainerContext } from "../contexts/containerContext";
 import { SpectreContext } from "../contexts/spectreContext";
 import { CaseContext } from "../contexts/caseContext";
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useState } from "react";
+import {useEffect, useState} from "react";
 
-//RecorderContext:
+//Recorder:
 import GammaExploring, { PotatoExploringActions } from "../actions/gammaExploring.ts";
 
 import Main from "./main/Main";
@@ -34,6 +34,22 @@ function App() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const ctrl1 = (e) => (e.ctrlKey && e.key === "r") || (e.metaKey && e.key === "r");
+
+    const ignore = (e) => {
+      if (ctrl1(e)) {
+        e.preventDefault()
+      }
+    };
+
+    window.addEventListener("keydown", ignore);
+
+    return () => {
+      window.removeEventListener("keydown", ignore);
+    };
+  }, );
+
   // useEffect(() => {
   //   function showClickCoord(evt) {
   //     console.log(`x: ${evt.screenX} y: ${evt.screenY-65}`);
@@ -48,6 +64,10 @@ function App() {
   const [isDesktopClicked, setDesktopClicked] = useState(false);
 
   //FormContext:
+  const [userData, setUserData] = useState({
+    'name': "",
+    'group': ""
+  });
   const [isFormOnSubmit, setFormSubmitStatus] = useState(false);
   const [isNavbarBtnsDisabled, setNavbarBtnsDisabled] = useState(true);
   const [isCalibrationPending, setCalibrationPending] = useState(false);
@@ -100,7 +120,7 @@ function App() {
   const [showBackgroundReportNow, setShowBackgroundReportNow] = useState(false);
   const [showResearchReportNow, setShowResearchReportNow] = useState(false);
 
-  //Spectre Context:
+  //SpectreContext:
   function getRandomVal (min, max, dec=4) {
     const str = (Math.random() * (max - min) + min).toFixed(dec);
 
@@ -158,6 +178,7 @@ function App() {
       resetPages
     }}>
       <FormContext.Provider value={{
+        userData, setUserData,
         isFormOnSubmit, setFormSubmitStatus,
         isNavbarBtnsDisabled, setNavbarBtnsDisabled,
         isCalibrationPending, setCalibrationPending,
@@ -186,6 +207,9 @@ function App() {
                 getRandomVal
               }}>
                 <div className="App">
+
+                  {/*<Ctrl1></Ctrl1>*/}
+
                   <Navbar
                     isDesktopClicked={isDesktopClicked}
                     resetPages={resetPages}

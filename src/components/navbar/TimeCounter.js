@@ -145,7 +145,6 @@ export default function TimeCounter (props) {
 
   function stopCounter () {
     checkReport();
-    // console.log(showCalibrationReportNow, showBackgroundReportNow, showResearchReportNow);
     setCounterActive(false);
   }
 

@@ -5,24 +5,19 @@ import {FormContext} from "../../contexts/formContext";
 
 export default function Form () {
 
-  const { setFormSubmitStatus } = useContext(FormContext);
-
-  const [userData, setUserData] = useState({
-    'name': "",
-    'group': ""
-  });
+  const { setFormSubmitStatus, userData, setUserData } = useContext(FormContext);
 
   const [dataValidity, setDataValidity] = useState({
     'name': false,
     'group': false
-  })
-
-  const [isFormValid, setFormValid] = useState(false)
+  });
 
   const [isFirstEntered, setFirstEntered] = useState({
     'name': true,
     'group': true
   });
+
+  const [isFormValid, setFormValid] = useState(false);
 
   const navigate = useNavigate();
 

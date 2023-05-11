@@ -43,7 +43,6 @@ export default function Navbar(props) {
   }
 
   function handleBtnClick(evt) {
-    console.log(evt.target);
     setPopupsOpenStatus({
       ...popupsOpenStatus,
       [`${evt.target.id}`]: true,

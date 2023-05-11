@@ -1,12 +1,15 @@
 import './Result.css';
 import '../../utils/answerChart';
 import { Doughnut } from 'react-chartjs-2';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import tick from "../../images/tick.svg";
 import cross from "../../images/cross_red.svg";
 import GammaExploring from "../../actions/gammaExploring.ts";
+import {FormContext} from "../../contexts/formContext";
 
 export default function Result () {
+
+  const { userData } = useContext(FormContext);
 
   const [havePassed, setHavePassed] = useState(false);
   const [resultMessage, setResultMessage] = useState("тест не сдан");
@@ -22,7 +25,8 @@ export default function Result () {
 
   return (
     <div className="Result">
-      <h2 className="Result__title">Результат</h2>
+      <h2 className="Result__title">Результаты тестирования</h2>
+      <p className="Result__info">{userData.name} {userData.group}</p>
       <div className="Result__answer-chart-wrapper">
         <div className={`Result__icon ${havePassed ? "Result__icon_tick" : "Result__icon_cross"}`} style={{
           backgroundImage: `url(${havePassed ? tick : cross})`,
