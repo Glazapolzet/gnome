@@ -208,8 +208,6 @@ function App() {
               }}>
                 <div className="App">
 
-                  {/*<Ctrl1></Ctrl1>*/}
-
                   <Navbar
                     isDesktopClicked={isDesktopClicked}
                     resetPages={resetPages}
