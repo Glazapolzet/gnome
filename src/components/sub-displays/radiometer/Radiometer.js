@@ -29,7 +29,7 @@ export default function Radiometer (props) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const popupData = {
     name: 'Предупреждение',
-    title: 'Внимание',
+    title: 'Внимание!',
     description: 'Данный тип сосуда нельзя помещать в радиометр'
   };
 
@@ -56,14 +56,15 @@ export default function Radiometer (props) {
     if (isContainerIn) {
 
       if (
-        containerPicked.calibration &&
+        containerContent.calibration &&
         !GammaExploring.check_action_added(PotatoExploringActions.CLOSE_CASE_WITH_C_CONTAINER)
       ) {
         GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_C_CONTAINER);
       }
 
       if (
-        containerPicked.organic &&
+        !containerContent.calibration &&
+        Object.keys(containerContent).length !== 0 &&
         !GammaExploring.check_action_added(PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER)
       ) {
         GammaExploring.add_action(PotatoExploringActions.CLOSE_CASE_WITH_O_CONTAINER);
@@ -87,36 +88,37 @@ export default function Radiometer (props) {
 
   function checkContainerType () {
 
-    if (containerPicked.calibration) {
-      GammaExploring.add_action(PotatoExploringActions.PUT_C_CONTAINER_INTO_CASE);
-    }
-
-    if (containerPicked.organic) {
-      switch (true) {
-        case containerContent['potato'] !== undefined:
-          GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0);
-          break;
-        case containerContent['meat'] !== undefined:
-          GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.05);
-          break;
-        case containerContent['milk'] !== undefined:
-          GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.05);
-          break;
-        default:
-          GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.1);
-          break;
-      }
-    }
-
-    if (containerPicked.marinelli) {
-      GammaExploring.cancel_action(PotatoExploringActions.PICK_O_CONTAINER);
+    if (containerPicked.marinelli || containerPicked.other) {
+      GammaExploring.cancel_action(PotatoExploringActions.NOT_USE_WRONG_CONTAINERS);
+      GammaExploring.add_action(PotatoExploringActions.NOT_USE_WRONG_CONTAINERS);
       setPopupOpen(true);
+      return;
+    }
+
+    if (containerContent.calibration) {
+      GammaExploring.add_action(PotatoExploringActions.PUT_C_CONTAINER_INTO_CASE);
+      return;
+    }
+
+    switch (true) {
+      case containerContent['potato'] !== undefined:
+        GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0);
+        break;
+      case containerContent['meat'] !== undefined:
+        GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.05);
+        break;
+      case containerContent['milk'] !== undefined:
+        GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.05);
+        break;
+      default:
+        GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_O_CONTAINER_INTO_CASE, 0.1);
+        break;
     }
   }
 
   function addContainer () {
     checkContainerType();
-    if (containerPicked.marinelli) {
+    if (containerPicked.marinelli || containerPicked.other) {
       return;
     }
 
@@ -128,8 +130,8 @@ export default function Radiometer (props) {
     setContainerToPicked(false);
     setContainerPicked({
       'marinelli': false,
-      'organic': false,
-      'calibration': false
+      'other': false,
+      'quvet': false
     });
     setContainerContent({});
 
@@ -189,7 +191,7 @@ export default function Radiometer (props) {
 
   function switchContent() {
     switch (true) {
-      case isCaseOpened && isCaseWithContainer && containerPicked.calibration:
+      case isCaseOpened && isCaseWithContainer && !!containerContent.calibration:
         return (
           <DisplayImage
             pic={radWithCalibration}
@@ -214,7 +216,7 @@ export default function Radiometer (props) {
               }]}
           />
         )
-      case isCaseOpened && isCaseWithContainer && containerPicked.organic:
+      case isCaseOpened && isCaseWithContainer && !containerContent.calibration && Object.keys(containerContent).length !== 0:
         return (
           <DisplayImage
             pic={radWithOrganic}

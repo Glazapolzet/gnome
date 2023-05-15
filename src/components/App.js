@@ -50,6 +50,10 @@ function App() {
     };
   }, );
 
+  useEffect(() => {
+    GammaExploring.add_action(PotatoExploringActions.NOT_USE_WRONG_CONTAINERS);
+  }, [])
+
   // useEffect(() => {
   //   function showClickCoord(evt) {
   //     console.log(`x: ${evt.screenX} y: ${evt.screenY-65}`);
@@ -102,8 +106,8 @@ function App() {
   //ContainerContext:
   const [containerPicked, setContainerPicked] = useState({
     'marinelli': false,
-    'organic': false,
-    'calibration': false
+    'other': false,
+    'quvet': false
   })
   const [isContainerIn, setContainerIn] = useState(false);
   const [containerContent, setContainerContent] = useState({});
@@ -277,10 +281,10 @@ function App() {
                       <Route path="table" element={<Table
                         marinelliDotY={300}
                         marinelliDotX={450}
-                        organicDotY={300}
-                        organicDotX={900}
-                        calibrationDotY={300}
-                        calibrationDotX={1200}
+                        otherDotY={300}
+                        otherDotX={900}
+                        quvetDotY={300}
+                        quvetDotX={1200}
                       />}/>
 
                     </Route>

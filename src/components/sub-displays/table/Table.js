@@ -1,10 +1,10 @@
 import './Table.css';
 import ActionDot from "../../action-dot/ActionDot";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 
 import table from '../../../images/table_with_containers.jpg';
-import tableWithoutCalibration from '../../../images/table_without_c.jpg';
-import tableWithoutOrganic from '../../../images/table_without_o.jpg';
+import tableWithoutQuvet from '../../../images/table_without_c.jpg';
+import tableWithoutOther from '../../../images/table_without_o.jpg';
 import tableWithoutMarinelli from '../../../images/table_without_marinelli.jpg';
 
 import DisplayImage from "../../quiz/DisplayImage";
@@ -15,42 +15,51 @@ import GammaExploring, { PotatoExploringActions } from "../../../actions/gammaEx
 import Popup from "../../popups/Popup";
 
 export default function Table (props) {
-
-  const { containerPicked, setContainerPicked } = useContext(ContainerContext);
+  const {
+    containerContent, setContainerContent,
+    containerPicked, setContainerPicked,
+    isContainerIn
+  } = useContext(ContainerContext);
 
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [popupData, setPopupData] = useState({});
 
-  const {setContainerContent} = useContext(ContainerContext);
-
   const content = {
+    'calibration': {
+      name: 'Сообщение',
+      title: 'Выбрано: источник',
+      description: 'Вы установили источник'
+    },
     'potato': {
       name: 'Картошка',
       title: 'Выбран образец: картошка',
-      description: 'Вы поместили картошку в сосуд Маринелли!'
+      description: 'Вы поместили картошку в сосуд Кювета!'
     },
     'meat': {
       name: 'Мясо',
       title: 'Выбран образец: мясо',
-      description: 'Вы поместили мясо в сосуд Маринелли!'
+      description: 'Вы поместили мясо в сосуд Кювета!'
     },
     'milk': {
       name: 'Молоко',
       title: 'Выбран образец: молоко',
-      description: 'Вы поместили молоко в сосуд Маринелли!'
+      description: 'Вы поместили молоко в сосуд Кювета!'
     }
   }
 
-  function checkContainerPicked() {
+  //TODO: переделать
+  function checkContainerPicked(evt) {
     switch (true) {
-      case containerPicked.organic:
-        GammaExploring.add_action(PotatoExploringActions.PICK_O_CONTAINER);
-        break;
-      case containerPicked.calibration:
+      case evt.target.id === 'quvet' &&
+        !!containerContent.calibration &&
+        !GammaExploring.check_action_added(PotatoExploringActions.PICK_C_CONTAINER):
         GammaExploring.add_action(PotatoExploringActions.PICK_C_CONTAINER);
         break;
-      case containerPicked.marinelli:
-        GammaExploring.add_action_with_penalty(PotatoExploringActions.PICK_O_CONTAINER, 0.01);
+      case evt.target.id === 'quvet' &&
+        !containerContent.calibration &&
+        Object.keys(containerContent).length !== 0 &&
+        !GammaExploring.check_action_added(PotatoExploringActions.PICK_O_CONTAINER):
+        GammaExploring.add_action(PotatoExploringActions.PICK_O_CONTAINER);
         break;
       default:
         break;
@@ -63,7 +72,7 @@ export default function Table (props) {
       [`${evt.target.id}`]: true
     });
 
-    checkContainerPicked();
+    checkContainerPicked(evt);
   }
 
   function handleBack (evt) {
@@ -73,11 +82,19 @@ export default function Table (props) {
     })
   }
 
-  function handlePutWithPenalty(product, penalty) {
-    GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_POTATO_INTO_CONTAINER, penalty);
+  function handlePut(product) {
     setPopupOpen(true);
     setPopupData(content[product]);
     setContainerContent({[`${product}`]: product});
+  }
+
+  function handlePutWithPenalty(product, penalty) {
+    GammaExploring.add_action_with_penalty(PotatoExploringActions.PUT_POTATO_INTO_CONTAINER, penalty);
+    handlePut(product);
+  }
+
+  function handleCalibrationPut () {
+    handlePut('calibration');
   }
 
   function handlePotatoPut () {
@@ -98,17 +115,17 @@ export default function Table (props) {
 
   function switchContent() {
     switch (true) {
-      case containerPicked.organic:
+      case containerPicked.other:
         return (
           <>
             <DisplayImage
-              pic={tableWithoutOrganic}
-              withDot={true}
-              dotY={props.organicDotY}
-              dotX={props.organicDotX}
+              pic={tableWithoutOther}
+              withDot={!isContainerIn}
+              dotY={props.otherDotY}
+              dotX={props.otherDotX}
               dotDropdown={[
                 {
-                  id: 'organic',
+                  id: 'other',
                   title: 'Вернуть',
                   handler: handleBack
                 }
@@ -116,17 +133,17 @@ export default function Table (props) {
             />
           </>
         )
-      case containerPicked.calibration:
+      case containerPicked.quvet:
         return (
           <>
             <DisplayImage
-              pic={tableWithoutCalibration}
-              withDot={true}
-              dotY={props.calibrationDotY}
-              dotX={props.calibrationDotX}
+              pic={tableWithoutQuvet}
+              withDot={!isContainerIn}
+              dotY={props.quvetDotY}
+              dotX={props.quvetDotX}
               dotDropdown={[
                 {
-                  id: 'calibration',
+                  id: 'quvet',
                   title: 'Вернуть',
                   handler: handleBack
                 }
@@ -139,7 +156,7 @@ export default function Table (props) {
           <>
             <DisplayImage
               pic={tableWithoutMarinelli}
-              withDot={true}
+              withDot={!isContainerIn}
               dotY={props.marinelliDotY}
               dotX={props.marinelliDotX}
               dotDropdown={[
@@ -167,20 +184,36 @@ export default function Table (props) {
               ]}
             />
             <ActionDot
-              y={props.organicDotY}
-              x={props.organicDotX}
-              dropdown={
-              GammaExploring.check_action_added(PotatoExploringActions.PUT_POTATO_INTO_CONTAINER) ? [
+              y={props.otherDotY}
+              x={props.otherDotX}
+              dropdown={[
                 {
-                  id: 'organic',
+                  id: 'other',
+                  title: 'Взять',
+                  handler: handleContainerPick
+                },
+              ]}
+            />
+            <ActionDot
+              y={props.quvetDotY}
+              x={props.quvetDotX}
+              dropdown={
+              Object.keys(containerContent).length !== 0 ? [
+                {
+                  id: 'quvet',
                   title: 'Взять',
                   handler: handleContainerPick
                 }
               ] : [
                 {
-                  id: 'organic',
+                  id: 'quvet',
                   title: 'Взять',
                   handler: handleContainerPick
+                },
+                {
+                  id: 'calibration',
+                  title: 'Поместить источник',
+                  handler: handleCalibrationPut
                 },
                 {
                   id: 'potato',
@@ -196,17 +229,6 @@ export default function Table (props) {
                   id: 'milk',
                   title: 'Налить молоко',
                   handler: handleMilkPut
-                },
-              ]}
-            />
-            <ActionDot
-              y={props.calibrationDotY}
-              x={props.calibrationDotX}
-              dropdown={[
-                {
-                  id: 'calibration',
-                  title: 'Взять',
-                  handler: handleContainerPick
                 },
               ]}
             />

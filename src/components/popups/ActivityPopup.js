@@ -60,7 +60,7 @@ export default function ActivityPopup (props) {
         probeWeight: true
       }))
     }
-    if (activityForm.geometry === "Маринелли") {
+    if (activityForm.geometry === "Кювета") {
       setItemsToCheck((itemsToCheck) => ({
         ...itemsToCheck,
         geometry: true
@@ -220,6 +220,7 @@ export default function ActivityPopup (props) {
               onChange={(evt) => setActivityForm({...activityForm, geometry: evt.target.value})}
             >
               <option value={"Точка_14мм"}>Точка_14мм</option>
+              <option value={"Кювета"}>Кювета</option>
               <option value={"Маринелли"}>Маринелли</option>
               <option value={"Петри"}>Петри</option>
               <option value={"Половина_Маринелли"}>Половина_Маринелли</option>

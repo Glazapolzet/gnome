@@ -1,7 +1,7 @@
 import "./ActionDot.css";
 import {useNavigate} from "react-router-dom";
 import ActionDotDropdown from "./ActionDotDropdown";
-import {useState, useTransition} from "react";
+import {useState} from "react";
 
 export default function ActionDot (props) {
 

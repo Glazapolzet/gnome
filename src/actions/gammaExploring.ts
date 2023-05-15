@@ -2,6 +2,9 @@ import { Exploring } from "./common";
 import { ActionRecorder } from "./memento";
 
 export enum PotatoExploringActions {
+  //WRONG_CONTAINER
+  NOT_USE_WRONG_CONTAINERS = "not_use_wrong_containers",
+
   ENABLE_PC = "enable_pc",
   ENABLE_PROGRAM = "enable_program",
   WAIT_FOR_WARMING_UP = "wait_for_warming_up",
@@ -29,7 +32,7 @@ export enum PotatoExploringActions {
 }
 
 const potatoExploringSequence: Exploring = {
-    totalPoints: 80,
+    totalPoints: 100,
     stages: [
       {
           coef: 1,
@@ -138,7 +141,20 @@ const potatoExploringSequence: Exploring = {
             },
           ],
         }
-      }
+      },
+      {
+        coef: 1,
+        penalty: 1,
+        actions: {
+          totalPoints: 20,
+          order: [
+            {
+              name: PotatoExploringActions.NOT_USE_WRONG_CONTAINERS,
+              penaltyForCanceling: 0.2,
+            },
+          ],
+        }
+      },
     ]
 }
 
