@@ -7,7 +7,7 @@ import { ContainerContext } from "../contexts/containerContext";
 import { SpectreContext } from "../contexts/spectreContext";
 import { CaseContext } from "../contexts/caseContext";
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 //Recorder:
 import GammaExploring, { PotatoExploringActions } from "../actions/gammaExploring.ts";
@@ -25,10 +25,10 @@ import spectrometer from "../images/spectrometer.jpg";
 import Doc from "./rad-doc/Doc";
 import multiradDoc from "../docs/multirad.pdf";
 
-import Case from "./sub-displays/table/Case";
 import Table from "./sub-displays/table/Table";
 import Window from "./sub-displays/window/Window";
 import Result from "./result/Result";
+import Radiometer from "./sub-displays/radiometer/Radiometer";
 
 function App() {
 
@@ -100,6 +100,11 @@ function App() {
   const [isCaseOpened, setCaseOpened] = useState(false);
 
   //ContainerContext:
+  const [containerPicked, setContainerPicked] = useState({
+    'marinelli': false,
+    'organic': false,
+    'calibration': false
+  })
   const [isContainerIn, setContainerIn] = useState(false);
   const [containerContent, setContainerContent] = useState({});
   const [isCalibrationContainerChosen, setCalibrationContainerChosen] = useState(false);
@@ -197,6 +202,7 @@ function App() {
             isCaseOpened, setCaseOpened
           }}>
             <ContainerContext.Provider value={{
+              containerPicked, setContainerPicked,
               isContainerIn, setContainerIn,
               containerContent, setContainerContent,
               isCalibrationContainerChosen, setCalibrationContainerChosen,
@@ -225,9 +231,13 @@ function App() {
                         "spectrometer"
                       ]}/>}
                     >
+
                       <Route path="radiometer" element={<DisplayImage
                         pic={radiometer}
-                        withDot={false}
+                        withDot={true}
+                        dotX={820}
+                        dotY={320}
+                        dotLeadingTo={'/rad-area'}
                       />}/>
 
                       <Route path="desktop" element={<DisplayImage
@@ -246,33 +256,56 @@ function App() {
 
                       <Route path="spectrometer" element={<DisplayImage
                         pic={spectrometer}
-                        withDot={true}
-                        dotLeadingTo={'/spec-area'}
-                        dotX={935}
-                        dotY={10}
+                        withDot={false}
                       />}/>
                     </Route>
 
-                    {/*TODO: сделать норм фотку стола*/}
-                    <Route path={'/spec-area'} element={<Display
+                    <Route path={'/rad-area'} element={<Display
                       backArrowTo={'/display'}
-                      defaultPicIndex={0}
+                      defaultPicIndex={1}
                       pics={[
-                        "case-closed",
                         "table",
-                      ]}/>}>
+                        "rad-closeup",
+                      ]}
+                    />}>
 
-                      <Route path="case-closed" element={<Case
-                        dotX={820}
-                        dotY={320}
+                      <Route path="rad-closeup" element={<Radiometer
+                        dotX={585}
+                        dotY={631}
                       />}/>
 
                       <Route path="table" element={<Table
-                        dotX={900}
-                        dotY={300}
+                        marinelliDotY={300}
+                        marinelliDotX={450}
+                        organicDotY={300}
+                        organicDotX={900}
+                        calibrationDotY={300}
+                        calibrationDotX={1200}
                       />}/>
 
                     </Route>
+
+                    {/*TODO: сделать норм фотку стола*/}
+                    {/*<Route path={'/spec-area'} element={<Display*/}
+                    {/*  backArrowTo={'/display'}*/}
+                    {/*  defaultPicIndex={0}*/}
+                    {/*  pics={[*/}
+                    {/*    "case-closed",*/}
+                    {/*    "table",*/}
+                    {/*  ]}/>}>*/}
+
+                    {/*  <Route path="case-closed" element={<Case*/}
+                    {/*    dotX={820}*/}
+                    {/*    dotY={320}*/}
+                    {/*  />}/>*/}
+
+                    {/*  <Route path="table" element={<Table*/}
+                    {/*    dotX={900}*/}
+                    {/*    dotY={300}*/}
+                    {/*  />}/>*/}
+
+                    {/*</Route>*/}
+
                     <Route path="/window" element={<Window
                       onLeave={handleWindowLeave}
                       resetPages={resetPages}
