@@ -111,11 +111,9 @@ export default function Navbar(props) {
             />
           </li>
           <li className="Navbar__link-wrapper">
-            <TimeCounter
-              //проверяет, доступна ли иконка часиков для нажатия
-              isDisabled={!props.isDesktopClicked || isNavbarBtnsDisabled}
-              inMinutes={withMinutes}
-              interval={timerInterval}
+            <Navlink
+              icon={info}
+              leadingTo={"/rad-doc"}
             />
           </li>
           <li className="Navbar__link-wrapper">
@@ -148,9 +146,11 @@ export default function Navbar(props) {
             />
           </li>
           <li className="Navbar__link-wrapper">
-            <Navlink
-              icon={info}
-              leadingTo={"/rad-doc"}
+            <TimeCounter
+              //проверяет, доступна ли иконка часиков для нажатия
+              isDisabled={!props.isDesktopClicked || isNavbarBtnsDisabled}
+              inMinutes={withMinutes}
+              interval={timerInterval}
             />
           </li>
         </ul>
