@@ -28,7 +28,7 @@ export default function Table (props) {
     'calibration': {
       name: 'Сообщение',
       title: 'Выбрано: источник',
-      description: 'Вы установили источник'
+      description: 'Вы поместили источник в сосуд Кювета!'
     },
     'potato': {
       name: 'Картошка',
