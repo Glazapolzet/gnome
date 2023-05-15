@@ -62,12 +62,12 @@ export default function Navbar(props) {
   }
 
   function handleBackgroundPopupClick () {
-    setCounter(150, 30, true)
+    setCounter(5, backgroundForm.exposition);
     closeAllPopups();
   }
 
   function handleActivityPopupClick () {
-    setCounter(150, 30, true)
+    setCounter(5, activityForm.exposition);
     closeAllPopups();
   }
 
