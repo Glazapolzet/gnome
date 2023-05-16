@@ -274,8 +274,8 @@ function App() {
                     />}>
 
                       <Route path="rad-closeup" element={<Radiometer
-                        dotX={585}
-                        dotY={631}
+                        dotX={850}
+                        dotY={600}
                       />}/>
 
                       <Route path="table" element={<Table
