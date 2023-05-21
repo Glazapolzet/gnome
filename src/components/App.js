@@ -138,7 +138,7 @@ function App() {
       return getRandomValue(borderValue, 1000, 0);
     }
 
-    return getRandomValue(0, borderValue, 0);
+    return getRandomValue(1, borderValue, 0);
   }
 
   const [elements, setElements] = useState({});
