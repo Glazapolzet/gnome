@@ -1,5 +1,5 @@
 .StartArea {
   display: flex;
   width: 100%;
-  height: calc(100% - 65px);
+  height: 100%;
 }

@@ -10,6 +10,15 @@ import BackgroundReport from "./BackgroundReport";
 import ResearchReport from "./ResearchReport";
 import Spectre from "./Spectre";
 
+import ecReport from "../../../docs/EC_report.pdf";
+import bgReport from "../../../docs/BG_report.pdf";
+import acReport from "../../../docs/AC_report.pdf";
+import radNorms from "../../../docs/Rad_norms.pdf";
+
+import ecSpectre from "../../../images/EC_spectre.png";
+import bgSpectre from "../../../images/BG_spectre.png";
+import acSpectre from "../../../images/AC_spectre.png";
+
 export default function Window (props) {
 
   const {isDesktopClickedForFirstTime, setDesktopClickedForFirstTime} = useContext(TimerContext);
@@ -25,9 +34,11 @@ export default function Window (props) {
     showCalibrationReportNow,
     showBackgroundReportNow,
     showResearchReportNow,
+    setShouldResetNormsConclusion
   } = useContext(WindowContext);
 
   const [isFirstTimePopupOpen, setFirstTimePopup] = useState(isDesktopClickedForFirstTime);
+
 
   useEffect(() => {
     if (isCalibrationReportDone && showCalibrationReportNow) {
@@ -41,6 +52,7 @@ export default function Window (props) {
     if (isResearchReportDone && showResearchReportNow) {
       props.resetPages();
       setResearchReportPageActive(true);
+      setShouldResetNormsConclusion(true);
     }
   }, [isBackgroundReportDone, isCalibrationReportDone, isResearchReportDone])
 
@@ -54,16 +66,16 @@ export default function Window (props) {
       return <About />;
     }
     if (isCalibrationReportPageActive) {
-      return <CalibrationReport/>;
+      return <CalibrationReport file={ecReport} image={ecSpectre}/>;
     }
     if (isBackgroundReportPageActive) {
-      return <BackgroundReport/>;
+      return <BackgroundReport file={bgReport} image={bgSpectre}/>;
     }
     if (isResearchReportPageActive) {
-      return <ResearchReport />;
+      return <ResearchReport file={acReport} image={acSpectre} />;
     }
     if (isSpectrePageActive) {
-      return <Spectre />
+      return <Spectre file={radNorms} />
     }
   }
 

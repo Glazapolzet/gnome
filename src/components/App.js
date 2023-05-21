@@ -22,13 +22,13 @@ import radiometer from "../images/radiometer.jpg";
 import desktop from "../images/desktop.jpg";
 import spectrometer from "../images/spectrometer.jpg";
 
-import Doc from "./rad-doc/Doc";
 import multiradDoc from "../docs/multirad.pdf";
 
 import Case from "./sub-displays/table/Case";
 import Table from "./sub-displays/table/Table";
 import Window from "./sub-displays/window/Window";
 import Result from "./result/Result";
+import RadDoc from "./rad-doc/RadDoc";
 
 function App() {
 
@@ -88,7 +88,11 @@ function App() {
   const [backgroundForm, setBackgroundForm] = useState({
     averaging: "0.4",
     exposition: 1800
-  })
+  });
+  const [spectreForm, setSpectreForm] = useState({
+    exceedingTheNorm: "Результат превышает значения, указанные в нормативе"
+  });
+  const [isSpectreOnSubmit, setSpectreOnSubmit] = useState(false);
 
   //TimerContext:
   const [isDesktopClickedForFirstTime, setDesktopClickedForFirstTime] = useState(true);
@@ -120,19 +124,33 @@ function App() {
   const [showBackgroundReportNow, setShowBackgroundReportNow] = useState(false);
   const [showResearchReportNow, setShowResearchReportNow] = useState(false);
 
+  const [shouldResetNormsConclusion, setShouldResetNormsConclusion] = useState(false);
+
   //SpectreContext:
-  function getRandomVal (min, max, dec=4) {
+  function getRandomValue (min, max, dec=4) {
     const str = (Math.random() * (max - min) + min).toFixed(dec);
 
     return parseFloat(str);
   }
 
-  const [elements, setElements] = useState({
-    cs: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
-    rs: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
-    th: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
-    k: `${getRandomVal(0, 50, 0)} +- ${getRandomVal(70, 130, 0)} Бк/кг`
-  });
+  function getKeyValue (borderValue) {
+    if (Math.random() > 0.6) {
+      return getRandomValue(borderValue, 1000, 0);
+    }
+
+    return getRandomValue(0, borderValue, 0);
+  }
+
+  const [elements, setElements] = useState({});
+
+  function generateElements() {
+    setElements({
+      cs: `${getKeyValue(121)} +- ${getRandomValue(0, 5)} Бк/кг`,
+      st: `${getKeyValue(41)} +- ${getRandomValue(0, 5)} Бк/кг`,
+      th: `${getRandomValue(0, 50)} +- ${getRandomValue(0, 10)} Бк/кг`,
+      k: `${getRandomValue(0, 50, 0)} +- ${getRandomValue(0, 10, 0)} Бк/кг`
+    })
+  }
 
   function handlePcClick () {
     if (!GammaExploring.check_action_added(PotatoExploringActions.ENABLE_PC)) {
@@ -175,6 +193,7 @@ function App() {
       showCalibrationReportNow, setShowCalibrationReportNow,
       showBackgroundReportNow, setShowBackgroundReportNow,
       showResearchReportNow, setShowResearchReportNow,
+      shouldResetNormsConclusion, setShouldResetNormsConclusion,
       resetPages
     }}>
       <FormContext.Provider value={{
@@ -185,7 +204,9 @@ function App() {
         isBackgroundPending, setBackgroundPending,
         isActivityPending, setActivityPending,
         backgroundForm, setBackgroundForm,
-        activityForm, setActivityForm
+        activityForm, setActivityForm,
+        spectreForm, setSpectreForm,
+        isSpectreOnSubmit, setSpectreOnSubmit
       }}>
         <TimerContext.Provider value={{
           isDesktopClickedForFirstTime, setDesktopClickedForFirstTime,
@@ -203,8 +224,7 @@ function App() {
               isOrganicContainerChosen, setOrganicContainerChosen
             }}>
               <SpectreContext.Provider value={{
-                elements, setElements,
-                getRandomVal
+                elements, generateElements
               }}>
                 <div className="App">
 
@@ -249,7 +269,7 @@ function App() {
                         withDot={true}
                         dotLeadingTo={'/spec-area'}
                         dotX={935}
-                        dotY={10}
+                        dotY={160}
                       />}/>
                     </Route>
 
@@ -281,7 +301,7 @@ function App() {
                       isBackgroundReportDone = {isBackgroundReportDone}
                       isResearchReportDone = {isResearchReportDone}
                     />} />
-                    <Route path="/rad-doc" element={<Doc link={multiradDoc} />} />
+                    <Route path="/rad-doc" element={<RadDoc file={multiradDoc} />} />
                     <Route path="/result" element={<Result />} />
                   </Routes>
                 </div>

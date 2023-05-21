@@ -1,13 +1,14 @@
 .Navbar {
-  position: relative;
+  width: 100%;
+  height: 65px;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 64px;
-  padding: 0 10px;
   border-bottom: 1px solid #ECF0F1;
   color: #000;
   background-color: #fff;
+  z-index: 3;
 }
 
 .Navbar__links {
@@ -18,12 +19,13 @@
 }
 
 .Navbar__links-right {
-  margin: 0 10px 0 0;
+  margin: 0 15px 0 0;
   column-gap: 10px;
   height: 100%;
 }
 
 .Navbar__links-left {
+  margin: 0 0 0 10px;
   column-gap: 15px;
   height: 100%;
 }

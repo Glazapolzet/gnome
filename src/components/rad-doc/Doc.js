@@ -1,26 +1,42 @@
+import React, { useState } from 'react';
+import { pdfjs, Document, Page } from 'react-pdf';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
+
 import './Doc.css';
-import {Document, Page} from "react-pdf/dist/esm/entry.webpack5";
-import {pdfjs} from "react-pdf";
-import MoveBackArrow from "../back-arrow/MoveBackArrow";
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url,
+).toString();
+
+const options = {
+  cMapUrl: 'cmaps/',
+  standardFontDataUrl: 'standard_fonts/',
+  verbosity: 0,
+};
 
 export default function Doc (props) {
+  const [numPages, setNumPages] = useState();
+
+  function onDocumentLoadSuccess({ numPages: nextNumPages }) {
+    setNumPages(nextNumPages);
+  }
+
   return (
-    <section className="Doc">
-      <MoveBackArrow leadingTo={-1}/>
-      <Document
-        options={{
-          cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
-          cMapPacked: true,
-        }}
-        file={props.link}
-        loading={"Loading PDF..."}
-        renderMode={"svg"}
-      >
-        <Page pageNumber={1} />
-        <Page pageNumber={2} />
-      </Document>
-    </section>
-  )
+    <div className="Doc">
+      {props.children}
+      <div className="Doc__container">
+        <div className="Doc__container__document">
+          <Document file={props.file} onLoadSuccess={onDocumentLoadSuccess} options={options}>
+            {Array.from(new Array(numPages), (el, index) => (
+              <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+            ))}
+          </Document>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 

@@ -1,7 +1,7 @@
 import './Table.css';
 import ActionDot from "../../action-dot/ActionDot";
 import {useContext, useState} from "react";
-import table from '../../../images/table_tmp.jpg';
+import table from '../../../images/table.jpg';
 import calibrationContainer from '../../../images/calibration-container.jpg';
 import OrganicContainer from "./OrganicContainer";
 import {ContainerContext} from "../../../contexts/containerContext";

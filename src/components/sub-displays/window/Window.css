@@ -1,8 +1,10 @@
 .Window {
+  margin: 65px 0 0 0;
+  position: relative;
   display: flex;
   justify-content: center;
   width: 100%;
-  height: calc(100% - 65px);
+  height: calc(100% - 115px);
 }
 
 .Window__container {
@@ -11,14 +13,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: scroll;
 }
 
 .Window__footer-navbar {
+  position: fixed;
+  bottom: 0;
   width: 100%;
   margin: auto 0 0;
-  padding: 0 0 0 20px;
   display: flex;
-  height: 50px;
+  min-height: 50px;
   background-color: #fff;
 }
 

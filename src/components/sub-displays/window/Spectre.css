@@ -1,27 +1,106 @@
 .Spectre {
+  position: relative;
   display: flex;
-  justify-content: flex-end;
   width: 100%;
-  height: calc(100% - 50px);
+  height: 100%;
   background-image: url("../../../images/graph_temp.png");
   background-size: 120% 120%;
   background-position: center;
   background-repeat: no-repeat;
+  z-index: 1;
 }
 
-.Spectre__content {
-  margin: 50px 220px 0 0;
+.Spectre__doc {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 40px;
+  height: 100%;
+}
+
+.Spectre__info {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  top: 100px;
+  left: 100px;
+  row-gap: 20px;
+}
+
+.Spectre__button-area {
+  display: flex;
+  column-gap: 20px;
+}
+
+.Spectre__button {
+  padding: 10px;
+  width: 365px;
+  font-family: inherit;
+  background-color: #eef1f3;
+  color: #000;
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.Spectre__button_single {
+  margin: 40px 0 0 0;
+  padding: 10px 15px;
+  width: fit-content;
+  height: 40px;
+  align-self: center;
+  font-family: inherit;
+}
+
+.Spectre__button:hover {
+  background-color: #e2e6e7;
+}
+
+.Spectre__conclusion {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  max-width: 365px;
+  top: 250px;
+  left: 100px;
+  row-gap: 20px;
+}
+
+.Spectre__input {
+  padding: 5px;
+  font-family: inherit;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  background-color: #ffe8a0;
+}
+
+.Spectre__input:focus {
+  outline: none;
+}
+
+.Spectre__measurements {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 60px;
+  right: 110px;
 }
 
 .Spectre__title {
-  text-align: end;
   font-size: 16px;
   margin: 0;
+  line-height: 1.3em;
+}
+
+.Spectre__title_right {
+  text-align: end;
 }
 
 .Spectre__list {
   padding: 0;
-  width: 400px;
   list-style: none;
 }
 

@@ -42,18 +42,9 @@ export default function TimeCounter (props) {
     resetPages
   } = useContext(WindowContext);
 
-  const {setElements, getRandomVal} = useContext(SpectreContext);
+  const {generateElements} = useContext(SpectreContext);
 
   const isDisabled = props.isDisabled;
-
-  function regenerateElements () {
-    setElements({
-      cs: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
-      rs: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
-      th: `${getRandomVal(-10, 0)} +- ${getRandomVal(0, 10)} Бк/кг`,
-      k: `${getRandomVal(0, 50, 0)} +- ${getRandomVal(70, 130, 0)} Бк/кг`
-    })
-  }
 
   function toggleDropdown() {
     setDropdownVisibility(!isDropdownVisible);
@@ -86,7 +77,7 @@ export default function TimeCounter (props) {
       setBackgroundPending(false);
     }
     if (isActivityPending) {
-      regenerateElements();
+      generateElements();
       setResearchReportDone(true);
       setShowResearchReportNow(true);
       setActivityPending(false);

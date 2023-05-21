@@ -1,6 +1,6 @@
 .Main {
   display: flex;
-  height: calc(100% - 65px);
+  height: 100%;
   align-items: center;
   justify-content: center;
 }

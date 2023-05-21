@@ -37,14 +37,14 @@ export class ActionRecorder {
 
         this.actionSequence.stages[stage].actions.order.push(action);
 
-        // console.log(this.actionSequence);
+        console.log(this.actionSequence);
     }
 
     add_action(actionName: string) {
         let [stage, action] = this._getActionInfoByActionName(actionName);
         this.actionSequence.stages[stage].actions.order.push(action);
 
-        // console.log(this.actionSequence);
+        console.log(this.actionSequence);
     }
 
     check_action_added(actionName: string): boolean {
@@ -57,7 +57,7 @@ export class ActionRecorder {
         this.actionSequence.stages[stage].actions.order.splice(this.actionSequence.stages[stage].actions.order.indexOf(action), 1);
         this.actionSequence.stages[stage].coef -= action.penaltyForCanceling;
 
-        // console.log(this.actionSequence);
+        console.log(this.actionSequence);
     }
 
     _clear_actions(source: Exploring): Exploring {
@@ -102,7 +102,7 @@ export class ActionRecorder {
             }
             
             for (let j = 0; j < this.trueActionSequence.stages[i].actions.order.length; j++) {
-                if (this.actionSequence.stages[i].actions.order[j].penalty !== undefined){
+                if (this.actionSequence.stages[i].actions.order[j].penalty !== undefined) {
                     this.actionSequence.stages[i].coef -= this.trueActionSequence.stages[i].actions.order[j].penalty as number
                 }
             }

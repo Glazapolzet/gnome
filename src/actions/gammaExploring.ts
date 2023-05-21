@@ -25,32 +25,35 @@ export enum PotatoExploringActions {
   PUT_O_CONTAINER_INTO_CASE ="put_o_container_into_case",
   CLOSE_CASE_WITH_O_CONTAINER = "close_case_with_o_container",
   ACTIVATE_ACTIVITY_POPUP = "activate_activity_popup",
-  STOP_TIMER_FOR_A_POPUP = "stop_timer_for_a_popup"
+  STOP_TIMER_FOR_A_POPUP = "stop_timer_for_a_popup",
+
+  //SPECTRE
+  SUBMIT_CONCLUSION_CHOOSE = "submit_conclusion_choose"
 }
 
 const potatoExploringSequence: Exploring = {
-    totalPoints: 80,
+    totalPoints: 100,
     stages: [
       {
-          coef: 1,
-          penalty: 1,
-          actions: {
-              totalPoints: 20,
-              order: [
-                {
-                  name: PotatoExploringActions.ENABLE_PC,
-                  penaltyForCanceling: 0,
-                },
-                {
-                  name: PotatoExploringActions.ENABLE_PROGRAM,
-                  penaltyForCanceling: 0,
-                },
-                {
-                  name: PotatoExploringActions.WAIT_FOR_WARMING_UP,
-                  penaltyForCanceling: 0,
-                },
-              ],
-          }
+        coef: 1,
+        penalty: 1,
+        actions: {
+            totalPoints: 20,
+            order: [
+              {
+                name: PotatoExploringActions.ENABLE_PC,
+                penaltyForCanceling: 0,
+              },
+              {
+                name: PotatoExploringActions.ENABLE_PROGRAM,
+                penaltyForCanceling: 0,
+              },
+              {
+                name: PotatoExploringActions.WAIT_FOR_WARMING_UP,
+                penaltyForCanceling: 0,
+              },
+            ],
+        }
       },
       {
         coef: 1,
@@ -138,7 +141,20 @@ const potatoExploringSequence: Exploring = {
             },
           ],
         }
-      }
+      },
+      {
+        coef: 1,
+        penalty: 1,
+        actions: {
+          totalPoints: 20,
+          order: [
+            {
+              name: PotatoExploringActions.SUBMIT_CONCLUSION_CHOOSE,
+              penaltyForCanceling: 0.01,
+            },
+          ],
+        }
+      },
     ]
 }
 

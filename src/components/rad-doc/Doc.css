@@ -1,34 +1,33 @@
-.Doc {
-  width: 100%;
-  height: calc(100% - 65px);
-  justify-content: center;
-}
-
-.react-pdf__Document {
+.Doc__container {
   display: flex;
   flex-direction: column;
-  row-gap: 5px;
-  margin-top: 56px;
   align-items: center;
-  box-sizing: border-box !important;
-  min-height: 100vh !important;
-  max-height: 100vh !important;
-  z-index: 0;
+  margin: 0;
+  padding: 10px;
 }
 
-.react-pdf__Page {
-  position: static !important;
-  min-width: 0 !important;
-  max-width: 90% !important;
+.Doc__container__document {
+  margin: 1em 0;
 }
 
-.react-pdf__Page__svg {
-  overflow: scroll !important;
-  width: 100% !important;
-  height: 100% !important;
+.Doc__container__document .react-pdf__Document {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.react-pdf__Page__annotations.annotationLayer {
-  width: 0 !important;
-  height: 0 !important;
+.Doc__container__document .react-pdf__Page {
+  max-width: calc(100% - 2em);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  margin: 1em;
+}
+
+.Doc__container__document .react-pdf__Page canvas {
+  max-width: 100%;
+  height: auto !important;
+}
+
+.Doc__container__document .react-pdf__message {
+  padding: 20px;
+  color: white;
 }
