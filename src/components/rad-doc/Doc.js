@@ -5,15 +5,14 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 import './Doc.css';
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.js',
-  import.meta.url,
-).toString();
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//   'pdfjs-dist/build/pdf.worker.min.js',
+//   import.meta.url,
+// ).toString();
 
 const options = {
   cMapUrl: 'cmaps/',
   standardFontDataUrl: 'standard_fonts/',
-  verbosity: 0,
 };
 
 export default function Doc (props) {

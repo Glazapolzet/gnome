@@ -19,17 +19,13 @@ export default function Table (props) {
   const [showOrganicContainer, setShowOrganicContainer] = useState(false);
 
   function handleCalibrationContainerChoose () {
-    if (!(isCalibrationContainerChosen || isOrganicContainerChosen)) {
       setShowOrganicContainer(false);
       setShowCalibrationContainer(true);
-    }
   }
 
   function handleOrganicContainerChoose () {
-    if (!(isCalibrationContainerChosen || isOrganicContainerChosen)) {
       setShowCalibrationContainer(false);
       setShowOrganicContainer(true);
-    }
   }
 
   function moveFromContainerPick () {
@@ -53,66 +49,85 @@ export default function Table (props) {
     moveFromContainerPick();
   }
 
-  return (
-    <>
-      {showCalibrationContainer ? (
-        <>
-          <img
-            className="Table"
-            src={calibrationContainer}
-            alt={calibrationContainer}
-            loading={"lazy"}
+  function switchContent() {
+    switch (true) {
+      case showCalibrationContainer:
+        return (
+          <>
+            <img
+              className="Table"
+              src={calibrationContainer}
+              alt={calibrationContainer}
+              loading={"lazy"}
+            />
+            <ActionDot
+              y={props.dotY}
+              x={props.dotX}
+              dropdown={[
+                {
+                  id: 'move-back',
+                  title: 'Назад',
+                  handler: moveFromContainerPick
+                },
+                {
+                  id: 'pick',
+                  title: 'Забрать',
+                  handler: handleCalibrationContainerPick
+                }
+              ]}
+            />
+          </>
+        )
+      case showOrganicContainer:
+        return (
+          <OrganicContainer
+            dotY={props.dotY}
+            dotX={props.dotX}
+            onBack={moveFromContainerPick}
+            onPick={handleOrganicContainerPick}
           />
-          <ActionDot
-            y={props.dotY}
-            x={props.dotX}
-            dropdown={[
-              {
-                id: 'move-back',
-                title: 'Назад',
-                handler: moveFromContainerPick
-              },
-              {
-                id: 'pick',
-                title: 'Забрать',
-                handler: handleCalibrationContainerPick
-              }
-            ]}
-          />
-        </>
-      ) : showOrganicContainer ? (
-        <OrganicContainer
-          dotY={props.dotY}
-          dotX={props.dotX}
-          onBack={moveFromContainerPick}
-          onPick={handleOrganicContainerPick}
-        />
-      ) : (
-        <>
-          <img
-            className="Table"
-            src={table}
-            alt={table}
-            loading={"lazy"}
-          />
-          <ActionDot
-            y={props.dotY}
-            x={props.dotX}
-            dropdown={[
-              {
-                id: 'calibration-container',
-                title: 'Взять контрольный источник',
-                handler: handleCalibrationContainerChoose
-              },
-              {
-                id: 'organic-container',
-                title: 'Взять сосуд Маринелли',
-                handler: handleOrganicContainerChoose
-              }
-            ]}
-          />
-        </>
-      )}
-    </>
-  )
+        )
+      case isCalibrationContainerChosen || isOrganicContainerChosen:
+        return (
+          <>
+            <img
+              className="Table"
+              src={table}
+              alt={table}
+              loading={"lazy"}
+            />
+          </>
+        )
+      default:
+        return (
+          <>
+            <img
+              className="Table"
+              src={table}
+              alt={table}
+              loading={"lazy"}
+            />
+            <ActionDot
+              y={props.dotY}
+              x={props.dotX}
+              dropdown={[
+                {
+                  id: 'calibration-container',
+                  title: 'Взять контрольный источник',
+                  handler: handleCalibrationContainerChoose
+                },
+                {
+                  id: 'organic-container',
+                  title: 'Взять сосуд Маринелли',
+                  handler: handleOrganicContainerChoose
+                }
+              ]}
+            />
+          </>
+        )
+    }
+  }
+
+  return switchContent();
+
 }
