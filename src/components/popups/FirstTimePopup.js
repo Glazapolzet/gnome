@@ -4,6 +4,24 @@ import GammaExploring, { PotatoExploringActions } from "../../actions/gammaExplo
 
 export default function FirstTimePopup (props) {
 
+  // Можно сделать так:
+  // type BtnProps = {
+  //  penalty: number
+  //  variant: str
+  // }
+  // function handleBtnWithPenalty({penalty}) {
+  //  props.onClose()
+  //  GammaExploring.add_action_with_penalty(PotatoExploringActions.WAIT_FOR_WARMING_UP, penalty);
+  // }
+  // 
+  // const buttons BtnProps[] = [ ... ]
+  // ...
+  // <div> {buttons.map((val) => makeButton(val))} </div>
+
+  // Что может происходить при закрытии? 
+  // Если никакой специфичной логики, то можно его просто тоглить, как описано в Popup.js
+
+
   function handleFirstBtnClick () {
     props.onClose();
     GammaExploring.add_action_with_penalty(PotatoExploringActions.WAIT_FOR_WARMING_UP, 0.2);

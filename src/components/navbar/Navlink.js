@@ -12,6 +12,7 @@ export default function Navlink(props) {
         <button
           className={`Navlink__btn ${props.isDisabled ? "Navlink__btn_disabled" : ""}`}
           type="button"
+          // Пиши в одном стиле
           style={{
             backgroundImage: `url(${props.icon})`,
             backgroundRepeat: "no-repeat",

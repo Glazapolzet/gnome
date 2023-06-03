@@ -17,6 +17,7 @@ export default function DropdownNavLink (props) {
           type="button"
           className={`DropdownNavLink__btn ${props.isDisabled ? "DropdownNavLink__btn_disabled" : ""}`}
           onClick={toggleDropdown}
+          // что за смешение стилей? и классы и style
           style={{
             backgroundImage: `url(${props.icon})`,
             backgroundRepeat: "no-repeat",

@@ -1,6 +1,22 @@
 import './Popup.css'
 
+// Поддерживай файловую структуру - каждый попап в отдельной папке
+// Проведи небольшой ренейминг - FirstTimePopup - не самое интуитивное название
+
 export default function Popup (props) {
+
+  // Можно сделать так 
+  // 
+  // [open, setOpen] = useState(true)
+  // function toggle() {
+  //  setOpen(!open)
+  // }
+  // 
+  // ...
+  // <Styled style={{
+  //  visibility: open ? "visible" : "hidden"
+  // }}/>
+
   return (
     <div className={`Popup ${props.isOpen ? "Popup__opened" : ""}`}>
       <div className="Popup__top-area">

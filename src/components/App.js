@@ -30,6 +30,19 @@ import Window from "./sub-displays/window/Window";
 import Result from "./result/Result";
 import RadDoc from "./rad-doc/RadDoc";
 
+// Общие рекомендации:
+// Давай использовать typescript и styled-components 
+// 
+// Желательно делать небольшие компоненты. 
+// Часть компонентов - управляющие, обладают логикой
+// Другая часть - конечные компоненты представления, без логики
+// 
+// Название компонентов с большой буквы, название папок с компонентами - тоже
+// 
+// Описывай пропсы для компонентов (ts type or interface )
+
+// Перенеси images и docs в папку assets
+
 function App() {
 
   const navigate = useNavigate();
@@ -49,6 +62,14 @@ function App() {
       window.removeEventListener("keydown", ignore);
     };
   }, );
+
+// App не является контролирующим элементом всего приложения
+// Думаю здесь можно объявить провайдеров для данных, если это требуется
+// Большинство контекстов можно переместить к компонентам, которые их используют,
+// чтобы не происходило такого явления как props drilling 
+
+// Давай подумаем над тем чтобы использовать какую-нибудь библиотеку для управления состоянием,
+// если не получится обойтись контекстами. Присмотрись к mobx
 
   // useEffect(() => {
   //   function showClickCoord(evt) {
@@ -232,7 +253,7 @@ function App() {
                     isDesktopClicked={isDesktopClicked}
                     resetPages={resetPages}
                   />
-
+{/* Роутер и переходы можно выделить в отдельную сущность */}
                   <Routes>
                     <Route path="/" element={<Main />} />
                     <Route path="/quiz" element={<StartArea onClick={handlePcClick} />} />

@@ -8,11 +8,17 @@ import {FormContext} from "../../contexts/formContext";
 import {SpectreContext} from "../../contexts/spectreContext";
 import GammaExploring, { PotatoExploringActions } from "../../actions/gammaExploring.ts";
 
+// Это отдельный компонент
+// Поддерживай файловую структуру для повышения читаемости
+
 export default function TimeCounter (props) {
 
   const [tick, setTick] = useState(0);
   const [value, setValue] = useState(0);
   const [isDropdownVisible, setDropdownVisibility] = useState(false);
+
+  // Откуда так много зависимостей?
+  // Думаю большую часто логики можно реализовать через callback из контролирующего компонента
 
   const {
     isCalibrationPending,
@@ -118,6 +124,7 @@ export default function TimeCounter (props) {
   }, [targetValue, isCounterActive, isDisabled, tick, setCounterDone, resetDeps, props.interval])
 
   function checkReport () {
+    // showCalibrationReportNow || showBackgroundReportNow || showResearchReportNow
     if (showCalibrationReportNow) {
       GammaExploring.add_action(PotatoExploringActions.STOP_TIMER_FOR_C_POPUP);
     }

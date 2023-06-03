@@ -23,8 +23,10 @@ export default function Navbar(props) {
     activityForm, backgroundForm
   } = useContext(FormContext);
 
+  // Сделай отдельный компонент таймера
   const {setCounterActive, setTargetValue} = useContext(TimerContext);
 
+  // Почему так? Зачем отслеживать состояние попапов, есть какая-то логика связанная с этим?
   const [popupsOpenStatus, setPopupsOpenStatus] = useState({
     'calibration': false,
     'background': false,

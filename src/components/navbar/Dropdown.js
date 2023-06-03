@@ -8,6 +8,7 @@ export default function Dropdown (props) {
     props.toggleDropdown();
   }
 
+  // Можно использовать ту же стратегию что и в Popup.js
   return (
     <div className={`Dropdown ${
       props.isDropdownVisible

@@ -7,6 +7,10 @@ import GammaExploring, { PotatoExploringActions } from "../../actions/gammaExplo
 
 export default function BackgroundPopup (props) {
 
+  // Лучше давать компоненту только те данные, которые он использует
+  // вместо всех стейтов можно использовать только стейт disableButton из какого-нибудь другого компонента
+
+
   const {
     isBackgroundPending,
     setBackgroundPending,
