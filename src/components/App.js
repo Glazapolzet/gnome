@@ -30,7 +30,14 @@ import Window from "./sub-displays/window/Window";
 import Result from "./result/Result";
 import RadDoc from "./rad-doc/RadDoc";
 
+const { invoke } = window.__TAURI__.tauri
+
+
 function App() {
+
+  invoke('greet', { name: 'World' })
+  // `invoke` returns a Promise
+  .then((response) => console.log(response))
 
   const navigate = useNavigate();
 
