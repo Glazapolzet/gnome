@@ -18,6 +18,7 @@ import radNorms from "../../../docs/Rad_norms.pdf";
 import ecSpectre from "../../../images/EC_spectre.png";
 import bgSpectre from "../../../images/BG_spectre.png";
 import acSpectre from "../../../images/AC_spectre.png";
+import EnterProgramPopup from "../../popups/EnterProgramPopup/EnterProgramPopup";
 
 export default function Window (props) {
 
@@ -37,8 +38,8 @@ export default function Window (props) {
     setShouldResetNormsConclusion
   } = useContext(WindowContext);
 
-  const [isFirstTimePopupOpen, setFirstTimePopup] = useState(isDesktopClickedForFirstTime);
-
+  // const [isFirstTimePopupOpen, setFirstTimePopup] = useState(isDesktopClickedForFirstTime);
+  const [showEnterProgramPopup, setShowEnterProgramPopup] = useState(isDesktopClickedForFirstTime);
 
   useEffect(() => {
     if (isCalibrationReportDone && showCalibrationReportNow) {
@@ -56,10 +57,17 @@ export default function Window (props) {
     }
   }, [isBackgroundReportDone, isCalibrationReportDone, isResearchReportDone])
 
-  function closePopup () {
-    setFirstTimePopup(false);
-    setDesktopClickedForFirstTime(false);
-  }
+  useEffect(() => {
+    if (isDesktopClickedForFirstTime) {
+      setShowEnterProgramPopup(true);
+      setDesktopClickedForFirstTime(false);
+    }
+  }, [isDesktopClickedForFirstTime])
+
+  // function closePopup () {
+  //   setFirstTimePopup(false);
+  //   setDesktopClickedForFirstTime(false);
+  // }
 
   function switchContent () {
     if (isAboutPageActive && !props.isCounterDone) {
@@ -109,10 +117,11 @@ export default function Window (props) {
 
   return (
     <>
-      <FirstTimePopup
-        isOpen={isFirstTimePopupOpen}
-        onClose={closePopup}
-      />
+      <EnterProgramPopup showPopup={showEnterProgramPopup} />
+      {/*<FirstTimePopup*/}
+      {/*  isOpen={isFirstTimePopupOpen}*/}
+      {/*  onClose={closePopup}*/}
+      {/*/>*/}
       <section className="Window">
         <MoveBackArrow
           leadingTo={'/display'}

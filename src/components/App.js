@@ -7,31 +7,40 @@ import { ContainerContext } from "../contexts/containerContext";
 import { SpectreContext } from "../contexts/spectreContext";
 import { CaseContext } from "../contexts/caseContext";
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import {useEffect, useState} from "react";
+import {useEffect, useState, lazy, Suspense} from "react";
 
 //Recorder:
 import GammaExploring, { PotatoExploringActions } from "../actions/gammaExploring.ts";
 
-import Main from "./main/Main";
-import StartArea from "./quiz/StartArea";
-import Navbar from "./navbar/Navbar";
-
-import Display from "./quiz/Display";
-import DisplayImage from "./quiz/DisplayImage";
 import radiometer from "../images/radiometer.jpg";
 import desktop from "../images/desktop.jpg";
 import spectrometer from "../images/spectrometer.jpg";
 
 import multiradDoc from "../docs/multirad.pdf";
 
-import Case from "./sub-displays/table/Case";
-import Table from "./sub-displays/table/Table";
-import Window from "./sub-displays/window/Window";
-import Result from "./result/Result";
-import RadDoc from "./rad-doc/RadDoc";
+const Main = lazy(() => import("./main/Main"));
+const Navbar = lazy(() => import("./navbar/Navbar"));
 
-const { invoke } = window.__TAURI__.tauri
+const StartArea = lazy(() => import("./quiz/StartArea"));
+const Display = lazy(() => import("./quiz/Display"));
+const DisplayImage = lazy(() => import("./quiz/DisplayImage"));
+const Case = lazy(() => import("./sub-displays/table/Case"));
+const Table = lazy(() => import("./sub-displays/table/Table"));
+const Window = lazy(() => import("./sub-displays/window/Window"));
+const Result = lazy(() => import("./result/Result"));
+const RadDoc = lazy(() => import("./rad-doc/RadDoc"));
 
+const { invoke } = window.__TAURI__.tauri;
+
+// interface greetProps {
+//   name: string;
+// }
+//
+// const greet: greetProps = ({name}) => {
+//   invoke('greet', {name: name})
+//     // `invoke` returns a Promise
+//     .then((response) => console.log(response))
+// }
 
 function App() {
 
