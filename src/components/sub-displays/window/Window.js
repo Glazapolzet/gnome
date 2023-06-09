@@ -115,9 +115,10 @@ export default function Window (props) {
     }
   }
 
+
   return (
     <>
-      <EnterProgramPopup showPopup={showEnterProgramPopup} />
+      <EnterProgramPopup/>
       {/*<FirstTimePopup*/}
       {/*  isOpen={isFirstTimePopupOpen}*/}
       {/*  onClose={closePopup}*/}

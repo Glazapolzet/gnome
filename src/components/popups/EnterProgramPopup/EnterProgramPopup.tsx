@@ -1,42 +1,36 @@
 import GammaExploring, { PotatoExploringActions } from "../../../actions/gammaExploring";
+import { TempProvider, useTemp } from "../../../contexts/tempContext";
 
 import {Layout, TitleBar, Title, Description, CloseButton, ButtonWrapper, Button} from '../styled';
 import {FC, useState} from "react";
 
 interface PopupProps {
-  showPopup: boolean,
+  setShown: (val: boolean) => void;
 }
 
-const Popup: FC<PopupProps> = ({showPopup}) => {
+interface BtnClickProps {
+  penalty: number
+}
 
-  const [isOpen, setOpen] = useState(showPopup);
 
-  console.log(isOpen);
+const Popup: FC<PopupProps> = () => {
+  const [wasShown, setShown] = useTemp()
+  const [isOpen, setOpen] = useState(true);
 
-  function handleMoreTimeClick() : void {
-    setOpen(false);
-    GammaExploring.add_action_with_penalty(PotatoExploringActions.WAIT_FOR_WARMING_UP, 0.2);
+  function toggleOpen() {
+    setOpen(!isOpen)
+    setShown(true)
   }
 
-  function handleCorrectTimeClick() : void {
-    setOpen(false);
-    GammaExploring.add_action_with_penalty(PotatoExploringActions.WAIT_FOR_WARMING_UP, 0);
-  }
-
-  function handleLessTimeClick() : void {
-    setOpen(false);
-    GammaExploring.add_action_with_penalty(PotatoExploringActions.WAIT_FOR_WARMING_UP, 0.6);
-  }
-
-  function handleClose() : void {
-    setOpen(false);
-    GammaExploring.add_action_with_penalty(PotatoExploringActions.WAIT_FOR_WARMING_UP, 0.9);
+  function handleClick({penalty}: BtnClickProps): void {
+    toggleOpen()
+    GammaExploring.add_action_with_penalty(PotatoExploringActions.WAIT_FOR_WARMING_UP, penalty);
   }
 
   return (
-    <Layout isOpen={isOpen}>
+    <Layout isOpen={isOpen && !wasShown}>
       <TitleBar>
-        <CloseButton onClick={handleClose}/>
+        <CloseButton onClick={() => handleClick({penalty: 0.9})}/>
       </TitleBar>
       <Title>Предупреждение</Title>
       <Description>
@@ -45,13 +39,13 @@ const Popup: FC<PopupProps> = ({showPopup}) => {
       </Description>
 
       <ButtonWrapper>
-        <Button onClick={handleMoreTimeClick}>
+        <Button onClick={() => handleClick({penalty: 0.2})}>
           20-30 минут
         </Button>
-        <Button onClick={handleCorrectTimeClick}>
+        <Button onClick={() => handleClick({penalty: 0})}>
           10-15 минут
         </Button>
-        <Button onClick={handleLessTimeClick}>
+        <Button onClick={() => handleClick({penalty: 0.6})}>
           5 минут
         </Button>
       </ButtonWrapper>
