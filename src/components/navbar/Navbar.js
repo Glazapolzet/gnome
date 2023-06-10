@@ -11,8 +11,11 @@ import info from "../../images/info.svg";
 import {useContext, useEffect, useState} from "react";
 import {FormContext} from "../../contexts/formContext";
 import {TimerContext} from "../../contexts/timerContext";
+import { Timer,  useTimer } from './Timer/Timer';
 
 export default function Navbar(props) {
+
+  const [timerOpts, timerDone, setOpts] = useTimer()
 
   const navigate = useNavigate();
 
@@ -50,10 +53,20 @@ export default function Navbar(props) {
   }
 
   function setCounter(interval, targetValue, inMinutes= false) {
-    setTimerInterval(interval);
-    setWithMinutes(inMinutes);
-    setTargetValue(targetValue);
-    setCounterActive(true);
+    setOpts(
+      {
+        isActive: true,
+        isActionsDisabled: false,
+        bitrate: interval,
+        time: targetValue,
+        format: inMinutes ? "min" : "sec"
+      }
+    )
+
+    // setTimerInterval(interval);
+    // setWithMinutes(inMinutes);
+    // setTargetValue(targetValue);
+    // setCounterActive(true);
   }
 
   function handleCalibrationPopupClick () {
@@ -146,12 +159,13 @@ export default function Navbar(props) {
             />
           </li>
           <li className="Navbar__link-wrapper">
-            <TimeCounter
+            <Timer/>
+            {/* <TimeCounter
               //проверяет, доступна ли иконка часиков для нажатия
               isDisabled={!props.isDesktopClicked || isNavbarBtnsDisabled}
               inMinutes={withMinutes}
               interval={timerInterval}
-            />
+            /> */}
           </li>
         </ul>
 
@@ -168,6 +182,7 @@ export default function Navbar(props) {
           </li>
         </ul>
       </div>
+
     </>
   )
 }

@@ -18,6 +18,7 @@ import spectrometer from "../images/spectrometer.jpg";
 
 import multiradDoc from "../docs/multirad.pdf";
 import { TempProvider } from '../contexts/tempContext';
+import { TimerProvider } from './navbar/Timer/Timer';
 
 const Main = lazy(() => import("./main/Main"));
 const Navbar = lazy(() => import("./navbar/Navbar"));
@@ -214,6 +215,7 @@ function App() {
       resetPages
     }}>
       <TempProvider>
+      <TimerProvider>
       <FormContext.Provider value={{
         userData, setUserData,
         isFormOnSubmit, setFormSubmitStatus,
@@ -328,6 +330,7 @@ function App() {
           </CaseContext.Provider>
         </TimerContext.Provider>
       </FormContext.Provider>
+      </TimerProvider>
       </TempProvider>
     </WindowContext.Provider>
   );
