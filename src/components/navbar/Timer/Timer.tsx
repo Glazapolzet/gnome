@@ -36,6 +36,7 @@ export const TimerContext = createContext<TimerContextProps>({
   done: false,
   setOpts: () => {},
   setDone: () => {}
+  // you can add stopCallback for func that must be called after stop click
 })
 
 export const TimerProvider: FC<TimerProviderProps> = ({ children }) => {
