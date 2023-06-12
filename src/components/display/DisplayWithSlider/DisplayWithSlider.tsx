@@ -43,12 +43,16 @@ const DisplayWithSlider: FC<DisplayWithSliderProps> = ({startSlide, sliderData})
           src={arrowLeft}
           onClick={prevSlide}
         />
-          {currentSlide}
+      </BarLeft>
+
+      {currentSlide}
+
+      <BarRight>
         <Arrow
           src={arrowRight}
           onClick={nextSlide}
         />
-      </BarLeft>
+      </BarRight>
     </Container>
   )
 
