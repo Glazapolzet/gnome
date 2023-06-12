@@ -17,7 +17,7 @@ import desktop from "../images/desktop.jpg";
 import spectrometer from "../images/spectrometer.jpg";
 
 import multiradDoc from "../docs/multirad.pdf";
-import { TempProvider } from '../contexts/tempContext';
+import { GlobalContextProvider } from '../contexts/GlobalContext';
 
 const Main = lazy(() => import("./main/Main"));
 const Navbar = lazy(() => import("./navbar/Navbar"));
@@ -213,7 +213,7 @@ function App() {
       shouldResetNormsConclusion, setShouldResetNormsConclusion,
       resetPages
     }}>
-      <TempProvider>
+      <GlobalContextProvider>
       <FormContext.Provider value={{
         userData, setUserData,
         isFormOnSubmit, setFormSubmitStatus,
@@ -328,7 +328,7 @@ function App() {
           </CaseContext.Provider>
         </TimerContext.Provider>
       </FormContext.Provider>
-      </TempProvider>
+      </GlobalContextProvider>
     </WindowContext.Provider>
   );
 }

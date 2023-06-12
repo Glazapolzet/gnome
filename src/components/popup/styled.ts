@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
+
 interface LayoutProps {
   isOpen: boolean,
 }
 
 export const Layout = styled.div<LayoutProps>`
   visibility: ${({isOpen}) => isOpen ? 'visible' : 'hidden'};
-  //visibility: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,7 +74,7 @@ export const Description = styled.p`
   line-height: 1.4;
 `
 
-export const ButtonWrapper = styled.div`
+export const ButtonContainer = styled.div`
   margin: 30px 0 18px;
   display: flex;
   column-gap: 15px;
@@ -93,4 +93,15 @@ export const Button = styled.button`
   &:hover {
     background-color: #e1e1e1;
   }
+  
+  &:disabled {
+    opacity: .7;
+    cursor: default;
+  }
+  
+  &:disabled:hover {
+    background-color: #eeeeee;
+  }
 `
+
+

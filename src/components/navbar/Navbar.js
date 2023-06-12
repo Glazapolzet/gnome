@@ -3,9 +3,9 @@ import {useNavigate} from "react-router-dom";
 import DropdownNavLink from "./DropdownNavLink";
 import Navlink from "./Navlink";
 import TimeCounter from "./TimeCounter";
-import CalibrationPopup from "../popups/CalibrationPopup";
-import BackgroundPopup from "../popups/BackgroundPopup";
-import ActivityPopup from "../popups/ActivityPopup";
+import CalibrationPopup from "../popup/CalibrationPopup";
+import BackgroundPopup from "../popup/BackgroundPopup";
+import ActivityPopup from "../popup/ActivityPopup";
 import beaker from "../../images/beaker-20-solid.svg";
 import info from "../../images/info.svg";
 import {useContext, useEffect, useState} from "react";
@@ -49,6 +49,7 @@ export default function Navbar(props) {
     })
   }
 
+  //сделать из этого глобальную функцию
   function setCounter(interval, targetValue, inMinutes= false) {
     setTimerInterval(interval);
     setWithMinutes(inMinutes);

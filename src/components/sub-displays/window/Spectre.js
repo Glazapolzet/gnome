@@ -4,7 +4,7 @@ import {SpectreContext} from "../../../contexts/spectreContext";
 import {FormContext} from "../../../contexts/formContext";
 import Doc from "../../rad-doc/Doc";
 import {WindowContext} from "../../../contexts/windowContext";
-import Popup from "../../popups/Popup";
+import Popup from "../../popup/Popup";
 import GammaExploring, {PotatoExploringActions} from "../../../actions/gammaExploring";
 
 export default function Spectre (props) {

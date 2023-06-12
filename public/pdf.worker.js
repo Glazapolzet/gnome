@@ -59873,7 +59873,7 @@ class XFAFactory {
   }
 
   setImages(images) {
-    this.form[_xfa_object.$globalData].images = images;
+    this.form[_xfa_object.$globalData].sliderData = images;
   }
 
   setFonts(fonts) {

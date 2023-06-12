@@ -19,9 +19,22 @@ export default function ActionDotDropdown (props) {
           <li
             key={id}
             className="ActionDotDropdown__btn"
-            onClick={() => handleBtnClick(handler)}
           >
-            {title}
+            <button
+              onClick={() => handleBtnClick(handler)}
+              style={{
+                padding: 0,
+                cursor: 'pointer',
+                border: 'none',
+                backgroundColor: 'inherit',
+                width: '100%',
+                height: '100%',
+                fontSize: '16px',
+                fontStyle: 'inherit',
+                textAlign: 'start',
+              }}>
+              {title}
+            </button>
           </li>
         ))}
       </ul>

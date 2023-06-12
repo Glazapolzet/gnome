@@ -12,7 +12,7 @@
   display: flex;
   position: relative;
   align-self: center;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
   border-radius: 8px;
 }
 
@@ -43,6 +43,7 @@
 .Display__left-bar {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
+  left: 0;
 }
 
 .Display__left-arrow {

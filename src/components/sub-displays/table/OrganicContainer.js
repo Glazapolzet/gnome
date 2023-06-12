@@ -4,7 +4,7 @@ import {useContext, useState} from "react";
 import organicContainerOpened from '../../../images/organic-container_opened.jpg';
 import organicContainerClosed from '../../../images/organic-container_closed.jpg';
 import organicContainerWithPotato from '../../../images/organic-container_with_potato.jpg';
-import Popup from "../../popups/Popup";
+import Popup from "../../popup/Popup";
 import {ContainerContext} from "../../../contexts/containerContext";
 import GammaExploring, { PotatoExploringActions } from "../../../actions/gammaExploring.ts";
 

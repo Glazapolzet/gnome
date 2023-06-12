@@ -2,7 +2,6 @@ import './Window.css';
 import MoveBackArrow from "../../back-arrow/MoveBackArrow";
 import {useContext, useEffect, useState} from "react";
 import {TimerContext} from "../../../contexts/timerContext";
-import FirstTimePopup from "../../popups/FirstTimePopup";
 import About from "./About";
 import {WindowContext} from "../../../contexts/windowContext";
 import CalibrationReport from "./CalibrationReport";
@@ -18,7 +17,8 @@ import radNorms from "../../../docs/Rad_norms.pdf";
 import ecSpectre from "../../../images/EC_spectre.png";
 import bgSpectre from "../../../images/BG_spectre.png";
 import acSpectre from "../../../images/AC_spectre.png";
-import EnterProgramPopup from "../../popups/EnterProgramPopup/EnterProgramPopup";
+
+import EnterProgramPopup from "../../popup/EnterProgramPopup/EnterProgramPopup";
 
 export default function Window (props) {
 
@@ -119,10 +119,7 @@ export default function Window (props) {
   return (
     <>
       <EnterProgramPopup/>
-      {/*<FirstTimePopup*/}
-      {/*  isOpen={isFirstTimePopupOpen}*/}
-      {/*  onClose={closePopup}*/}
-      {/*/>*/}
+
       <section className="Window">
         <MoveBackArrow
           leadingTo={'/display'}
