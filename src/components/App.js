@@ -6,30 +6,41 @@ import { WindowContext } from "../contexts/windowContext";
 import { ContainerContext } from "../contexts/containerContext";
 import { SpectreContext } from "../contexts/spectreContext";
 import { CaseContext } from "../contexts/caseContext";
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
 import {useEffect, useState, lazy, Suspense} from "react";
 
 //Recorder:
 import GammaExploring, { PotatoExploringActions } from "../actions/gammaExploring.ts";
 
 import radiometer from "../images/radiometer.jpg";
-import desktop from "../images/desktop.jpg";
+import pc from "../images/pc.jpg";
 import spectrometer from "../images/spectrometer.jpg";
+import cabinet from "../images/cabinet.jpg";
 
 import multiradDoc from "../docs/multirad.pdf";
 import { GlobalContextProvider } from '../contexts/GlobalContext';
+import Display from "./display/Display";
+import DisplayImage from "./display-image/DisplayImage";
+import DisplayWithSlider from "./display/DisplayWithSlider";
+import GameArea from "./GameArea";
+import DisplayImageWithDropdownDot from "./display-image/DisplayImageWithDropdownDot";
+import DisplayImageWithDot from "./display-image/DisplayImageWithDot";
 
 const Main = lazy(() => import("./main/Main"));
 const Navbar = lazy(() => import("./navbar/Navbar"));
 
 const StartArea = lazy(() => import("./quiz/StartArea"));
-const Display = lazy(() => import("./quiz/Display"));
-const DisplayImage = lazy(() => import("./quiz/DisplayImage"));
+// const Display = lazy(() => import("./quiz/Display"));
+// const DisplayImage = lazy(() => import("./quiz/DisplayImage"));
 const Case = lazy(() => import("./sub-displays/table/Case"));
 const Table = lazy(() => import("./sub-displays/table/Table"));
 const Window = lazy(() => import("./sub-displays/window/Window"));
 const Result = lazy(() => import("./result/Result"));
 const RadDoc = lazy(() => import("./rad-doc/RadDoc"));
+
+
+const Content = lazy(() => import("../components/Content"));
+
 
 const { invoke } = window.__TAURI__.tauri;
 
@@ -173,16 +184,18 @@ function App() {
     if (!GammaExploring.check_action_added(PotatoExploringActions.ENABLE_PC)) {
       GammaExploring.add_action(PotatoExploringActions.ENABLE_PC);
     }
-    navigate('/display');
+    console.log("work")
+    // navigate('/display');
   }
 
-  function handleDesktopClick () {
+  function handleProgramClick () {
     if (!GammaExploring.check_action_added(PotatoExploringActions.ENABLE_PROGRAM)) {
       GammaExploring.add_action(PotatoExploringActions.ENABLE_PROGRAM);
     }
     setDesktopClicked(true);
     setAboutPageActive(true);
-    navigate('/window');
+    // navigate('/window');
+    navigate("/page/game/program");
   }
 
   function handleWindowLeave () {
@@ -246,82 +259,143 @@ function App() {
               }}>
                 <div className="App">
 
-                  <Navbar
-                    isDesktopClicked={isDesktopClicked}
-                    resetPages={resetPages}
-                  />
-
                   <Routes>
-                    <Route path="/" element={<Main />} />
-                    <Route path="/quiz" element={<StartArea onClick={handlePcClick} />} />
-                    <Route path="/display" element={<Display
-                      backArrowTo={'/quiz'}
-                      defaultPicIndex={1}
-                      pics={[
-                        "radiometer",
-                        "desktop",
-                        "spectrometer"
-                      ]}/>}
-                    >
-                      <Route path="radiometer" element={<DisplayImage
-                        pic={radiometer}
-                        withDot={false}
-                      />}/>
+                    <Route path={"/"} element={<Navigate to={"/page/menu"} replace={true}/>}/>
+                    {/* isDesktopClicked, resetPages – temp props */}
+                    <Route path={"/page"} element={<Content isDesktopClicked={isDesktopClicked} resetPages={resetPages} />}>
+                      <Route path={"menu"} element={<Main />}/>
 
-                      <Route path="desktop" element={<DisplayImage
-                        pic={desktop}
-                        withDot={true}
-                        dotX={255}
-                        dotY={45}
-                        dotDropdown={[
-                          {
-                            id: "start-app",
-                            title: 'Запуск ПО «Прогресс»',
-                            handler: handleDesktopClick
-                          },
-                        ]}
-                      />}/>
+                      {/*TODO: поменять роуты в навбаре на эти:*/}
+                      <Route path={"info"} element={<RadDoc file={multiradDoc} />}/>
+                      <Route path={"result"} element={<Result />} />
 
-                      <Route path="spectrometer" element={<DisplayImage
-                        pic={spectrometer}
-                        withDot={true}
-                        dotLeadingTo={'/spec-area'}
-                        dotX={935}
-                        dotY={160}
-                      />}/>
+                      <Route path={"game"} element={<GameArea />}>
+                        <Route path={"start"} element={<Display
+                          srcImage={cabinet}
+                          dotX={725}
+                          dotY={530}
+                          dotCallback={handlePcClick}
+                          dotDestination={"/page/game/zone-pc"}
+                          />}/>
+
+                        <Route path={"zone-pc"} element={<DisplayWithSlider
+                          startSlide={"pc"}
+                          sliderData={{
+                            "radiometer": <DisplayImage src={radiometer} />,
+                            "pc": <DisplayImageWithDropdownDot
+                              src={pc}
+                              dotX={255}
+                              dotY={45}
+                              dropdown={[{
+                                title: 'Запуск ПО «Прогресс»',
+                                handler: handleProgramClick,
+                              }]}/>,
+                            "spectrometer": <DisplayImageWithDot
+                              srcImage={spectrometer}
+                              dotX={935}
+                              dotY={160}
+                              dotDestination={"page/game/zone-spectrometer"}
+                            />,
+                          }}
+                        />}/>
+
+                        <Route path={"zone-spectrometer"} element={<DisplayWithSlider
+                          startSlide={"case"}
+                          sliderData={{
+                            "case": <Case dotX={820} dotY={320} />,
+                            "table": <Table dotX={900} dotY={300} />,
+                          }}
+                          />}/>
+
+                        {/*TODO: сделать отдельные роуты для репортов*/}
+                        <Route path={"program"} element={<Window
+                          onLeave={handleWindowLeave}
+                          resetPages={resetPages}
+                          isCounterDone = {isCounterDone}
+                          isCalibrationReportDone = {isCalibrationReportDone}
+                          isBackgroundReportDone = {isBackgroundReportDone}
+                          isResearchReportDone = {isResearchReportDone}
+                        />}/>
+                      </Route>
                     </Route>
-
-                    {/*TODO: сделать норм фотку стола*/}
-                    <Route path={'/spec-area'} element={<Display
-                      backArrowTo={'/display'}
-                      defaultPicIndex={0}
-                      pics={[
-                        "case-closed",
-                        "table",
-                      ]}/>}>
-
-                      <Route path="case-closed" element={<Case
-                        dotX={820}
-                        dotY={320}
-                      />}/>
-
-                      <Route path="table" element={<Table
-                        dotX={900}
-                        dotY={300}
-                      />}/>
-
-                    </Route>
-                    <Route path="/window" element={<Window
-                      onLeave={handleWindowLeave}
-                      resetPages={resetPages}
-                      isCounterDone = {isCounterDone}
-                      isCalibrationReportDone = {isCalibrationReportDone}
-                      isBackgroundReportDone = {isBackgroundReportDone}
-                      isResearchReportDone = {isResearchReportDone}
-                    />} />
-                    <Route path="/rad-doc" element={<RadDoc file={multiradDoc} />} />
-                    <Route path="/result" element={<Result />} />
                   </Routes>
+
+                  {/*<Navbar*/}
+                  {/*  isDesktopClicked={isDesktopClicked}*/}
+                  {/*  resetPages={resetPages}*/}
+                  {/*/>*/}
+
+                  {/*<Routes>*/}
+                  {/*  <Route path="/" element={<Main />} />*/}
+                  {/*  <Route path="/quiz" element={<StartArea onClick={handlePcClick} />} />*/}
+                  {/*  <Route path="/display" element={<Display*/}
+                  {/*    backArrowTo={'/quiz'}*/}
+                  {/*    defaultPicIndex={1}*/}
+                  {/*    pics={[*/}
+                  {/*      "radiometer",*/}
+                  {/*      "desktop",*/}
+                  {/*      "spectrometer"*/}
+                  {/*    ]}/>}*/}
+                  {/*  >*/}
+                  {/*    <Route path="radiometer" element={<DisplayImage*/}
+                  {/*      pic={radiometer}*/}
+                  {/*      withDot={false}*/}
+                  {/*    />}/>*/}
+
+                  {/*    <Route path="desktop" element={<DisplayImage*/}
+                  {/*      pic={desktop}*/}
+                  {/*      withDot={true}*/}
+                  {/*      dotX={255}*/}
+                  {/*      dotY={45}*/}
+                  {/*      dotDropdown={[*/}
+                  {/*        {*/}
+                  {/*          id: "start-app",*/}
+                  {/*          title: 'Запуск ПО «Прогресс»',*/}
+                  {/*          handler: handleProgramClick*/}
+                  {/*        },*/}
+                  {/*      ]}*/}
+                  {/*    />}/>*/}
+
+                  {/*    <Route path="spectrometer" element={<DisplayImage*/}
+                  {/*      pic={spectrometer}*/}
+                  {/*      withDot={true}*/}
+                  {/*      dotLeadingTo={'/spec-area'}*/}
+                  {/*      dotX={935}*/}
+                  {/*      dotY={160}*/}
+                  {/*    />}/>*/}
+                  {/*  </Route>*/}
+
+                  {/*  /!*TODO: сделать норм фотку стола*!/*/}
+                  {/*  <Route path={'/spec-area'} element={<Display*/}
+                  {/*    backArrowTo={'/display'}*/}
+                  {/*    defaultPicIndex={0}*/}
+                  {/*    pics={[*/}
+                  {/*      "case-closed",*/}
+                  {/*      "table",*/}
+                  {/*    ]}/>}>*/}
+
+                  {/*    <Route path="case-closed" element={<Case*/}
+                  {/*      dotX={820}*/}
+                  {/*      dotY={320}*/}
+                  {/*    />}/>*/}
+
+                  {/*    <Route path="table" element={<Table*/}
+                  {/*      dotX={900}*/}
+                  {/*      dotY={300}*/}
+                  {/*    />}/>*/}
+
+                  {/*  </Route>*/}
+                  {/*  <Route path="/window" element={<Window*/}
+                  {/*    onLeave={handleWindowLeave}*/}
+                  {/*    resetPages={resetPages}*/}
+                  {/*    isCounterDone = {isCounterDone}*/}
+                  {/*    isCalibrationReportDone = {isCalibrationReportDone}*/}
+                  {/*    isBackgroundReportDone = {isBackgroundReportDone}*/}
+                  {/*    isResearchReportDone = {isResearchReportDone}*/}
+                  {/*  />} />*/}
+                  {/*  <Route path="/rad-doc" element={<RadDoc file={multiradDoc} />} />*/}
+                  {/*  <Route path="/result" element={<Result />} />*/}
+                  {/*</Routes>*/}
                 </div>
               </SpectreContext.Provider>
             </ContainerContext.Provider>

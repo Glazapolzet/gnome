@@ -12,7 +12,7 @@ import Spectre from "./Spectre";
 import ecReport from "../../../docs/EC_report.pdf";
 import bgReport from "../../../docs/BG_report.pdf";
 import acReport from "../../../docs/AC_report.pdf";
-import radNorms from "../../../docs/Rad_norms.pdf";
+import radNorms from "../../../docs/rad_norms.pdf";
 
 import ecSpectre from "../../../images/EC_spectre.png";
 import bgSpectre from "../../../images/BG_spectre.png";
@@ -128,36 +128,36 @@ export default function Window (props) {
         />
         <div className="Window__container">
           {switchContent()}
-          <div className="Window__footer-navbar">
-            <button
-              type="button"
-              className={`Window__footer-button ${isCalibrationReportPageActive ? "Window__footer-button_active" : ""}`}
-              onClick={handleCalibrationReportBtnClick}
-            >
-              Отчет Э.К.
-            </button>
-            <button
-              type="button"
-              className={`Window__footer-button ${isBackgroundReportPageActive ? "Window__footer-button_active" : ""}`}
-              onClick={handleBackgroundReportBtnClick}
-            >
-              Отчет И.Ф.
-            </button>
-            <button
-              type="button"
-              className={`Window__footer-button ${isResearchReportPageActive ? "Window__footer-button_active" : ""}`}
-              onClick={handleResearchReportBtnClick}
-            >
-              Отчет И.А.
-            </button>
-            <button
-              type="button"
-              className={`Window__footer-button ${isSpectrePageActive ? "Window__footer-button_active" : ""}`}
-              onClick={handleSpectreBtnClick}
-            >
-              Спектр
-            </button>
-          </div>
+        </div>
+        <div className="Window__footer-navbar">
+          <button
+            type="button"
+            className={`Window__footer-button ${isCalibrationReportPageActive ? "Window__footer-button_active" : ""}`}
+            onClick={handleCalibrationReportBtnClick}
+          >
+            Отчет Э.К.
+          </button>
+          <button
+            type="button"
+            className={`Window__footer-button ${isBackgroundReportPageActive ? "Window__footer-button_active" : ""}`}
+            onClick={handleBackgroundReportBtnClick}
+          >
+            Отчет И.Ф.
+          </button>
+          <button
+            type="button"
+            className={`Window__footer-button ${isResearchReportPageActive ? "Window__footer-button_active" : ""}`}
+            onClick={handleResearchReportBtnClick}
+          >
+            Отчет И.А.
+          </button>
+          <button
+            type="button"
+            className={`Window__footer-button ${isSpectrePageActive ? "Window__footer-button_active" : ""}`}
+            onClick={handleSpectreBtnClick}
+          >
+            Спектр
+          </button>
         </div>
       </section>
     </>

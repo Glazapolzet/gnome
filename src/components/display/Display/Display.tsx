@@ -7,16 +7,18 @@ interface DisplayProps {
   srcImage: string,
   dotX: number,
   dotY: number,
+  dotCallback: () => void,
   dotDestination: string,
 }
 
-const Display: FC<DisplayProps> = ({srcImage, dotX, dotY, dotDestination}) => {
+const Display: FC<DisplayProps> = ({srcImage, dotX, dotY, dotCallback, dotDestination}) => {
   return (
     <Container>
       <DisplayImageWithDot
-        src={srcImage}
+        srcImage={srcImage}
         dotX={dotX}
         dotY={dotY}
+        dotCallback={dotCallback}
         dotDestination={dotDestination}
       />
     </Container>

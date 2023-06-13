@@ -55,7 +55,7 @@ export default function Form () {
   function handleFormSubmit(evt) {
     evt.preventDefault();
 
-    navigate('/quiz');
+    navigate("/page/game/start");
     setFormSubmitStatus(true);
   }
 
