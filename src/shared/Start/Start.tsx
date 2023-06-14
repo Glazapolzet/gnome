@@ -1,5 +1,5 @@
 import cabinet from "../../images/cabinet.jpg";
-import DisplayImageWithDot from "../../components/display-image/DisplayImageWithDot";
+import ImageWithDot from "../../components/image/ImageWithDot";
 import GammaExploring, {PotatoExploringActions} from "../../actions/gammaExploring";
 import {PATH_ZONE_PC} from "../../constants/pathnames";
 import Display from "../../components/display/Display";
@@ -16,7 +16,7 @@ const Start = () => {
   return (
     <Display
       component={
-        <DisplayImageWithDot
+        <ImageWithDot
           srcImage={cabinet}
           dotX={725}
           dotY={530}

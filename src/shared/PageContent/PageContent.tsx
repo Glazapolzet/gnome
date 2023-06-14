@@ -1,5 +1,5 @@
 import {Layout} from "./styled";
-import Navbar from "../navbar/Navbar";
+import Navbar from "../../components/navbar/Navbar";
 import {FC} from "react";
 import {Outlet} from "react-router-dom";
 
@@ -10,7 +10,7 @@ interface TempProps {
 }
 
 //TODO: это старые пропсы от навбара, пока оставила в качестве заглушки
-const Content: FC<TempProps> = ({isDesktopClicked, resetPages}) => {
+const PageContent: FC<TempProps> = ({isDesktopClicked, resetPages}) => {
   return (
     <>
       <Navbar
@@ -24,4 +24,4 @@ const Content: FC<TempProps> = ({isDesktopClicked, resetPages}) => {
   )
 }
 
-export default Content;
+export default PageContent;

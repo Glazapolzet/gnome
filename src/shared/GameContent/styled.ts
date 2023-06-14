@@ -1,7 +1,7 @@
 import styled from "styled-components/macro";
 
 
-export const Wrapper = styled.div`
+export const Layout = styled.div`
   display: flex;
   height: calc(100% - 65px);
   width: 100%;

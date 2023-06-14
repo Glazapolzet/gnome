@@ -7,46 +7,26 @@ import { ContainerContext } from "../contexts/containerContext";
 import { SpectreContext } from "../contexts/spectreContext";
 import { CaseContext } from "../contexts/caseContext";
 import {Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom';
-import {useEffect, useState, lazy, Suspense} from "react";
+import {useEffect, useState, lazy} from "react";
 
 //Recorder:
 import GammaExploring, { PotatoExploringActions } from "../actions/gammaExploring.ts";
 
-import radiometer from "../images/radiometer.jpg";
-import pc from "../images/pc.jpg";
-import spectrometer from "../images/spectrometer.jpg";
-import cabinet from "../images/cabinet.jpg";
-
 import multiradDoc from "../docs/multirad.pdf";
-import { GlobalContextProvider } from '../contexts/GlobalContext';
-import Display from "./display/Display";
-import DisplayImage from "./display-image/DisplayImage";
-import DisplayWithSlider from "./display/DisplayWithSlider";
-import GameArea from "./GameArea";
-import DisplayImageWithDropdownDot from "./display-image/DisplayImageWithDropdownDot";
-import DisplayImageWithDot from "./display-image/DisplayImageWithDot";
 
-import Table from "./sub-displays/table/Table";
-import Case from "./sub-displays/table/Case";
+import {GlobalContextProvider} from '../contexts/GlobalContext';
+import {PATH_MENU, PATH_PROGRAM} from "../constants/pathnames";
+import GameContent from "../shared/GameContent";
 import Start from "../shared/Start";
 import ZonePc from "../shared/ZonePc";
 import ZoneSpectrometer from "../shared/ZoneSpectrometer";
-import {PATH_PROGRAM} from "../constants/pathnames";
+import PageContent from "../shared/PageContent";
 
 const Main = lazy(() => import("./main/Main"));
-const Navbar = lazy(() => import("./navbar/Navbar"));
 
-const StartArea = lazy(() => import("./quiz/StartArea"));
-// const Display = lazy(() => import("./quiz/Display"));
-// const DisplayImage = lazy(() => import("./quiz/DisplayImage"));
-// const Case = lazy(() => import("./sub-displays/table/Case"));
-// const Table = lazy(() => import("./sub-displays/table/Table"));
 const Window = lazy(() => import("./sub-displays/window/Window"));
 const Result = lazy(() => import("./result/Result"));
 const RadDoc = lazy(() => import("./rad-doc/RadDoc"));
-
-
-const Content = lazy(() => import("../components/Content"));
 
 
 const { invoke } = window.__TAURI__.tauri;
@@ -271,16 +251,17 @@ function App() {
                 <div className="App">
 
                   <Routes>
-                    <Route path={"/"} element={<Navigate to={"/page/menu"} replace={true}/>}/>
+                    <Route path={"/"} element={<Navigate to={PATH_MENU} replace={true}/>}/>
+
                     {/* isDesktopClicked, resetPages – temp props */}
-                    <Route path={"/page"} element={<Content isDesktopClicked={isDesktopClicked} resetPages={resetPages} />}>
+                    <Route path={"/page"} element={<PageContent isDesktopClicked={isDesktopClicked} resetPages={resetPages} />}>
                       <Route path={"menu"} element={<Main />}/>
 
                       {/*TODO: поменять роуты в навбаре на эти:*/}
                       <Route path={"info"} element={<RadDoc file={multiradDoc} />}/>
                       <Route path={"result"} element={<Result />} />
 
-                      <Route path={"game"} element={<GameArea />}>
+                      <Route path={"game"} element={<GameContent />}>
                         <Route path={"start"} element={<Start />} />
 
                         <Route path={"zone-pc"} element={<ZonePc handleProgramClick={handleProgramClick} />}/>
@@ -317,12 +298,12 @@ function App() {
                   {/*      "spectrometer"*/}
                   {/*    ]}/>}*/}
                   {/*  >*/}
-                  {/*    <Route path="radiometer" element={<DisplayImage*/}
+                  {/*    <Route path="radiometer" element={<Image*/}
                   {/*      pic={radiometer}*/}
                   {/*      withDot={false}*/}
                   {/*    />}/>*/}
 
-                  {/*    <Route path="desktop" element={<DisplayImage*/}
+                  {/*    <Route path="desktop" element={<Image*/}
                   {/*      pic={desktop}*/}
                   {/*      withDot={true}*/}
                   {/*      dotX={255}*/}
@@ -336,7 +317,7 @@ function App() {
                   {/*      ]}*/}
                   {/*    />}/>*/}
 
-                  {/*    <Route path="spectrometer" element={<DisplayImage*/}
+                  {/*    <Route path="spectrometer" element={<Image*/}
                   {/*      pic={spectrometer}*/}
                   {/*      withDot={true}*/}
                   {/*      dotLeadingTo={'/spec-area'}*/}
@@ -345,7 +326,6 @@ function App() {
                   {/*    />}/>*/}
                   {/*  </Route>*/}
 
-                  {/*  /!*TODO: сделать норм фотку стола*!/*/}
                   {/*  <Route path={'/spec-area'} element={<Display*/}
                   {/*    backArrowTo={'/display'}*/}
                   {/*    defaultPicIndex={0}*/}

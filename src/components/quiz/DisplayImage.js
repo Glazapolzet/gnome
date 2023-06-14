@@ -1,7 +1,7 @@
 import './DisplayImage.css'
 import ActionDot from "../action-dot/ActionDot";
 
-export default function DisplayImage (props) {
+export default function Image (props) {
 
   return (
     <>

@@ -1,4 +1,4 @@
-import {Image} from '../styled';
+import {Img} from '../styled';
 import {FC} from "react";
 import ActionDotWithDropdown from "../../action-dot/ActionDotWithDropdown";
 import type {DropdownProps} from "../../action-dot/Dropdown";
@@ -10,10 +10,10 @@ interface DisplayImageWithDropdownDotProps {
   dotDropdown: Array<DropdownProps>,
 }
 
-const DisplayImageWithDropdownDot: FC<DisplayImageWithDropdownDotProps> = ({src, dotX, dotY, dotDropdown}) => {
+const ImageWithDropdownDot: FC<DisplayImageWithDropdownDotProps> = ({src, dotX, dotY, dotDropdown}) => {
   return (
     <>
-      <Image
+      <Img
         src={src}
         alt={"image"}
       />
@@ -26,4 +26,4 @@ const DisplayImageWithDropdownDot: FC<DisplayImageWithDropdownDotProps> = ({src,
   )
 }
 
-export default DisplayImageWithDropdownDot;
+export default ImageWithDropdownDot;

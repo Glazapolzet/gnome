@@ -1,4 +1,4 @@
-import {Image} from '../styled';
+import {Img} from '../styled';
 import {FC} from "react";
 import ActionDot from "../../action-dot/ActionDot/ActionDot";
 
@@ -10,10 +10,10 @@ interface DisplayImageWithDotProps {
   dotDestination: string,
 }
 
-const DisplayImageWithDot: FC<DisplayImageWithDotProps> = ({srcImage, dotX, dotY,dotCallback, dotDestination}) => {
+const ImageWithDot: FC<DisplayImageWithDotProps> = ({srcImage, dotX, dotY,dotCallback, dotDestination}) => {
   return (
     <>
-      <Image
+      <Img
         src={srcImage}
         alt={"image"}
       />
@@ -27,4 +27,4 @@ const DisplayImageWithDot: FC<DisplayImageWithDotProps> = ({srcImage, dotX, dotY
   )
 }
 
-export default DisplayImageWithDot;
+export default ImageWithDot;

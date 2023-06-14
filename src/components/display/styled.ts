@@ -1,15 +1,5 @@
 import styled from "styled-components/macro";
 
-//TODO: Layout это часть внешних компонентов, которые будут использовать Display.
-
-// export const Layout = styled.div`
-//   width: 100%;
-//   height: calc(100% - 65px);
-//   margin: 65px 0 0 0;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `
 
 export const Container = styled.div`
   width: 80%;

@@ -1,8 +1,8 @@
-import DisplayImage from "../../components/display-image/DisplayImage";
+import Image from "../../components/image/Image";
 import radiometer from "../../images/radiometer.jpg";
-import DisplayImageWithDropdownDot from "../../components/display-image/DisplayImageWithDropdownDot";
+import ImageWithDropdownDot from "../../components/image/ImageWithDropdownDot";
 import pc from "../../images/pc.jpg";
-import DisplayImageWithDot from "../../components/display-image/DisplayImageWithDot";
+import ImageWithDot from "../../components/image/ImageWithDot";
 import spectrometer from "../../images/spectrometer.jpg";
 import DisplayWithSlider from "../../components/display/DisplayWithSlider";
 import ButtonBack from "../../components/ButtonBack";
@@ -24,10 +24,10 @@ const ZonePc: FC<ZonePcProps> = ({handleProgramClick}) => {
       <DisplayWithSlider
         startComponentName={"pc"}
         componentData={{
-          "radiometer": <DisplayImage
+          "radiometer": <Image
             src={radiometer}
           />,
-          "pc": <DisplayImageWithDropdownDot
+          "pc": <ImageWithDropdownDot
             src={pc}
             dotX={255}
             dotY={45}
@@ -36,7 +36,7 @@ const ZonePc: FC<ZonePcProps> = ({handleProgramClick}) => {
               handler: handleProgramClick,
             }]}
           />,
-          "spectrometer": <DisplayImageWithDot
+          "spectrometer": <ImageWithDot
             srcImage={spectrometer}
             dotX={135}
             dotY={160}

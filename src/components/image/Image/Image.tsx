@@ -1,17 +1,17 @@
-import {Image} from '../styled';
+import {Img} from '../styled';
 import {FC} from "react";
 
 interface DisplayImageProps {
   src: string,
 }
 
-const DisplayImage: FC<DisplayImageProps> = ({src}) => {
+const Image: FC<DisplayImageProps> = ({src}) => {
   return (
-    <Image
+    <Img
       src={src}
       alt={"image"}
     />
   )
 }
 
-export default DisplayImage;
+export default Image;
