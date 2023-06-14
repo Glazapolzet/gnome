@@ -7,10 +7,10 @@ interface DisplayImageWithDropdownDotProps {
   src: string,
   dotX: number,
   dotY: number,
-  dropdown: Array<DropdownProps>,
+  dotDropdown: Array<DropdownProps>,
 }
 
-const DisplayImageWithDropdownDot: FC<DisplayImageWithDropdownDotProps> = ({src, dotX, dotY, dropdown}) => {
+const DisplayImageWithDropdownDot: FC<DisplayImageWithDropdownDotProps> = ({src, dotX, dotY, dotDropdown}) => {
   return (
     <>
       <Image
@@ -20,7 +20,7 @@ const DisplayImageWithDropdownDot: FC<DisplayImageWithDropdownDotProps> = ({src,
       <ActionDotWithDropdown
         xCoord={dotX}
         yCoord={dotY}
-        dropdown={dropdown}
+        dropdown={dotDropdown}
       />
     </>
   )

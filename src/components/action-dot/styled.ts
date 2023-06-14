@@ -1,4 +1,5 @@
 import styled from "styled-components/macro";
+import eyeIcon from "../../images/check_eye.svg";
 
 
 interface LayoutProps {
@@ -19,7 +20,7 @@ export const Button = styled.button`
   position: relative;
   margin: 0;
   padding: 0;
-  background-image: url("../../images/check_eye.svg");
+  background-image: url(${eyeIcon});
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;

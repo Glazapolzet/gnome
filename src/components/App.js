@@ -278,43 +278,47 @@ function App() {
                       <Route path={"result"} element={<Result />} />
 
                       <Route path={"game"} element={<GameArea />}>
-                        <Route path={"start"} element={<Display
-                          srcImage={cabinet}
-                          dotX={725}
-                          dotY={530}
-                          dotCallback={handlePcClick}
-                          dotDestination={"/page/game/zone-pc"}
-                          />}/>
+                        <Route path={"start"} element={<Display component={
+                          <DisplayImageWithDot
+                            srcImage={cabinet}
+                            dotX={725}
+                            dotY={530}
+                            dotCallback={handlePcClick}
+                            dotDestination={"/page/game/zone-pc"}
+                          />
+                        }/>}/>
 
-                        <Route path={"zone-pc"} element={<DisplayWithSlider
-                          key={"zone-pc"}
-                          startSlide={"pc"}
-                          sliderData={{
-                            "radiometer": <DisplayImage src={radiometer} />,
-                            "pc": <DisplayImageWithDropdownDot
-                              src={pc}
-                              dotX={255}
-                              dotY={45}
-                              dropdown={[{
-                                title: 'Запуск ПО «Прогресс»',
-                                handler: handleProgramClick,
-                              }]}/>,
-                            "spectrometer": <DisplayImageWithDot
-                              srcImage={spectrometer}
-                              dotX={135}
-                              dotY={160}
-                              dotDestination={"/page/game/zone-spectrometer"}
+                        <Route path={"zone-pc"} element={
+                          <DisplayWithSlider
+                            key={"zone-pc"}
+                            startComponentName={"pc"}
+                            componentData={{
+                              "radiometer": <DisplayImage src={radiometer} />,
+                              "pc": <DisplayImageWithDropdownDot
+                                src={pc}
+                                dotX={255}
+                                dotY={45}
+                                dotDropdown={[{
+                                  title: 'Запуск ПО «Прогресс»',
+                                  handler: handleProgramClick,
+                                }]}/>,
+                              "spectrometer": <DisplayImageWithDot
+                                srcImage={spectrometer}
+                                dotX={135}
+                                dotY={160}
+                                dotDestination={"/page/game/zone-spectrometer"}
                             />,
                           }}
                         />}/>
 
-                        <Route path={"zone-spectrometer"} element={<DisplayWithSlider
-                          key={"zone-spectrometer"}
-                          startSlide={"case"}
-                          sliderData={{
-                            "case": <Case dotX={820} dotY={320} />,
-                            "table": <Table dotX={900} dotY={300} />,
-                          }}
+                        <Route path={"zone-spectrometer"} element={
+                          <DisplayWithSlider
+                            key={"zone-spectrometer"}
+                            startComponentName={"case"}
+                            componentData={{
+                              "case": <Case dotX={820} dotY={320} />,
+                              "table": <Table dotX={900} dotY={300} />,
+                            }}
                           />}/>
 
                         {/*TODO: сделать отдельные роуты для репортов*/}

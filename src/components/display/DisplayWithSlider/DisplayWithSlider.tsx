@@ -1,21 +1,21 @@
 import {Container} from "../styled";
 import {Layout, BarLeft, BarRight, Arrow} from "./styled";
-import {FC, ReactElement, useCallback, useEffect, useState} from "react";
+import {FC, ReactElement, useState} from "react";
 import arrowLeft from "../../../images/chevron-left-circle.svg";
 import arrowRight from "../../../images/chevron-right-circle.svg";
 
 
 interface DisplayWithSliderProps {
-  startSlide: string,
-  sliderData: Record<string, ReactElement>,
+  startComponentName: string,
+  componentData: Record<string, ReactElement>,
 }
 
-const DisplayWithSlider: FC<DisplayWithSliderProps> = ({startSlide, sliderData}) => {
+const DisplayWithSlider: FC<DisplayWithSliderProps> = ({startComponentName, componentData}) => {
 
-  const slides = Object.keys(sliderData);
+  const componentsName = Object.keys(componentData);
 
-  const endIndex = slides.length - 1;
-  const [currentIndex, setCurrentIndex] = useState(slides.indexOf(startSlide));
+  const endIndex = componentsName.length - 1;
+  const [currentIndex, setCurrentIndex] = useState(componentsName.indexOf(startComponentName));
 
   function nextSlide() {
     setCurrentIndex((currentIndex) => currentIndex === endIndex
@@ -40,13 +40,13 @@ const DisplayWithSlider: FC<DisplayWithSliderProps> = ({startSlide, sliderData})
         />
       </BarLeft>
 
-      {slides.map((slide, index) => {
+      {componentsName.map((componentName, index) => {
         return (
           <Layout
             key={index}
             isVisible={index === currentIndex}
           >
-            {sliderData[slides[index]]}
+            {componentData[componentName]}
           </Layout>
         )
       })}

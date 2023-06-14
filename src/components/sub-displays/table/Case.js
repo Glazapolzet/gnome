@@ -24,6 +24,9 @@ export default function Case (props) {
   const [isCaseEmpty, setCaseEmpty] = useState(false);
   const [isCaseWithContainer, setCaseWithContainer] = useState(false);
 
+  console.log(isContainerIn);
+  console.log(isContainerChosen);
+
   useEffect(() => {
     if (!isCaseOpened) {
       return

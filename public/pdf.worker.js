@@ -59873,7 +59873,7 @@ class XFAFactory {
   }
 
   setImages(images) {
-    this.form[_xfa_object.$globalData].sliderData = images;
+    this.form[_xfa_object.$globalData].componentData = images;
   }
 
   setFonts(fonts) {
@@ -70235,7 +70235,7 @@ var _util = __w_pdfjs_require__(2);
 class Root extends _xfa_object.XFAObject {
   constructor(ids) {
     super(-1, "root", Object.create(null));
-    this.element = null;
+    this.component = null;
     this[_xfa_object.$ids] = ids;
   }
 

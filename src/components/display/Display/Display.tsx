@@ -1,26 +1,23 @@
-import {FC} from "react";
+import {FC, ReactElement} from "react";
 import {Container} from "../styled";
-import DisplayImageWithDot from "../../display-image/DisplayImageWithDot";
 
+
+// interface DisplayProps {
+//   srcImage: string,
+//   dotX: number,
+//   dotY: number,
+//   dotCallback?: () => void,
+//   dotDestination: string,
+// }
 
 interface DisplayProps {
-  srcImage: string,
-  dotX: number,
-  dotY: number,
-  dotCallback: () => void,
-  dotDestination: string,
+  component: ReactElement,
 }
 
-const Display: FC<DisplayProps> = ({srcImage, dotX, dotY, dotCallback, dotDestination}) => {
+const Display: FC<DisplayProps> = ({component}) => {
   return (
     <Container>
-      <DisplayImageWithDot
-        srcImage={srcImage}
-        dotX={dotX}
-        dotY={dotY}
-        dotCallback={dotCallback}
-        dotDestination={dotDestination}
-      />
+      {component}
     </Container>
   )
 
