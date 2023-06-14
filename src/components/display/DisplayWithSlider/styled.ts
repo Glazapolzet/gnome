@@ -1,9 +1,18 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 
 interface ArrowProps {
   src: any,
 }
+
+interface LayoutProps {
+  isVisible: boolean,
+}
+
+export const Layout = styled.div<LayoutProps>`
+  display: ${({isVisible}) => isVisible ? "block" : "none"};
+  width: 100%;
+`
 
 export const Bar = styled.div`
   position: absolute;

@@ -6,7 +6,7 @@ import { WindowContext } from "../contexts/windowContext";
 import { ContainerContext } from "../contexts/containerContext";
 import { SpectreContext } from "../contexts/spectreContext";
 import { CaseContext } from "../contexts/caseContext";
-import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
+import {Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom';
 import {useEffect, useState, lazy, Suspense} from "react";
 
 //Recorder:
@@ -26,14 +26,17 @@ import GameArea from "./GameArea";
 import DisplayImageWithDropdownDot from "./display-image/DisplayImageWithDropdownDot";
 import DisplayImageWithDot from "./display-image/DisplayImageWithDot";
 
+import Table from "./sub-displays/table/Table";
+import Case from "./sub-displays/table/Case";
+
 const Main = lazy(() => import("./main/Main"));
 const Navbar = lazy(() => import("./navbar/Navbar"));
 
 const StartArea = lazy(() => import("./quiz/StartArea"));
 // const Display = lazy(() => import("./quiz/Display"));
 // const DisplayImage = lazy(() => import("./quiz/DisplayImage"));
-const Case = lazy(() => import("./sub-displays/table/Case"));
-const Table = lazy(() => import("./sub-displays/table/Table"));
+// const Case = lazy(() => import("./sub-displays/table/Case"));
+// const Table = lazy(() => import("./sub-displays/table/Table"));
 const Window = lazy(() => import("./sub-displays/window/Window"));
 const Result = lazy(() => import("./result/Result"));
 const RadDoc = lazy(() => import("./rad-doc/RadDoc"));
@@ -210,6 +213,11 @@ function App() {
     setSpectrePageActive(false);
   }
 
+  const location = useLocation();
+  useEffect(() => {
+    console.log(location)
+  })
+
   return (
     <WindowContext.Provider value={{
       isAboutPageActive, setAboutPageActive,
@@ -279,6 +287,7 @@ function App() {
                           />}/>
 
                         <Route path={"zone-pc"} element={<DisplayWithSlider
+                          key={"zone-pc"}
                           startSlide={"pc"}
                           sliderData={{
                             "radiometer": <DisplayImage src={radiometer} />,
@@ -292,14 +301,15 @@ function App() {
                               }]}/>,
                             "spectrometer": <DisplayImageWithDot
                               srcImage={spectrometer}
-                              dotX={935}
+                              dotX={135}
                               dotY={160}
-                              dotDestination={"page/game/zone-spectrometer"}
+                              dotDestination={"/page/game/zone-spectrometer"}
                             />,
                           }}
                         />}/>
 
                         <Route path={"zone-spectrometer"} element={<DisplayWithSlider
+                          key={"zone-spectrometer"}
                           startSlide={"case"}
                           sliderData={{
                             "case": <Case dotX={820} dotY={320} />,

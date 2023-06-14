@@ -6,8 +6,8 @@ import {Layout, Button} from "../styled";
 interface ActionDotProps {
   xCoord: number,
   yCoord: number,
-  destination: string,
   callback?: () => void,
+  destination: string,
 }
 
 const ActionDot: FC<ActionDotProps> = ({xCoord, yCoord, callback, destination}) => {

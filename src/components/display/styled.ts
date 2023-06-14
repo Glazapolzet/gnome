@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 //TODO: Layout это часть внешних компонентов, которые будут использовать Display.
 
