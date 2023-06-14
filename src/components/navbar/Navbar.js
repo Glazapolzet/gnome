@@ -11,6 +11,7 @@ import info from "../../images/info.svg";
 import {useContext, useEffect, useState} from "react";
 import {FormContext} from "../../contexts/formContext";
 import {TimerContext} from "../../contexts/timerContext";
+import {PATH_INFO, PATH_MENU, PATH_RESULT} from "../../constants/pathnames";
 
 export default function Navbar(props) {
 
@@ -75,7 +76,7 @@ export default function Navbar(props) {
   function handleResultClick (evt) {
     evt.preventDefault();
     setNavbarBtnsDisabled(true);
-    navigate("/result");
+    navigate(PATH_RESULT);
   }
 
   useEffect(() => {
@@ -107,14 +108,14 @@ export default function Navbar(props) {
           <li className="Navbar__link-wrapper">
             <Navlink
               title={"Меню"}
-              leadingTo={"/"}
+              leadingTo={PATH_MENU}
               isDisabled={isFormOnSubmit}
             />
           </li>
           <li className="Navbar__link-wrapper">
             <Navlink
               icon={info}
-              leadingTo={"/rad-doc"}
+              leadingTo={PATH_INFO}
             />
           </li>
           <li className="Navbar__link-wrapper">
@@ -162,7 +163,7 @@ export default function Navbar(props) {
           <li className="Navbar__link-wrapper">
             <Navlink
               title={"Завершить"}
-              leadingTo={"/result"}
+              leadingTo={PATH_RESULT}
               isDisabled={!isFormOnSubmit}
               onClick={handleResultClick}
             />

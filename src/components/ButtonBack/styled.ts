@@ -5,6 +5,13 @@ interface ButtonProps {
   src: any,
 }
 
+export const Layout = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+`
+
 export const Button = styled.button<ButtonProps>`
   background-image: url(${({src}) => src});
   background-repeat: no-repeat;
@@ -18,6 +25,4 @@ export const Button = styled.button<ButtonProps>`
   background-color: rgba(0, 0, 0, 0.55);
   opacity: 0.8;
   cursor: pointer;
-  left: 0;
-  z-index: 2;
 `

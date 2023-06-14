@@ -2,8 +2,11 @@ import "./Form.css";
 import {useNavigate} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import {FormContext} from "../../contexts/formContext";
+import {PATH_START} from "../../constants/pathnames";
 
 export default function Form () {
+
+  //TODO: контекст формы не сбрасывается, если перейти на /info и обратно сюда
 
   const { setFormSubmitStatus, userData, setUserData } = useContext(FormContext);
 
@@ -55,7 +58,7 @@ export default function Form () {
   function handleFormSubmit(evt) {
     evt.preventDefault();
 
-    navigate("/page/game/start");
+    navigate(PATH_START);
     setFormSubmitStatus(true);
   }
 

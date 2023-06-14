@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {FC} from "react";
-import {Button} from "./styled";
-import backArrow from '../../images/arrow-left-large.svg';
+import {Layout, Button} from "./styled";
+import backArrow from "../../images/arrow-left-large.svg";
 
 
 interface ButtonBackProps {
@@ -17,10 +17,12 @@ const ButtonBack: FC<ButtonBackProps> = ({destination}) => {
   }
 
   return (
-    <Button
-      src={backArrow}
-      onClick={handleClick}
-    />
+    <Layout>
+      <Button
+        src={backArrow}
+        onClick={handleClick}
+      />
+    </Layout>
   )
 
 }

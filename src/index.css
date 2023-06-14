@@ -2,6 +2,7 @@
   height: 100vh;
   background-color: #ECF0F1;
   color: #000;
+  user-select: none;
 }
 
 #root {

@@ -13,7 +13,7 @@ import styled from "styled-components/macro";
 
 export const Container = styled.div`
   width: 80%;
-  height: 80%;
+  height: 85%;
   display: flex;
   position: relative;
   align-self: center;

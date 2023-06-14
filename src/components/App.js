@@ -28,6 +28,10 @@ import DisplayImageWithDot from "./display-image/DisplayImageWithDot";
 
 import Table from "./sub-displays/table/Table";
 import Case from "./sub-displays/table/Case";
+import Start from "../shared/Start";
+import ZonePc from "../shared/ZonePc";
+import ZoneSpectrometer from "../shared/ZoneSpectrometer";
+import {PATH_PROGRAM} from "../constants/pathnames";
 
 const Main = lazy(() => import("./main/Main"));
 const Navbar = lazy(() => import("./navbar/Navbar"));
@@ -187,7 +191,6 @@ function App() {
     if (!GammaExploring.check_action_added(PotatoExploringActions.ENABLE_PC)) {
       GammaExploring.add_action(PotatoExploringActions.ENABLE_PC);
     }
-    console.log("work")
     // navigate('/display');
   }
 
@@ -198,7 +201,7 @@ function App() {
     setDesktopClicked(true);
     setAboutPageActive(true);
     // navigate('/window');
-    navigate("/page/game/program");
+    navigate(PATH_PROGRAM);
   }
 
   function handleWindowLeave () {
@@ -278,48 +281,11 @@ function App() {
                       <Route path={"result"} element={<Result />} />
 
                       <Route path={"game"} element={<GameArea />}>
-                        <Route path={"start"} element={<Display component={
-                          <DisplayImageWithDot
-                            srcImage={cabinet}
-                            dotX={725}
-                            dotY={530}
-                            dotCallback={handlePcClick}
-                            dotDestination={"/page/game/zone-pc"}
-                          />
-                        }/>}/>
+                        <Route path={"start"} element={<Start />} />
 
-                        <Route path={"zone-pc"} element={
-                          <DisplayWithSlider
-                            key={"zone-pc"}
-                            startComponentName={"pc"}
-                            componentData={{
-                              "radiometer": <DisplayImage src={radiometer} />,
-                              "pc": <DisplayImageWithDropdownDot
-                                src={pc}
-                                dotX={255}
-                                dotY={45}
-                                dotDropdown={[{
-                                  title: 'Запуск ПО «Прогресс»',
-                                  handler: handleProgramClick,
-                                }]}/>,
-                              "spectrometer": <DisplayImageWithDot
-                                srcImage={spectrometer}
-                                dotX={135}
-                                dotY={160}
-                                dotDestination={"/page/game/zone-spectrometer"}
-                            />,
-                          }}
-                        />}/>
+                        <Route path={"zone-pc"} element={<ZonePc handleProgramClick={handleProgramClick} />}/>
 
-                        <Route path={"zone-spectrometer"} element={
-                          <DisplayWithSlider
-                            key={"zone-spectrometer"}
-                            startComponentName={"case"}
-                            componentData={{
-                              "case": <Case dotX={820} dotY={320} />,
-                              "table": <Table dotX={900} dotY={300} />,
-                            }}
-                          />}/>
+                        <Route path={"zone-spectrometer"} element={<ZoneSpectrometer />}/>
 
                         {/*TODO: сделать отдельные роуты для репортов*/}
                         <Route path={"program"} element={<Window

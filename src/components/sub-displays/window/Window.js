@@ -19,6 +19,7 @@ import bgSpectre from "../../../images/BG_spectre.png";
 import acSpectre from "../../../images/AC_spectre.png";
 
 import EnterProgramPopup from "../../popup/EnterProgramPopup/EnterProgramPopup";
+import {PATH_ZONE_PC} from "../../../constants/pathnames";
 
 export default function Window (props) {
 
@@ -122,7 +123,7 @@ export default function Window (props) {
 
       <section className="Window">
         <MoveBackArrow
-          leadingTo={'/display'}
+          leadingTo={PATH_ZONE_PC}
           onClick={props.onLeave}
           isDisabled={isDesktopClickedForFirstTime}
         />
