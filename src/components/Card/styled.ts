@@ -10,3 +10,12 @@ export const Box = styled.div`
   border-radius: 8px;
   background-color: #fff;
 `
+
+export const Title = styled.h2`
+  margin: 20px 0 0;
+  font-family: inherit;
+`
+
+export const Subtitle = styled.h3`
+  margin: 15px 0 35px;
+`
