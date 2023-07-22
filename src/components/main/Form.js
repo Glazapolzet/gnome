@@ -4,7 +4,7 @@ import {useContext, useEffect, useState} from "react";
 import {FormContext} from "../../contexts/formContext";
 import {PATH_START} from "../../constants/pathnames";
 
-export default function Form () {
+export default function RegistrationForm () {
 
   //TODO: контекст формы не сбрасывается, если перейти на /info и обратно сюда
 

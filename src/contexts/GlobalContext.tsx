@@ -1,15 +1,15 @@
-import {FC, ReactNode, createContext, useContext, useMemo, useState} from "react";
+import {FC, ReactNode, createContext, useMemo, useState} from "react";
 
 interface GlobalContextProps {
-    firstTimePopupShown: boolean,
-    setFirstTimePopupShown: (val: boolean) => void,
+  firstTimePopupShown: boolean,
+  setFirstTimePopupShown: (val: boolean) => void,
 }
 
 interface GlobalContextProviderProps {
   children: ReactNode
 }
 
-const GlobalContext = createContext<GlobalContextProps>({firstTimePopupShown: false, setFirstTimePopupShown: () => {}});
+export const GlobalContext = createContext<GlobalContextProps>({firstTimePopupShown: false, setFirstTimePopupShown: () => {}});
 
 export const GlobalContextProvider: FC<GlobalContextProviderProps> = ({ children }) => {
     const [firstTimePopupShown, setFirstTimePopupShown] = useState(false);
@@ -26,13 +26,6 @@ export const GlobalContextProvider: FC<GlobalContextProviderProps> = ({ children
     )
 }
 
-export const useGlobal = (): [boolean, (val: boolean) => void]  => {
-    const {firstTimePopupShown, setFirstTimePopupShown} = useContext(GlobalContext)
-    return [
-        firstTimePopupShown,
-        setFirstTimePopupShown
-    ]
-}
 
 
 

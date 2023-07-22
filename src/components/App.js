@@ -80,8 +80,8 @@ function App() {
 
   //FormContext:
   const [userData, setUserData] = useState({
-    'name': "",
-    'group': ""
+    name: "",
+    group: "",
   });
   const [isFormOnSubmit, setFormSubmitStatus] = useState(false);
   const [isNavbarBtnsDisabled, setNavbarBtnsDisabled] = useState(true);

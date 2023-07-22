@@ -18,7 +18,7 @@ import ecSpectre from "../../../images/EC_spectre.png";
 import bgSpectre from "../../../images/BG_spectre.png";
 import acSpectre from "../../../images/AC_spectre.png";
 
-import EnterProgramPopup from "../../popup/EnterProgramPopup/EnterProgramPopup";
+import EnterProgramPopup from "../../popup/EnterProgramPopup";
 import {PATH_ZONE_PC} from "../../../constants/pathnames";
 
 export default function Window (props) {

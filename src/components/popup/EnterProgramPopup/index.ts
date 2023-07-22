@@ -1,1 +1,1 @@
-export * from "./EnterProgramPopup";
+export {default} from "./EnterProgramPopup";

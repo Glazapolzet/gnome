@@ -1,5 +1,5 @@
 import GammaExploring, { PotatoExploringActions } from "../../../actions/gammaExploring";
-import { useGlobal } from "../../../contexts/GlobalContext";
+import useGlobal from "../../../hooks/useGlobal";
 import {Layout, TitleBar, Title, Description, CloseButton, ButtonContainer, Button} from '../styled';
 import {FC, useState} from "react";
 
