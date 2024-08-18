@@ -1,7 +1,7 @@
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FormContext } from "../../contexts/formContext";
 import "./Form.css";
-import {useNavigate} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
-import {FormContext} from "../../contexts/formContext";
 
 export default function Form () {
 
@@ -55,7 +55,7 @@ export default function Form () {
   function handleFormSubmit(evt) {
     evt.preventDefault();
 
-    navigate('/quiz');
+    navigate('/gnome/quiz');
     setFormSubmitStatus(true);
   }
 

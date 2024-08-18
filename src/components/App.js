@@ -1,43 +1,43 @@
 import './App.css';
 
+import { useEffect, useState } from "react";
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { CaseContext } from "../contexts/caseContext";
+import { ContainerContext } from "../contexts/containerContext";
 import { FormContext } from "../contexts/formContext";
+import { SpectreContext } from "../contexts/spectreContext";
 import { TimerContext } from "../contexts/timerContext";
 import { WindowContext } from "../contexts/windowContext";
-import { ContainerContext } from "../contexts/containerContext";
-import { SpectreContext } from "../contexts/spectreContext";
-import { CaseContext } from "../contexts/caseContext";
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import {useEffect, useState} from "react";
 
 //Recorder:
 import GammaExploring, { PotatoExploringActions } from "../actions/gammaExploring.ts";
 
 import Main from "./main/Main";
-import StartArea from "./quiz/StartArea";
 import Navbar from "./navbar/Navbar";
+import StartArea from "./quiz/StartArea";
 
+import desktop from "../images/desktop.jpg";
+import radiometer from "../images/radiometer.jpg";
+import spectrometer from "../images/spectrometer.jpg";
 import Display from "./quiz/Display";
 import DisplayImage from "./quiz/DisplayImage";
-import radiometer from "../images/radiometer.jpg";
-import desktop from "../images/desktop.jpg";
-import spectrometer from "../images/spectrometer.jpg";
 
 import multiradDoc from "../docs/multirad.pdf";
 
+import RadDoc from "./rad-doc/RadDoc";
+import Result from "./result/Result";
 import Case from "./sub-displays/table/Case";
 import Table from "./sub-displays/table/Table";
 import Window from "./sub-displays/window/Window";
-import Result from "./result/Result";
-import RadDoc from "./rad-doc/RadDoc";
 
-const { invoke } = window.__TAURI__.tauri
+// const { invoke } = window.__TAURI__.tauri
 
 
 function App() {
 
-  invoke('greet', { name: 'World' })
-  // `invoke` returns a Promise
-  .then((response) => console.log(response))
+  // invoke('greet', { name: 'World' })
+  // // `invoke` returns a Promise
+  // .then((response) => console.log(response))
 
   const navigate = useNavigate();
 
@@ -163,7 +163,7 @@ function App() {
     if (!GammaExploring.check_action_added(PotatoExploringActions.ENABLE_PC)) {
       GammaExploring.add_action(PotatoExploringActions.ENABLE_PC);
     }
-    navigate('/display');
+    navigate('/gnome/display');
   }
 
   function handleDesktopClick () {
@@ -172,7 +172,7 @@ function App() {
     }
     setDesktopClicked(true);
     setAboutPageActive(true);
-    navigate('/window');
+    navigate('/gnome/window');
   }
 
   function handleWindowLeave () {
@@ -234,82 +234,84 @@ function App() {
                 elements, generateElements
               }}>
                 <div className="App">
-
                   <Navbar
                     isDesktopClicked={isDesktopClicked}
                     resetPages={resetPages}
                   />
 
                   <Routes>
-                    <Route path="/" element={<Main />} />
-                    <Route path="/quiz" element={<StartArea onClick={handlePcClick} />} />
-                    <Route path="/display" element={<Display
-                      backArrowTo={'/quiz'}
-                      defaultPicIndex={1}
-                      pics={[
-                        "radiometer",
-                        "desktop",
-                        "spectrometer"
-                      ]}/>}
-                    >
-                      <Route path="radiometer" element={<DisplayImage
-                        pic={radiometer}
-                        withDot={false}
-                      />}/>
+                    <Route path='/gnome'>
+                      <Route path="" element={<Main />} />
+                      <Route path="quiz" element={<StartArea onClick={handlePcClick} />} />
+                      <Route path="display" element={<Display
+                        backArrowTo={'/gnome/quiz'}
+                        defaultPicIndex={1}
+                        pics={[
+                          "radiometer",
+                          "desktop",
+                          "spectrometer"
+                        ]}/>}
+                      >
+                        <Route path="radiometer" element={<DisplayImage
+                          pic={radiometer}
+                          withDot={false}
+                        />}/>
 
-                      <Route path="desktop" element={<DisplayImage
-                        pic={desktop}
-                        withDot={true}
-                        dotX={255}
-                        dotY={45}
-                        dotDropdown={[
-                          {
-                            id: "start-app",
-                            title: 'Запуск ПО «Прогресс»',
-                            handler: handleDesktopClick
-                          },
-                        ]}
-                      />}/>
+                        <Route path="desktop" element={<DisplayImage
+                          pic={desktop}
+                          withDot={true}
+                          dotX={255}
+                          dotY={45}
+                          dotDropdown={[
+                            {
+                              id: "start-app",
+                              title: 'Запуск ПО «Прогресс»',
+                              handler: handleDesktopClick
+                            },
+                          ]}
+                        />}/>
 
-                      <Route path="spectrometer" element={<DisplayImage
-                        pic={spectrometer}
-                        withDot={true}
-                        dotLeadingTo={'/spec-area'}
-                        dotX={935}
-                        dotY={160}
-                      />}/>
+                        <Route path="spectrometer" element={<DisplayImage
+                          pic={spectrometer}
+                          withDot={true}
+                          dotLeadingTo={'/gnome/spec-area'}
+                          dotX={935}
+                          dotY={160}
+                        />}/>
+                      </Route>
+
+                      {/*TODO: сделать норм фотку стола*/}
+                      <Route path={'spec-area'} element={<Display
+                        backArrowTo={'/gnome/display'}
+                        defaultPicIndex={0}
+                        pics={[
+                          "case-closed",
+                          "table",
+                        ]}/>}>
+
+                        <Route path="case-closed" element={<Case
+                          dotX={820}
+                          dotY={320}
+                        />}/>
+
+                        <Route path="table" element={<Table
+                          dotX={900}
+                          dotY={300}
+                        />}/>
+
+                      </Route>
+                      <Route path="window" element={<Window
+                        onLeave={handleWindowLeave}
+                        resetPages={resetPages}
+                        isCounterDone = {isCounterDone}
+                        isCalibrationReportDone = {isCalibrationReportDone}
+                        isBackgroundReportDone = {isBackgroundReportDone}
+                        isResearchReportDone = {isResearchReportDone}
+                      />} />
+                      <Route path="rad-doc" element={<RadDoc file={multiradDoc} />} />
+                      <Route path="result" element={<Result />} />
                     </Route>
-
-                    {/*TODO: сделать норм фотку стола*/}
-                    <Route path={'/spec-area'} element={<Display
-                      backArrowTo={'/display'}
-                      defaultPicIndex={0}
-                      pics={[
-                        "case-closed",
-                        "table",
-                      ]}/>}>
-
-                      <Route path="case-closed" element={<Case
-                        dotX={820}
-                        dotY={320}
-                      />}/>
-
-                      <Route path="table" element={<Table
-                        dotX={900}
-                        dotY={300}
-                      />}/>
-
-                    </Route>
-                    <Route path="/window" element={<Window
-                      onLeave={handleWindowLeave}
-                      resetPages={resetPages}
-                      isCounterDone = {isCounterDone}
-                      isCalibrationReportDone = {isCalibrationReportDone}
-                      isBackgroundReportDone = {isBackgroundReportDone}
-                      isResearchReportDone = {isResearchReportDone}
-                    />} />
-                    <Route path="/rad-doc" element={<RadDoc file={multiradDoc} />} />
-                    <Route path="/result" element={<Result />} />
+                    <Route path={'/'} element={< Navigate to={'/gnome'}/>} />
                   </Routes>
                 </div>
               </SpectreContext.Provider>

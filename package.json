@@ -1,5 +1,6 @@
 {
   "name": "gnome-front",
+  "homepage": "https://github.com/Glazapolzet/gnome",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

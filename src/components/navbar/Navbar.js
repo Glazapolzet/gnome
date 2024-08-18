@@ -1,16 +1,16 @@
-import './Navbar.css';
-import {useNavigate} from "react-router-dom";
-import DropdownNavLink from "./DropdownNavLink";
-import Navlink from "./Navlink";
-import TimeCounter from "./TimeCounter";
-import CalibrationPopup from "../popups/CalibrationPopup";
-import BackgroundPopup from "../popups/BackgroundPopup";
-import ActivityPopup from "../popups/ActivityPopup";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FormContext } from "../../contexts/formContext";
+import { TimerContext } from "../../contexts/timerContext";
 import beaker from "../../images/beaker-20-solid.svg";
 import info from "../../images/info.svg";
-import {useContext, useEffect, useState} from "react";
-import {FormContext} from "../../contexts/formContext";
-import {TimerContext} from "../../contexts/timerContext";
+import ActivityPopup from "../popups/ActivityPopup";
+import BackgroundPopup from "../popups/BackgroundPopup";
+import CalibrationPopup from "../popups/CalibrationPopup";
+import DropdownNavLink from "./DropdownNavLink";
+import './Navbar.css';
+import Navlink from "./Navlink";
+import TimeCounter from "./TimeCounter";
 
 export default function Navbar(props) {
 
@@ -74,7 +74,7 @@ export default function Navbar(props) {
   function handleResultClick (evt) {
     evt.preventDefault();
     setNavbarBtnsDisabled(true);
-    navigate("/result");
+    navigate("/gnome/result");
   }
 
   useEffect(() => {
@@ -113,7 +113,7 @@ export default function Navbar(props) {
           <li className="Navbar__link-wrapper">
             <Navlink
               icon={info}
-              leadingTo={"/rad-doc"}
+              leadingTo={"/gnome/rad-doc"}
             />
           </li>
           <li className="Navbar__link-wrapper">
@@ -161,7 +161,7 @@ export default function Navbar(props) {
           <li className="Navbar__link-wrapper">
             <Navlink
               title={"Завершить"}
-              leadingTo={"/result"}
+              leadingTo={"/gnome/result"}
               isDisabled={!isFormOnSubmit}
               onClick={handleResultClick}
             />
