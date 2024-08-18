@@ -1,29 +1,29 @@
-import './Window.css';
+import { useContext, useEffect, useState } from "react";
+import { TimerContext } from "../../../contexts/timerContext";
+import { WindowContext } from "../../../contexts/windowContext";
 import MoveBackArrow from "../../back-arrow/MoveBackArrow";
-import {useContext, useEffect, useState} from "react";
-import {TimerContext} from "../../../contexts/timerContext";
 import FirstTimePopup from "../../popups/FirstTimePopup";
 import About from "./About";
-import {WindowContext} from "../../../contexts/windowContext";
-import CalibrationReport from "./CalibrationReport";
 import BackgroundReport from "./BackgroundReport";
+import CalibrationReport from "./CalibrationReport";
 import ResearchReport from "./ResearchReport";
 import Spectre from "./Spectre";
+import './Window.css';
 
-import ecReport from "../../../docs/EC_report.pdf";
-import bgReport from "../../../docs/BG_report.pdf";
 import acReport from "../../../docs/AC_report.pdf";
+import bgReport from "../../../docs/BG_report.pdf";
+import ecReport from "../../../docs/EC_report.pdf";
 import radNorms from "../../../docs/Rad_norms.pdf";
 
-import ecSpectre from "../../../images/EC_spectre.png";
-import bgSpectre from "../../../images/BG_spectre.png";
 import acSpectre from "../../../images/AC_spectre.png";
+import bgSpectre from "../../../images/BG_spectre.png";
+import ecSpectre from "../../../images/EC_spectre.png";
 
 export default function Window (props) {
 
   const {isDesktopClickedForFirstTime, setDesktopClickedForFirstTime} = useContext(TimerContext);
   const {
-    isAboutPageActive, setAboutPageActive,
+    isAboutPageActive, 
     isCalibrationReportPageActive, setCalibrationReportPageActive,
     isBackgroundReportPageActive, setBackgroundReportPageActive,
     isResearchReportPageActive, setResearchReportPageActive,
@@ -115,7 +115,7 @@ export default function Window (props) {
       />
       <section className="Window">
         <MoveBackArrow
-          leadingTo={'/display'}
+          leadingTo={'/gnome/display'}
           onClick={props.onLeave}
           isDisabled={isDesktopClickedForFirstTime}
         />

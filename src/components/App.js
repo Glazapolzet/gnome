@@ -280,7 +280,6 @@ function App() {
                         />}/>
                       </Route>
 
-                      {/*TODO: сделать норм фотку стола*/}
                       <Route path={'spec-area'} element={<Display
                         backArrowTo={'/gnome/display'}
                         defaultPicIndex={0}

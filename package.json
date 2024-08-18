@@ -1,6 +1,6 @@
 {
   "name": "gnome-front",
-  "homepage": "https://github.com/Glazapolzet/gnome",
+  "homepage": "https://glazapolzet.github.io/gnome/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -27,10 +27,11 @@
   "scripts": {
     "start": "react-scripts start",
     "dev": "nf start -p 3000",
-    "build": "react-scripts build",
+    "build": "tsc && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d dist"
+    "predeploy" : "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

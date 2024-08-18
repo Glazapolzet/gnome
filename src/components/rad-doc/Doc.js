@@ -5,10 +5,7 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 import './Doc.css';
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.js',
-  import.meta.url,
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const options = {
   cMapUrl: 'cmaps/',
@@ -28,7 +25,7 @@ export default function Doc (props) {
       <div className="Doc__container">
         <div className="Doc__container__document">
           <Document file={props.file} onLoadSuccess={onDocumentLoadSuccess} options={options}>
-            {Array.from(new Array(numPages), (el, index) => (
+            {Array.from(new Array(numPages), (_el, index) => (
               <Page key={`page_${index + 1}`} pageNumber={index + 1} />
             ))}
           </Document>
