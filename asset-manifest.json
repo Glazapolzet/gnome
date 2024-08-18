@@ -1,9 +1,8 @@
 {
   "files": {
     "main.css": "/gnome/static/css/main.f31c2283.css",
-    "main.js": "/gnome/static/js/main.73fc1033.js",
+    "main.js": "/gnome/static/js/main.624fcf81.js",
     "static/media/multirad.pdf": "/gnome/static/media/multirad.5f046a680d27cf9977f1.pdf",
-    "static/media/pdf.worker.min.js": "/gnome/static/media/pdf.worker.min.08f03d2179bf050f0448.js",
     "static/media/Rad_norms.pdf": "/gnome/static/media/Rad_norms.6e9cee84fa32ed468bb2.pdf",
     "static/media/desktop.jpg": "/gnome/static/media/desktop.8d64fc8efde38dd9f9ce.jpg",
     "static/media/cabinet.jpg": "/gnome/static/media/cabinet.f32e8f7681912819f94b.jpg",
@@ -37,10 +36,10 @@
     "static/media/tick.svg": "/gnome/static/media/tick.bd0707465310413626e3b204df046e8c.svg",
     "static/media/cross.svg": "/gnome/static/media/cross.771c7eae22185777caa9.svg",
     "main.f31c2283.css.map": "/gnome/static/css/main.f31c2283.css.map",
-    "main.73fc1033.js.map": "/gnome/static/js/main.73fc1033.js.map"
+    "main.624fcf81.js.map": "/gnome/static/js/main.624fcf81.js.map"
   },
   "entrypoints": [
     "static/css/main.f31c2283.css",
-    "static/js/main.73fc1033.js"
+    "static/js/main.624fcf81.js"
   ]
 }
